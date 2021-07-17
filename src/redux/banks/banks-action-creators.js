@@ -62,10 +62,10 @@ const getBankRequest = () => {
     }
 }
 
-const getBankSuccess = instruction => {
+const getBankSuccess = bank => {
     return {
         type: GET_BANK_SUCCESS,
-        payload: instruction
+        payload: bank
     }
 }
 
@@ -168,7 +168,7 @@ export const deleteBank = (id, token) => {
 }
 
 
-const getBankSRequest = () => {
+const getBanksRequest = () => {
     return {
         type: GET_BANKS_REQUEST
     }
@@ -190,7 +190,7 @@ const getBanksFailure = error => {
 
 export const getBanks = (token) => {
     return dispatch => {
-        dispatch(getBankSRequest());
+        dispatch(getBanksRequest());
         axios({
             method: 'get',
             url: `${DEVELOPMENT_SERVER}/banks`,
