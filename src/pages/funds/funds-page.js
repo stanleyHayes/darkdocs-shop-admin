@@ -14,10 +14,10 @@ import {
 } from "@material-ui/core";
 import {brown, green, red} from "@material-ui/core/colors";
 import {useDispatch, useSelector} from "react-redux";
-import {getInstructions} from "../../redux/instructions/instructions-action-creators";
 import {Alert} from "@material-ui/lab";
 import {Add, Delete, Edit, Visibility} from "@material-ui/icons";
 import moment from "moment";
+import {getFunds} from "../../redux/funds/funds-action-creators";
 
 const FundsPage = () => {
 
@@ -49,7 +49,7 @@ const FundsPage = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getInstructions(token));
+        dispatch(getFunds(token));
     }, [dispatch, token]);
 
     const {funds, loading, error} = useSelector(state => state.funds);

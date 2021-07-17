@@ -18,6 +18,7 @@ import {getInstructions} from "../../redux/instructions/instructions-action-crea
 import {Alert} from "@material-ui/lab";
 import {Add, Delete, Edit, Visibility} from "@material-ui/icons";
 import moment from 'moment';
+import {getBanks} from "../../redux/banks/banks-action-creators";
 
 const BanksPage = () => {
 
@@ -49,7 +50,7 @@ const BanksPage = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getInstructions(token));
+        dispatch(getBanks(token));
     }, [dispatch, token]);
 
     const {banks, loading, error} = useSelector(state => state.banks);

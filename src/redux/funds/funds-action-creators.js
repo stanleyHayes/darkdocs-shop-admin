@@ -29,14 +29,14 @@ const createFundFailure = error => {
     }
 }
 
-export const createFund = (bank, token) => {
+export const createFund = (fund, token) => {
     return dispatch => {
         dispatch(createFundRequest());
         axios({
             method: 'post',
-            url: `${DEVELOPMENT_SERVER}/banks`,
+            url: `${DEVELOPMENT_SERVER}/funds`,
             headers: {Authorization: `Bearer ${token}`},
-            data: bank
+            data: fund
         }).then(res => {
             const {data} = res.data;
             dispatch(createFundSuccess(data));
@@ -179,7 +179,7 @@ const getFundsFailure = error => {
     }
 }
 
-export const getBanks = (token) => {
+export const getFunds = (token) => {
     return dispatch => {
         dispatch(getFundsRequest());
         axios({
