@@ -15,6 +15,7 @@ import {makeStyles} from "@material-ui/styles";
 import {Link, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {signIn} from "../../redux/authentication/auth-action-creators";
+import {Alert} from "@material-ui/lab";
 
 const LoginPage = () => {
 
@@ -127,11 +128,14 @@ const LoginPage = () => {
 
                 <Grid container={true} justifyContent="center" alignItems='center'>
                     <Grid item={true} xs={12} md={4}>
-                        <Card elevation={4}>
+                        <Card elevation={1}>
                             {loading && <LinearProgress variant="query"/>}
                             <CardContent>
                                 {authError &&
-                                <Typography variant="body2" color="error" align="center">{authError}</Typography>}
+                                <Alert title="Error">
+                                    {authError}
+                                </Alert>
+                                }
                                 <Typography
                                     color="textPrimary"
                                     className={classes.title}
@@ -194,12 +198,6 @@ const LoginPage = () => {
                                         size="small">
                                         Login
                                     </Button>
-
-                                    <Link className={classes.link} to="/auth/register">
-                                        <Button fullWidth={true} variant="text" size="small">
-                                            Don't have an account? Register
-                                        </Button>
-                                    </Link>
                                 </form>
                             </CardContent>
                         </Card>
