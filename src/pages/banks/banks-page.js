@@ -14,7 +14,6 @@ import {
 } from "@material-ui/core";
 import {brown, green, red} from "@material-ui/core/colors";
 import {useDispatch, useSelector} from "react-redux";
-import {getInstructions} from "../../redux/instructions/instructions-action-creators";
 import {Alert} from "@material-ui/lab";
 import {Add, Delete, Edit, Visibility} from "@material-ui/icons";
 import moment from 'moment';
