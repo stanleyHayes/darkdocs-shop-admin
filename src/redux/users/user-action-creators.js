@@ -1,5 +1,5 @@
 import axios from "axios";
-import {DARKDOCS_SHOP_ADMIN_INSTRUCTIONS_KEY, DEVELOPMENT_SERVER} from "../../constants/constants";
+import {DEVELOPMENT_SERVER} from "../../constants/constants";
 import {
     CREATE_USER_FAILURE,
     CREATE_USER_REQUEST,
