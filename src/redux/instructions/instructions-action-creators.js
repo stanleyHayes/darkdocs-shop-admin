@@ -151,7 +151,7 @@ const deleteInstructionFailure = error => {
     }
 }
 
-export const deleteInstruction = (id, instruction, token) => {
+export const deleteInstruction = (id, token) => {
     return dispatch => {
         dispatch(deleteInstructionRequest());
         axios({

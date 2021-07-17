@@ -58,7 +58,7 @@ const InstructionsPage = () => {
     }, [dispatch, token]);
 
     const {instructions, loading, error} = useSelector(state => state.instructions);
-    console.log(instructions, token);
+
     return (
         <Layout>
             <Container className={classes.container}>
@@ -79,7 +79,7 @@ const InstructionsPage = () => {
                     <Box>
                         <Typography align="center" variant="h6">No instructions available</Typography>
                     </Box>) : (
-                    <TableContainer component={Paper} className={classes.tableContainer}>
+                    <TableContainer elevation={1} component={Paper} className={classes.tableContainer}>
                         <Table>
                             <TableHead>
                                 <TableRow>
