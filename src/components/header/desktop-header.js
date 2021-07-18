@@ -90,7 +90,7 @@ const DesktopHeader = () => {
 
                 <Grid item={true} lg={4} container={true} justifyContent="flex-end">
                     <Button
-                        fullWidth={true}
+                        fullWidth={false}
                         className={classes.name}
                         onClick={handleProfileClick}
                         endIcon={<KeyboardArrowDown/>}

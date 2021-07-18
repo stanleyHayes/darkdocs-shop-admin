@@ -46,7 +46,7 @@ const DashboardPage = () => {
                 <Typography variant="h5" gutterBottom={true} className={classes.title}>Contact Information</Typography>
 
                 <Grid container={true} spacing={2} className={classes.gridContainer}>
-                    <Grid item={true}  xs={12} md={4}>
+                    <Grid item={true}  xs={12} md={6}>
                         <Card variant="outlined">
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
@@ -61,7 +61,7 @@ const DashboardPage = () => {
                             </CardContent>
                         </Card>
                     </Grid>
-                    <Grid item={true}  xs={12} md={4}>
+                    <Grid item={true}  xs={12} md={6}>
                         <Card variant="outlined">
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
@@ -75,21 +75,6 @@ const DashboardPage = () => {
                                 <Typography noWrap={true} variant="body1" align="center">
                                     {information && information.btcAddress}
                                 </Typography>
-                            </CardContent>
-                        </Card>
-                    </Grid>
-                    <Grid item={true}  xs={12} md={4}>
-                        <Card variant="outlined">
-                            <CardContent>
-                                <Grid container={true} justifyContent="center">
-                                    <Grid item={true}>
-                                        <Avatar>
-                                            <Email />
-                                        </Avatar>
-                                    </Grid>
-                                </Grid>
-                                <Typography variant="body2" align="center">Phone</Typography>
-                                <Typography variant="body2" align="center">{information && information.phone}</Typography>
                             </CardContent>
                         </Card>
                     </Grid>
