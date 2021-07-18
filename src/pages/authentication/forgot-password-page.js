@@ -34,8 +34,8 @@ const ForgotPasswordPage = () => {
             },
             button: {
                 marginTop: 8,
-                marginBottom: 8,
                 paddingTop: 16,
+                marginBottom: 8,
                 paddingBottom: 16,
                 backgroundColor: theme.palette.primary.main
             },
@@ -63,6 +63,9 @@ const ForgotPasswordPage = () => {
                 objectFit: 'cover',
                 objectPosition: 'center'
             },
+            goToLoginButton: {
+
+            }
         }
     });
 
@@ -93,7 +96,7 @@ const ForgotPasswordPage = () => {
 
     return (
         <div className={classes.container}>
-            <Container className={classes.gridContainer} container={true} justifyContent="center" alignItems='center'>
+            <Container className={classes.gridContainer}>
                 <Grid container={true} justifyContent="center" alignItems="center">
                     <Grid item={true}>
                         <Avatar className={classes.logo} variant="rounded">

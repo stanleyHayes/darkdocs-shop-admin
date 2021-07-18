@@ -35,7 +35,6 @@ const LoginPage = () => {
             },
             button: {
                 marginTop: 8,
-                marginBottom: 8,
                 paddingBottom: 16,
                 paddingTop: 16,
                 backgroundColor: theme.palette.primary.main
