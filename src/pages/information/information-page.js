@@ -52,7 +52,7 @@ const InformationPage = () => {
 
 
     const [info, setInfo] = useState({});
-    const {btcAddress, email, phone} = info;
+    const {btcAddress, email} = info;
     const [error, setError] = useState({});
     const [hasError, setHasError] = useState(false);
 
@@ -77,19 +77,12 @@ const InformationPage = () => {
         if(data.email !== email){
             updatedInfo['username'] = email;
         }
-        if(data.phone !== phone){
-            updatedInfo['phone'] = phone;
-        }
         if(data.btcAddress !== btcAddress){
             updatedInfo['name'] = btcAddress;
         }
         if(data.email !== email){
             setHasError(true);
             setError({...error, 'email': 'Field required'});
-        }
-        if(data.phone !== phone){
-            setHasError(true);
-            setError({...error, 'phone': 'Field required'});
         }
         if(data.btcAddress !== btcAddress && !btcAddress){
             setHasError(true);
@@ -130,22 +123,6 @@ const InformationPage = () => {
                                         error={Boolean(error.email)}
                                         helperText={error.email}
                                     />
-
-                                    <TextField
-                                        variant="outlined"
-                                        label="Phone"
-                                        placeholder="Enter phone"
-                                        margin="normal"
-                                        className={classes.textField}
-                                        value={email}
-                                        type="email"
-                                        onChange={handleChange}
-                                        name="email"
-                                        fullWidth={true}
-                                        error={Boolean(error.email)}
-                                        helperText={error.email}
-                                    />
-
 
                                     <TextField
                                         variant="outlined"
