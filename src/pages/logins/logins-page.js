@@ -26,6 +26,7 @@ import {Alert} from "@material-ui/lab";
 import {Add, Delete, Edit, Visibility} from "@material-ui/icons";
 import moment from "moment";
 import {getLogins} from "../../redux/logins/logins-action-creators";
+import AddBankLoginDialog from "../../components/modals/logins/add-logins-dialog";
 
 const LoginsPage = () => {
 
@@ -33,8 +34,7 @@ const LoginsPage = () => {
     const useStyles = makeStyles(theme => {
         return {
             container: {},
-            button: {
-            },
+            button: {},
             divider: {
                 marginTop: 16,
                 marginBottom: 16
@@ -64,6 +64,16 @@ const LoginsPage = () => {
 
     const [status, setStatus] = useState('All');
     const [page, setPage] = useState(0);
+    const [openBankLoginDialog, setOpenBankLoginDialog] = useState(false);
+
+    const handleOpenBankLoginDialog = () => {
+        setOpenBankLoginDialog(true);
+    }
+
+    const handleBankLoginClose = () => {
+        setOpenBankLoginDialog(false);
+    }
+
     const handlePageChange = (event, page) => {
         setPage(page);
     }
@@ -109,9 +119,10 @@ const LoginsPage = () => {
                     </Grid>
                     <Grid item={true} xs={12} md={4}>
                         <Button
+                            onClick={handleOpenBankLoginDialog}
                             fullWidth={true}
                             className={classes.button}
-                            variant="contained"
+                            variant="outlined"
                             startIcon={<Add/>}>Add</Button>
                     </Grid>
                 </Grid>
@@ -122,7 +133,8 @@ const LoginsPage = () => {
                     <Box>
                         <Typography align="center" variant="h6">No bank logins available</Typography>
                     </Box>) : (
-                    <TableContainer elevation={1} variant="outlined"  component={Paper} className={classes.tableContainer}>
+                    <TableContainer elevation={1} variant="outlined" component={Paper}
+                                    className={classes.tableContainer}>
                         <Table>
                             <TableHead>
                                 <TableRow hover={true}>
@@ -176,6 +188,11 @@ const LoginsPage = () => {
                     </TableContainer>
                 )}
             </Container>
+            {openBankLoginDialog &&
+            <AddBankLoginDialog
+                openBankLoginDialog={openBankLoginDialog}
+                handleBankLoginDialogClose={handleBankLoginClose}
+            />}
         </Layout>
     )
 }

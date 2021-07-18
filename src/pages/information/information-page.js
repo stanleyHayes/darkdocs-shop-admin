@@ -32,7 +32,8 @@ const InformationPage = () => {
                 marginBottom: 32
             },
             title: {
-                marginBottom: 32
+                marginBottom: 16,
+                textTransform: 'uppercase'
             },
             textField: {
                 marginTop: 8,
@@ -100,13 +101,11 @@ const InformationPage = () => {
             <Container className={classes.container}>
                 <Grid container={true} justifyContent="center">
                     <Grid item={true} xs={12} md={8} lg={6}>
-                        <Card elevation={1} variant="elevation">
+                        <Card elevation={1} variant="outlined">
                             <CardContent>
-                                <Typography gutterBottom={true} variant="h6" align="center">
+                                <Typography color="textSecondary" className={classes.title} gutterBottom={true} variant="h6" align="center">
                                     Update Information
                                 </Typography>
-
-                                <Divider variant="fullWidth" className={classes.divider}/>
 
                                 <form onSubmit={handleSubmit}>
                                     <TextField

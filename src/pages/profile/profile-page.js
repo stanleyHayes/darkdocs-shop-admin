@@ -5,6 +5,7 @@ import {makeStyles} from "@material-ui/styles";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {Skeleton} from "@material-ui/lab";
+import {grey} from "@material-ui/core/colors";
 
 const ProfilePage = () => {
 
@@ -35,7 +36,11 @@ const ProfilePage = () => {
                 color: 'white',
                 backgroundColor: '#DC2626',
                 paddingTop: 8,
-                paddingBottom: 8
+                paddingBottom: 8,
+                transition: 'all 300ms ease-in-out',
+                '&:hover': {
+                    color: grey['600'],
+                }
             }
         }
     });

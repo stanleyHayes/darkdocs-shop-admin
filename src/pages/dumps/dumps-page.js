@@ -24,14 +24,14 @@ import {getDumps} from "../../redux/dumps/dumps-action-creators";
 import {Alert} from "@material-ui/lab";
 import {Add, Delete, Edit, Visibility} from "@material-ui/icons";
 import moment from "moment";
+import AddCCDumpsDialog from "../../components/modals/dumps/add-ccdumps-dialog";
 
 const DumpsPage = () => {
 
     const useStyles = makeStyles(theme => {
         return {
             container: {},
-            button: {
-            },
+            button: {},
             divider: {
                 marginTop: 16,
                 marginBottom: 16
@@ -58,6 +58,16 @@ const DumpsPage = () => {
     const classes = useStyles();
 
     const [page, setPage] = useState(0);
+    const [openCCDumpsDialog, setOpenCCDumpsDialog] = useState(false);
+
+    const handleCCDumpsDialogOpen = () => {
+        setOpenCCDumpsDialog(true);
+    }
+
+    const handleCCDumpsDialogClose = () => {
+        setOpenCCDumpsDialog(false);
+    }
+
     const handlePageChange = (event, page) => {
         setPage(page);
     }
@@ -75,12 +85,19 @@ const DumpsPage = () => {
             <Container className={classes.container}>
                 {loading && <LinearProgress variant="query"/>}
                 {error && <Alert title="Error">{error}</Alert>}
-                <Grid container={true} justifyContent="space-between"  spacing={2}>
+                <Grid container={true} justifyContent="space-between" spacing={2}>
                     <Grid item={true} xs={12} md={8}>
                         <Typography color="textSecondary" className={classes.title} variant="h5">CC Dumps</Typography>
                     </Grid>
                     <Grid item={true} xs={12} md={4}>
-                        <Button fullWidth={true} className={classes.button} variant="contained" startIcon={<Add/>}>Add</Button>
+                        <Button
+                            onClick={handleCCDumpsDialogOpen}
+                            fullWidth={true}
+                            className={classes.button}
+                            variant="outlined"
+                            startIcon={<Add/>}>
+                            Add
+                        </Button>
                     </Grid>
                 </Grid>
 
@@ -90,7 +107,8 @@ const DumpsPage = () => {
                     <Box>
                         <Typography align="center" variant="h6">No CC Dumps available</Typography>
                     </Box>) : (
-                    <TableContainer elevation={1} variant="outlined"  component={Paper} className={classes.tableContainer}>
+                    <TableContainer elevation={1} variant="outlined" component={Paper}
+                                    className={classes.tableContainer}>
                         <Table>
                             <TableHead>
                                 <TableRow hover={true}>
@@ -142,6 +160,12 @@ const DumpsPage = () => {
                     </TableContainer>
                 )}
             </Container>
+
+            {openCCDumpsDialog &&
+            <AddCCDumpsDialog
+                handleCCDumpsDialogClose={handleCCDumpsDialogClose}
+                openCCDumpsDialog={openCCDumpsDialog}
+            />}
         </Layout>
     )
 }

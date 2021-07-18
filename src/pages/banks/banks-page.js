@@ -26,6 +26,7 @@ import {Alert} from "@material-ui/lab";
 import {Add, Delete, Edit, Visibility} from "@material-ui/icons";
 import moment from 'moment';
 import {getBanks} from "../../redux/banks/banks-action-creators";
+import AddBankDialog from "../../components/modals/bank/add-bank-modal";
 
 const BanksPage = () => {
 
@@ -58,6 +59,16 @@ const BanksPage = () => {
 
     const [country, setCountry] = useState('All');
     const [page, setPage] = useState(0);
+    const [openBankDialog, setOpenBankDialog] = useState(false);
+
+    const handleBankDialogOpen = () => {
+        setOpenBankDialog(true);
+    }
+
+    const handleBankDialogClose = () => {
+        setOpenBankDialog(false);
+    }
+
     const handlePageChange = (event, page) => {
         setPage(page);
     }
@@ -108,9 +119,10 @@ const BanksPage = () => {
                     </Grid>
                     <Grid item={true} xs={12} md={4}>
                         <Button
+                            onClick={handleBankDialogOpen}
                             fullWidth={true}
                             className={classes.button}
-                            variant="contained"
+                            variant="outlined"
                             startIcon={<Add/>}>Add</Button>
                     </Grid>
                 </Grid>
@@ -121,7 +133,8 @@ const BanksPage = () => {
                     <Box>
                         <Typography align="center" variant="h6">No banks available</Typography>
                     </Box>) : (
-                    <TableContainer elevation={1} variant="outlined" component={Paper} className={classes.tableContainer}>
+                    <TableContainer elevation={1} variant="outlined" component={Paper}
+                                    className={classes.tableContainer}>
                         <Table>
                             <TableHead>
                                 <TableRow hover={true}>
@@ -171,6 +184,11 @@ const BanksPage = () => {
                     </TableContainer>
                 )}
             </Container>
+            {openBankDialog &&
+            <AddBankDialog
+                openBankDialog={openBankDialog}
+                handleBankDialogClose={handleBankDialogClose}
+            />}
         </Layout>
     )
 }

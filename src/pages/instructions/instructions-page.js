@@ -24,6 +24,7 @@ import moment from "moment";
 import {Alert} from '@material-ui/lab';
 import {getInstructions} from "../../redux/instructions/instructions-action-creators";
 import {brown, green, red} from "@material-ui/core/colors";
+import AddInstructionDialog from "../../components/modals/instructions/add-instruction-dialog";
 
 const InstructionsPage = () => {
 
@@ -59,6 +60,16 @@ const InstructionsPage = () => {
     const dispatch = useDispatch();
 
     const [page, setPage] = useState(0);
+    const [openInstructionDialog, setOpenInstructionDialog] = useState(false);
+
+    const handleOpenInstructionDialog = () => {
+        setOpenInstructionDialog(true);
+    }
+
+    const handleInstructionClose = () => {
+        setOpenInstructionDialog(false);
+    }
+
     const handlePageChange = (event, page) => {
         setPage(page);
     }
@@ -86,9 +97,10 @@ const InstructionsPage = () => {
                     </Grid>
                     <Grid item={true} xs={12} md={4}>
                         <Button
+                            onClick={handleOpenInstructionDialog}
                             fullWidth={true}
                             className={classes.button}
-                            variant="contained"
+                            variant="outlined"
                             startIcon={<Add/>}>Add</Button>
                     </Grid>
                 </Grid>
@@ -99,7 +111,8 @@ const InstructionsPage = () => {
                     <Box>
                         <Typography align="center" variant="h6">No instructions available</Typography>
                     </Box>) : (
-                    <TableContainer elevation={1} variant="outlined" component={Paper} className={classes.tableContainer}>
+                    <TableContainer elevation={1} variant="outlined" component={Paper}
+                                    className={classes.tableContainer}>
                         <Table>
                             <TableHead>
                                 <TableRow>
@@ -145,6 +158,11 @@ const InstructionsPage = () => {
                     </TableContainer>
                 )}
             </Container>
+            {openInstructionDialog &&
+            <AddInstructionDialog
+                openInstructionDialog={openInstructionDialog}
+                handleInstructionDialogClose={handleInstructionClose}
+            />}
         </Layout>
     )
 }

@@ -24,7 +24,7 @@ const theme = createTheme({
         primary: {
             light: grey['100'],
             main: grey['300'],
-            dark: grey['500']
+            dark: grey['400']
         }
     }
 });

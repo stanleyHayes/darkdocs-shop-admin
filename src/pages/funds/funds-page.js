@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import Layout from "../../components/layout/layout";
 import {
     Box,
-    Button,
     Container,
     Divider,
     Grid,
@@ -21,7 +20,7 @@ import {
 import {brown, green, red} from "@material-ui/core/colors";
 import {useDispatch, useSelector} from "react-redux";
 import {Alert} from "@material-ui/lab";
-import {Add, Delete, Edit, Visibility} from "@material-ui/icons";
+import {Delete, Edit, Visibility} from "@material-ui/icons";
 import moment from "moment";
 import {getFunds} from "../../redux/funds/funds-action-creators";
 
@@ -30,8 +29,7 @@ const FundsPage = () => {
     const useStyles = makeStyles(theme => {
         return {
             container: {},
-            button: {
-            },
+            button: {},
             divider: {
                 marginTop: 16,
                 marginBottom: 16
@@ -82,7 +80,7 @@ const FundsPage = () => {
                 {loading && <LinearProgress variant="query"/>}
                 {error && <Alert title="Error">{error}</Alert>}
                 <Grid container={true} justifyContent="space-between" spacing={2}>
-                    <Grid item={true} xs={12} md={4}>
+                    <Grid item={true} xs={12} md={8}>
                         <Typography
                             color="textSecondary"
                             className={classes.title}
@@ -105,13 +103,6 @@ const FundsPage = () => {
                             <MenuItem value="Pending">Pending</MenuItem>
                         </Select>
                     </Grid>
-                    <Grid item={true} xs={12} md={4}>
-                        <Button
-                            fullWidth={true}
-                            className={classes.button}
-                            variant="contained"
-                            startIcon={<Add/>}>Add</Button>
-                    </Grid>
                 </Grid>
 
 
@@ -121,7 +112,8 @@ const FundsPage = () => {
                     <Box>
                         <Typography align="center" variant="h6">No funds available</Typography>
                     </Box>) : (
-                    <TableContainer elevation={1} variant="outlined"  component={Paper} className={classes.tableContainer}>
+                    <TableContainer elevation={1} variant="outlined" component={Paper}
+                                    className={classes.tableContainer}>
                         <Table>
                             <TableHead>
                                 <TableRow hover={true}>

@@ -7,7 +7,8 @@ export const dumps = [
         dumpedIn: 'USA,MD,Baltimore,21218',
         bankBase: 'AMERICAN EXPRESS COMPANY',
         quantity: 45,
-        price: 150
+        price: 150,
+        createdAt: '08-08-2020'
     },
     {
         service: 'Track 1&2 Code 201 with Pin',
@@ -17,7 +18,8 @@ export const dumps = [
         dumpedIn: 'USA,WY,Rock Springs,82901',
         bankBase: 'ARVEST BANK',
         quantity: 45,
-        price: 150
+        price: 150,
+        createdAt: '08-08-2020'
     },
     {
         service: 'Track 1&2 Code 201 with Pin',
@@ -27,7 +29,8 @@ export const dumps = [
         dumpedIn: 'USA,NC,High Point,27262',
         bankBase: 'ORLD FINANCIAL NETWORK BANK',
         quantity: 4,
-        price: 150
+        price: 150,
+        createdAt: '08-08-2020'
     },
     {
         service: 'Track 1&2 Code 201 with Pin',
@@ -37,7 +40,8 @@ export const dumps = [
         dumpedIn: 'CAPITAL ONE BANK (USA),N.A',
         bankBase: 'AMERICAN EXPRESS COMPANY',
         quantity: 4,
-        price: 150
+        price: 150,
+        createdAt: '08-08-2020'
     },
     {
         service: 'Track 1&2 Code 201 with Pin',
@@ -47,6 +51,7 @@ export const dumps = [
         dumpedIn: 'USA,MD,Baltimore,21206',
         bankBase: 'BANK OF AMERICA ,N.A',
         quantity: 4,
-        price: 150
+        price: 150,
+        createdAt: '08-08-2020'
     }
 ];

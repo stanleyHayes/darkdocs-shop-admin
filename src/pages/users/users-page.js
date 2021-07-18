@@ -26,6 +26,7 @@ import {getUsers} from "../../redux/users/user-action-creators";
 import {Alert} from "@material-ui/lab";
 import {Add, Delete, Edit, Visibility} from "@material-ui/icons";
 import moment from "moment";
+import AddUserDialog from "../../components/modals/users/add-user-dialog";
 
 const UsersPage = () => {
 
@@ -33,9 +34,7 @@ const UsersPage = () => {
     const useStyles = makeStyles(theme => {
         return {
             container: {},
-            button: {
-
-            },
+            button: {},
             divider: {
                 marginTop: 16,
                 marginBottom: 16
@@ -65,9 +64,17 @@ const UsersPage = () => {
 
     const [role, setRole] = useState('All');
     const [status, setStatus] = useState('All');
+    const [openUserDialog, setOpenUserDialog] = useState(false);
     const [page, setPage] = useState(0);
     const handlePageChange = (event, page) => {
         setPage(page);
+    }
+    const handleOpenUserDialog = () => {
+        setOpenUserDialog(true);
+    }
+
+    const handleUserDialogClose = () => {
+        setOpenUserDialog(false);
     }
 
     const handleRoleChange = event => {
@@ -129,7 +136,12 @@ const UsersPage = () => {
                         </Select>
                     </Grid>
                     <Grid item={true} xs={12} md={3}>
-                        <Button fullWidth={true} className={classes.button} variant="contained" startIcon={<Add/>}>Add</Button>
+                        <Button
+                            onClick={handleOpenUserDialog}
+                            fullWidth={true}
+                            className={classes.button}
+                            variant="outlined"
+                            startIcon={<Add/>}>Add</Button>
                     </Grid>
                 </Grid>
 
@@ -139,7 +151,8 @@ const UsersPage = () => {
                     <Box>
                         <Typography align="center" variant="h6">No users available</Typography>
                     </Box>) : (
-                    <TableContainer component={Paper} variant="outlined" elevation={1} className={classes.tableContainer}>
+                    <TableContainer component={Paper} variant="outlined" elevation={1}
+                                    className={classes.tableContainer}>
                         <Table>
                             <TableHead>
                                 <TableRow>
@@ -195,6 +208,11 @@ const UsersPage = () => {
                     </TableContainer>
                 )}
             </Container>
+            {openUserDialog &&
+            <AddUserDialog
+                openUserDialog={openUserDialog}
+                handleUserDialogClose={handleUserDialogClose}
+            />}
         </Layout>
     )
 }
