@@ -72,7 +72,7 @@ const DashboardPage = () => {
                                     </Grid>
                                 </Grid>
                                 <Typography variant="body2" align="center">BTC Address</Typography>
-                                <Typography noWrap={true} variant="body1" align="center">
+                                <Typography variant="caption" display="block" align="center">
                                     {information && information.btcAddress}
                                 </Typography>
                             </CardContent>
