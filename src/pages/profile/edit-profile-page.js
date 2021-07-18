@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import Layout from "../../components/layout/layout";
-import {Button, Card, CardContent, Container, Divider, Grid, TextField, Typography} from "@material-ui/core";
+import {Button, Card, CardContent, Container, Grid, TextField, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
@@ -23,7 +23,6 @@ const EditProfilePage = () => {
             },
             button: {
                 marginTop: 8,
-                marginBottom: 8,
                 paddingTop: 16,
                 paddingBottom: 16,
                 backgroundColor: theme.palette.primary.main
@@ -31,6 +30,10 @@ const EditProfilePage = () => {
             logo: {
                 width: 100,
                 height: 100
+            },
+            title: {
+                marginBottom: 8,
+                textTransform: 'uppercase',
             }
         }
     });
@@ -59,39 +62,39 @@ const EditProfilePage = () => {
     const handleSubmit = event => {
         event.preventDefault();
         const updatedUser = {};
-        if(data.username !== username){
+        if (data.username !== username) {
             updatedUser['username'] = username;
         }
-        if(data.email !== email){
+        if (data.email !== email) {
             updatedUser['email'] = email;
         }
-        if(data.name !== name){
+        if (data.name !== name) {
             updatedUser['name'] = name;
         }
-        if(city){
+        if (city) {
             updatedUser['city'] = city;
         }
-        if(country){
+        if (country) {
             updatedUser['country'] = country;
         }
-        if(postalCode){
+        if (postalCode) {
             updatedUser['postalCode'] = postalCode;
         }
-        if(data.username !== username && !username){
+        if (data.username !== username && !username) {
             setHasError(true);
             setError({...error, 'username': 'Field required'});
         }
-        if(data.email !== email){
+        if (data.email !== email) {
             setHasError(true);
             setError({...error, 'email': 'Field required'});
         }
-        if(data.name !== name){
+        if (data.name !== name) {
             setHasError(true);
             setError({...error, 'name': 'Field required'});
         }
-        if(hasError){
+        if (hasError) {
 
-        }else {
+        } else {
             dispatch(updateProfile(updatedUser, token, history));
         }
     }
@@ -101,13 +104,11 @@ const EditProfilePage = () => {
             <Container className={classes.container}>
                 <Grid container={true} justifyContent="center">
                     <Grid item={true} xs={12} md={8} lg={6}>
-                        <Card elevation={1} variant="elevation">
+                        <Card elevation={1} variant="outlined">
                             <CardContent>
-                                <Typography gutterBottom={true} variant="h6" align="center">
+                                <Typography className={classes.title} gutterBottom={true} variant="h6" align="center">
                                     Edit Profile
                                 </Typography>
-
-                                <Divider variant="fullWidth" className={classes.divider}/>
 
                                 <form onSubmit={handleSubmit}>
                                     <TextField

@@ -88,7 +88,7 @@ const OrdersPage = () => {
             <Container className={classes.container}>
                 {loading && <LinearProgress variant="query"/>}
                 {error && <Alert title="Error">{error}</Alert>}
-                <Grid container={true} justifyContent="space-between">
+                <Grid container={true} justifyContent="space-between" spacing={2}>
                     <Grid item={true} xs={12} md={4}>
                         <Typography
                             color="textSecondary"
@@ -101,7 +101,7 @@ const OrdersPage = () => {
                     <Grid item={true} xs={12} md={4}>
                         <Select
                             onChange={handleStatusChange}
-                            fullWidth={false}
+                            fullWidth={true}
                             label={<Typography variant="body2">Status</Typography>}
                             margin="dense"
                             variant="outlined"
@@ -116,7 +116,7 @@ const OrdersPage = () => {
                     <Grid item={true} xs={12} md={4}>
                         <Select
                             onChange={handleTypeChange}
-                            fullWidth={false}
+                            fullWidth={true}
                             label={<Typography variant="body2">Type</Typography>}
                             margin="dense"
                             variant="outlined"
@@ -135,7 +135,7 @@ const OrdersPage = () => {
                     <Box>
                         <Typography align="center" variant="h6">No orders available</Typography>
                     </Box>) : (
-                    <TableContainer elevation={1} component={Paper} className={classes.tableContainer}>
+                    <TableContainer elevation={1} variant="outlined" component={Paper} className={classes.tableContainer}>
                         <Table>
                             <TableHead>
                                 <TableRow hover={true}>

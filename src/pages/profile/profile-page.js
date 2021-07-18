@@ -21,7 +21,8 @@ const ProfilePage = () => {
                 marginBottom: 32
             },
             title: {
-                textTransform: 'uppercase'
+                textTransform: 'uppercase',
+                marginBottom: 8
             },
             link: {
                 textDecoration: 'none'
@@ -49,19 +50,19 @@ const ProfilePage = () => {
                 {loading && <LinearProgress variant="query"/>}
                 <Grid className={classes.gridContainer} container={true} justifyContent="center">
                     <Grid item={true} xs={12} md={8} lg={6}>
-                        <Card elevation={1} variant="elevation">
+                        <Card elevation={1} variant="outlined">
                             <CardContent>
-                                <Typography className={classes.title} gutterBottom={true} variant="h5">
+                                <Typography align="center" className={classes.title} gutterBottom={true} variant="h5">
                                     User Profile
                                 </Typography>
 
-                                <Divider variant="fullWidth" className={classes.divider}/>
                                 <Typography variant="caption">
                                     Name
                                 </Typography>
                                 {loading ? <Skeleton variant="text"/> : (
                                     <Typography variant="body1">
-                                        {user && user.name}
+                                        {/*{user && user.name}*/}
+                                        Stanley Hayford
                                     </Typography>
                                 )}
 
@@ -72,7 +73,8 @@ const ProfilePage = () => {
                                 </Typography>
                                 {loading ? <Skeleton variant="text"/> : (
                                     <Typography variant="body1">
-                                        {user && user.email}
+                                        {/*{user && user.email}*/}
+                                        hayfordstanley@gmail.com
                                     </Typography>
                                 )}
                                 <Divider variant="fullWidth" light={true} className={classes.divider}/>
@@ -83,6 +85,7 @@ const ProfilePage = () => {
                                 {loading ? <Skeleton variant="text"/> : (
                                     <Typography variant="body1">
                                         {user && user.username}
+                                        sahayford
                                     </Typography>
                                 )}
                             </CardContent>
@@ -92,7 +95,7 @@ const ProfilePage = () => {
 
                 <Grid className={classes.gridContainer} container={true} justifyContent="center">
                     <Grid item={true} xs={12} md={8} lg={6}>
-                        <Card elevation={1} variant="elevation">
+                        <Card elevation={1} variant="outlined">
                             <CardContent>
                                 <Link className={classes.link} to="/edit-profile">
                                     <Button

@@ -1,13 +1,15 @@
 import React, {useState} from "react";
-import {Grid, Hidden, makeStyles, SwipeableDrawer} from "@material-ui/core";
+import {Box, Grid, Hidden, makeStyles, SwipeableDrawer} from "@material-ui/core";
 import DrawerContent from "../drawer/drawer-content";
+import Header from "../header/header";
 
 const Layout = ({children}) => {
 
     const useStyles = makeStyles(theme => {
         return {
             gridContainer: {
-                minHeight: '100vh'
+                minHeight: '100vh',
+                backgroundColor: theme.palette.background.default,
             },
             sidenav: {
                 backgroundColor: 'white'
@@ -31,6 +33,7 @@ const Layout = ({children}) => {
         setDrawerOpen(true);
     }
 
+
     return (
         <div>
             <Grid container={true} className={classes.gridContainer}>
@@ -39,8 +42,11 @@ const Layout = ({children}) => {
                         <DrawerContent handleCloseDrawer={handleCloseDrawer}/>
                     </Grid>
                 </Hidden>
-                <Grid item={true} xs={12} md={9} lg={10} className={classes.content}>
-                    {children}
+                <Grid item={true} xs={12} md={9} lg={10}>
+                    <Header handleDrawerOpen={handleOpenDrawer} />
+                    <Box  className={classes.content}>
+                        {children}
+                    </Box>
                 </Grid>
             </Grid>
             <SwipeableDrawer onClose={handleCloseDrawer} onOpen={handleOpenDrawer} open={drawerOpen}>

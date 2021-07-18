@@ -18,11 +18,12 @@ import {
     FORGOT_PASSWORD_SUCCESS,
     FORGOT_PASSWORD_REQUEST
 } from './auth-action-types';
+import {user} from "./auth.data";
 
 const INITIAL_STATE = {
     loading: false,
     token: null,
-    user: null,
+    user: user,
     error: ""
 }
 

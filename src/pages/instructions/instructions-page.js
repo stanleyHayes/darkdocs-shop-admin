@@ -74,19 +74,19 @@ const InstructionsPage = () => {
             <Container className={classes.container}>
                 {loading && <LinearProgress variant="query"/>}
                 {error && <Alert title="Error">{error}</Alert>}
-                <Grid container={true} justifyContent="space-between">
-                    <Grid item={true} xs={12} md={6}>
+                <Grid container={true} justifyContent="space-between" spacing={2}>
+                    <Grid item={true} xs={12} md={8}>
                         <Typography
                             color="textSecondary"
                             className={classes.title}
                             variant="h5"
                             gutterBottom={true}>
-                            Bank Logins
+                            Do's & Don't
                         </Typography>
                     </Grid>
-                    <Grid item={true} xs={12} md={6} container={true} justifyContent="flex-end">
+                    <Grid item={true} xs={12} md={4}>
                         <Button
-                            fullWidth={false}
+                            fullWidth={true}
                             className={classes.button}
                             variant="contained"
                             startIcon={<Add/>}>Add</Button>
@@ -99,7 +99,7 @@ const InstructionsPage = () => {
                     <Box>
                         <Typography align="center" variant="h6">No instructions available</Typography>
                     </Box>) : (
-                    <TableContainer elevation={1} component={Paper} className={classes.tableContainer}>
+                    <TableContainer elevation={1} variant="outlined" component={Paper} className={classes.tableContainer}>
                         <Table>
                             <TableHead>
                                 <TableRow>

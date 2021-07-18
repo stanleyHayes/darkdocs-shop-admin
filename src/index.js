@@ -7,6 +7,7 @@ import {createTheme, ThemeProvider} from "@material-ui/core";
 import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
 import store from "./redux/store";
+import {grey} from "@material-ui/core/colors";
 
 const theme = createTheme({
     typography: {
@@ -19,6 +20,11 @@ const theme = createTheme({
         background: {
             default: '#E5E5E5',
             paper: 'white'
+        },
+        primary: {
+            light: grey['100'],
+            main: grey['300'],
+            dark: grey['500']
         }
     }
 });

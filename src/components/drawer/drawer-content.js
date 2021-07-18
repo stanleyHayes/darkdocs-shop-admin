@@ -25,7 +25,6 @@ const DrawerContent = () => {
             title: {
                 textTransform: 'uppercase',
                 fontWeight: 'bold',
-                paddingLeft: 24
             },
             divider: {
                 marginTop: 8,
@@ -37,7 +36,7 @@ const DrawerContent = () => {
             },
             logoutButton: {
                 fontWeight: 500,
-                paddingLeft: 24
+                textTransform: 'capitalize',
             },
             link: {
                 textDecoration: 'none',
@@ -46,20 +45,15 @@ const DrawerContent = () => {
                 width: '100%',
                 paddingTop: 4,
                 paddingBottom: 4,
-                paddingLeft: 16,
                 '&:hover': {
                     backgroundColor: grey['100']
                 }
             },
-            subDivider: {
-
-            },
+            subDivider: {},
             box: {
                 marginBottom: 32
             },
-            initials: {
-
-            },
+            initials: {},
             avatar: {
                 width: 100,
                 height: 100
@@ -70,8 +64,9 @@ const DrawerContent = () => {
     const classes = useStyles();
 
     return (
-        <Box className={classes.container}>
-            <Grid container={true} direction="column" alignItems="center" justifyContent="center" className={classes.box}>
+        <Container className={classes.container}>
+            <Grid container={true} direction="column" alignItems="center" justifyContent="center"
+                  className={classes.box}>
                 <Grid item={true}>
                     <Avatar className={classes.avatar}>
                         <Typography className={classes.initials} variant="h5" align="center">SH</Typography>
@@ -143,7 +138,7 @@ const DrawerContent = () => {
                 <Divider variant="fullWidth" className={classes.subDivider}/>
                 <Button className={classes.logoutButton} startIcon={<ExitToApp/>} variant="text">Logout</Button>
             </Box>
-        </Box>
+        </Container>
     )
 }
 

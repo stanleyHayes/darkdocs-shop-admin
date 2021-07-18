@@ -82,20 +82,20 @@ const BanksPage = () => {
             <Container className={classes.container}>
                 {loading && <LinearProgress variant="query"/>}
                 {error && <Alert title="Error">{error}</Alert>}
-                <Grid container={true} justifyContent="space-between">
+                <Grid container={true} justifyContent="space-between" spacing={2}>
                     <Grid item={true} xs={12} md={4}>
                         <Typography
                             color="textSecondary"
                             className={classes.title}
                             variant="h5"
                             gutterBottom={true}>
-                            Bank Logins
+                            Bank
                         </Typography>
                     </Grid>
                     <Grid item={true} xs={12} md={4}>
                         <Select
                             onChange={handleCountryChange}
-                            fullWidth={false}
+                            fullWidth={true}
                             label={<Typography variant="body2">Country</Typography>}
                             margin="dense"
                             variant="outlined"
@@ -106,11 +106,11 @@ const BanksPage = () => {
                             <MenuItem value="Deleted">Canada</MenuItem>
                         </Select>
                     </Grid>
-                    <Grid item={true} xs={12} md={4} container={true} justifyContent="flex-end">
+                    <Grid item={true} xs={12} md={4}>
                         <Button
-                            fullWidth={false}
+                            fullWidth={true}
                             className={classes.button}
-                            variant="outlined"
+                            variant="contained"
                             startIcon={<Add/>}>Add</Button>
                     </Grid>
                 </Grid>
@@ -121,7 +121,7 @@ const BanksPage = () => {
                     <Box>
                         <Typography align="center" variant="h6">No banks available</Typography>
                     </Box>) : (
-                    <TableContainer elevation={1} component={Paper} className={classes.tableContainer}>
+                    <TableContainer elevation={1} variant="outlined" component={Paper} className={classes.tableContainer}>
                         <Table>
                             <TableHead>
                                 <TableRow hover={true}>

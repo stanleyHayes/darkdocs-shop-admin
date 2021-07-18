@@ -90,7 +90,7 @@ const UsersPage = () => {
             <Container className={classes.container}>
                 {loading && <LinearProgress variant="query"/>}
                 {error && <Alert title="Error">{error}</Alert>}
-                <Grid container={true} justifyContent="space-between">
+                <Grid container={true} justifyContent="space-between" spacing={2}>
                     <Grid item={true} xs={12} md={3}>
                         <Typography
                             color="textSecondary"
@@ -103,7 +103,7 @@ const UsersPage = () => {
                     <Grid item={true} xs={12} md={3}>
                         <Select
                             onChange={handleStatusChange}
-                            fullWidth={false}
+                            fullWidth={true}
                             label={<Typography variant="body2">Status</Typography>}
                             margin="dense"
                             variant="outlined"
@@ -117,7 +117,7 @@ const UsersPage = () => {
                     <Grid item={true} xs={12} md={3}>
                         <Select
                             onChange={handleRoleChange}
-                            fullWidth={false}
+                            fullWidth={true}
                             label={<Typography variant="body2">Role</Typography>}
                             margin="dense"
                             variant="outlined"
@@ -128,8 +128,8 @@ const UsersPage = () => {
                             <MenuItem value="Login">User</MenuItem>
                         </Select>
                     </Grid>
-                    <Grid item={true} xs={12} md={3} container={true} justifyContent="flex-end">
-                        <Button className={classes.button} variant="outlined" startIcon={<Add/>}>Add</Button>
+                    <Grid item={true} xs={12} md={3}>
+                        <Button fullWidth={true} className={classes.button} variant="contained" startIcon={<Add/>}>Add</Button>
                     </Grid>
                 </Grid>
 
@@ -139,7 +139,7 @@ const UsersPage = () => {
                     <Box>
                         <Typography align="center" variant="h6">No users available</Typography>
                     </Box>) : (
-                    <TableContainer component={Paper} elevation={1} className={classes.tableContainer}>
+                    <TableContainer component={Paper} variant="outlined" elevation={1} className={classes.tableContainer}>
                         <Table>
                             <TableHead>
                                 <TableRow>

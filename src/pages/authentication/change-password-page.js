@@ -35,7 +35,6 @@ const ChangePasswordPage = () => {
             },
             button: {
                 marginTop: 8,
-                marginBottom: 8,
                 paddingTop: 16,
                 paddingBottom: 16,
                 backgroundColor: theme.palette.primary.main
@@ -115,7 +114,7 @@ const ChangePasswordPage = () => {
             <Container className={classes.container}>
                 <Grid className={classes.gridContainer} container={true} justifyContent="center" alignItems='center'>
                     <Grid item={true} xs={12} md={6}>
-                        <Card variant="elevation" elevation={1}>
+                        <Card variant="outlined" elevation={1}>
                             {loading && <LinearProgress variant="query"/>}
                             <CardContent>
                                 {authError && <Typography variant="body2" color="error" align="center">
