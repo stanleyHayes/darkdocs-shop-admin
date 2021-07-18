@@ -9,7 +9,9 @@ const Layout = ({children}) => {
             gridContainer: {
                 minHeight: '100vh'
             },
-            sidenav: {},
+            sidenav: {
+                backgroundColor: 'white'
+            },
             content: {
                 backgroundColor: theme.palette.background.default,
                 paddingTop: 32,

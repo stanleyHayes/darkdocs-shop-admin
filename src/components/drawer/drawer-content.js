@@ -1,5 +1,5 @@
 import React from "react";
-import {Box, Button, Container, Divider, makeStyles, Typography} from "@material-ui/core";
+import {Avatar, Box, Button, Container, Divider, Grid, makeStyles, Typography} from "@material-ui/core";
 import {Link} from "react-router-dom";
 import {
     AccountBalance,
@@ -7,10 +7,11 @@ import {
     CreditCard,
     Dashboard, Edit, ExitToApp,
     Info, Input,
-    List, LockOpen,
+    List, LockOpen, People,
     ShoppingBasket,
     VerifiedUser
 } from "@material-ui/icons";
+import {grey} from "@material-ui/core/colors";
 
 const DrawerContent = () => {
 
@@ -18,29 +19,50 @@ const DrawerContent = () => {
         return {
             container: {
                 paddingTop: 32,
-                paddingBottom: 32
+                paddingBottom: 32,
+                backgroundColor: 'white'
             },
             title: {
                 textTransform: 'uppercase',
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                paddingLeft: 24
             },
             divider: {
-                marginTop: 16,
-                marginBottom: 16
+                marginTop: 8,
+                marginBottom: 8
             },
             button: {
                 textTransform: 'capitalize',
                 fontWeight: 500
             },
+            logoutButton: {
+                fontWeight: 500,
+                paddingLeft: 24
+            },
             link: {
-                textDecoration: 'none'
+                textDecoration: 'none',
+                display: 'block',
+                transition: 'all 300ms 50ms ease-in-out',
+                width: '100%',
+                paddingTop: 4,
+                paddingBottom: 4,
+                paddingLeft: 16,
+                '&:hover': {
+                    backgroundColor: grey['100']
+                }
             },
             subDivider: {
-                marginTop: 4,
-                marginBottom: 4
+
             },
             box: {
                 marginBottom: 32
+            },
+            initials: {
+
+            },
+            avatar: {
+                width: 100,
+                height: 100
             }
         }
     });
@@ -48,7 +70,19 @@ const DrawerContent = () => {
     const classes = useStyles();
 
     return (
-        <Container className={classes.container}>
+        <Box className={classes.container}>
+            <Grid container={true} direction="column" alignItems="center" justifyContent="center" className={classes.box}>
+                <Grid item={true}>
+                    <Avatar className={classes.avatar}>
+                        <Typography className={classes.initials} variant="h5" align="center">SH</Typography>
+                    </Avatar>
+                </Grid>
+                <Grid item={true}>
+                    <Typography className={classes.initials} variant="h5" align="center">
+                        Stanley Hayford
+                    </Typography>
+                </Grid>
+            </Grid>
             <Box className={classes.box}>
                 <Typography variant="body2" className={classes.title}>
                     Main
@@ -59,7 +93,7 @@ const DrawerContent = () => {
                 </Link>
                 <Divider variant="fullWidth" className={classes.subDivider}/>
                 <Link to="/users" className={classes.link}>
-                    <Button className={classes.button} startIcon={<Dashboard/>} variant="text">Users</Button>
+                    <Button className={classes.button} startIcon={<People/>} variant="text">Users</Button>
                 </Link>
                 <Divider variant="fullWidth" className={classes.subDivider}/>
                 <Link to="/banks" className={classes.link}>
@@ -107,9 +141,9 @@ const DrawerContent = () => {
                     <Button className={classes.button} startIcon={<LockOpen/>} variant="text">Change Password</Button>
                 </Link>
                 <Divider variant="fullWidth" className={classes.subDivider}/>
-                <Button className={classes.button} startIcon={<ExitToApp/>} variant="text">Logout</Button>
+                <Button className={classes.logoutButton} startIcon={<ExitToApp/>} variant="text">Logout</Button>
             </Box>
-        </Container>
+        </Box>
     )
 }
 
