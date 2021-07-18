@@ -1,15 +1,23 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Layout from "../../components/layout/layout";
 import {
-    Avatar,
     Box,
     Button,
     Container,
     Divider,
     Grid,
     LinearProgress,
-    makeStyles, Paper, Table, TableBody, TableCell,
-    TableContainer, TableHead, TableRow,
+    makeStyles,
+    MenuItem,
+    Paper,
+    Select,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TablePagination,
+    TableRow,
     Typography
 } from "@material-ui/core";
 import {brown, green, red} from "@material-ui/core/colors";
@@ -26,7 +34,6 @@ const LoginsPage = () => {
         return {
             container: {},
             button: {
-                backgroundColor: theme.palette.primary.main
             },
             divider: {
                 marginTop: 16,
@@ -34,13 +41,19 @@ const LoginsPage = () => {
             },
             tableContainer: {},
             editIcon: {
-                color: brown['600']
+                color: brown['600'],
+                cursor: 'pointer'
             },
             viewIcon: {
-                color: green['600']
+                color: green['600'],
+                cursor: 'pointer'
             },
             deleteIcon: {
-                color: red['600']
+                color: red['600'],
+                cursor: 'pointer'
+            },
+            title: {
+                textTransform: 'uppercase'
             }
         }
     });
@@ -48,6 +61,17 @@ const LoginsPage = () => {
     const classes = useStyles();
 
     const dispatch = useDispatch();
+
+    const [status, setStatus] = useState('All');
+    const [page, setPage] = useState(0);
+    const handlePageChange = (event, page) => {
+        setPage(page);
+    }
+
+    const handleStatusChange = event => {
+        setStatus(event.target.value);
+    }
+
 
     useEffect(() => {
         dispatch(getLogins(token));
@@ -61,11 +85,34 @@ const LoginsPage = () => {
                 {loading && <LinearProgress variant="query"/>}
                 {error && <Alert title="Error">{error}</Alert>}
                 <Grid container={true} justifyContent="space-between">
-                    <Grid item={true}>
-                        <Typography variant="h4" align="center">Bank Logins</Typography>
+                    <Grid item={true} xs={12} md={4}>
+                        <Typography
+                            color="textSecondary"
+                            className={classes.title}
+                            variant="h5"
+                            gutterBottom={true}>
+                            Bank Logins
+                        </Typography>
                     </Grid>
-                    <Grid item={true}>
-                        <Button className={classes.button} variant="outlined" startIcon={<Add/>}>Add</Button>
+                    <Grid item={true} xs={12} md={4}>
+                        <Select
+                            onChange={handleStatusChange}
+                            fullWidth={false}
+                            label={<Typography variant="body2">Status</Typography>}
+                            margin="dense"
+                            variant="outlined"
+                            value={status}>
+                            <MenuItem value='All'>Select Status</MenuItem>
+                            <MenuItem value="Active">Unavailable</MenuItem>
+                            <MenuItem value="Suspended">Available</MenuItem>
+                        </Select>
+                    </Grid>
+                    <Grid item={true} xs={12} md={4} container={true} justifyContent="flex-end">
+                        <Button
+                            fullWidth={false}
+                            className={classes.button}
+                            variant="outlined"
+                            startIcon={<Add/>}>Add</Button>
                     </Grid>
                 </Grid>
 
@@ -104,19 +151,13 @@ const LoginsPage = () => {
                                                 <TableCell>
                                                     <Grid container={true} spacing={1}>
                                                         <Grid item={true}>
-                                                            <Avatar>
-                                                                <Visibility className={classes.viewIcon}/>
-                                                            </Avatar>
+                                                            <Visibility className={classes.viewIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
-                                                            <Avatar>
-                                                                <Edit className={classes.editIcon}/>
-                                                            </Avatar>
+                                                            <Edit className={classes.editIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
-                                                            <Avatar>
-                                                                <Delete className={classes.deleteIcon}/>
-                                                            </Avatar>
+                                                            <Delete className={classes.deleteIcon}/>
                                                         </Grid>
                                                     </Grid>
                                                 </TableCell>
@@ -125,6 +166,12 @@ const LoginsPage = () => {
                                     })
                                 }
                             </TableBody>
+                            <TablePagination
+                                count={logins.length}
+                                page={page}
+                                onPageChange={handlePageChange}
+                                rowsPerPage={10}
+                            />
                         </Table>
                     </TableContainer>
                 )}

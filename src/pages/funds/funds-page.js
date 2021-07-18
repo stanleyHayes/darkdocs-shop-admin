@@ -1,15 +1,21 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Layout from "../../components/layout/layout";
 import {
-    Avatar,
     Box,
     Button,
     Container,
     Divider,
     Grid,
     LinearProgress,
-    makeStyles, Paper, Table, TableBody, TableCell,
-    TableContainer, TableHead, TableRow,
+    makeStyles, MenuItem,
+    Paper, Select,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TablePagination,
+    TableRow,
     Typography
 } from "@material-ui/core";
 import {brown, green, red} from "@material-ui/core/colors";
@@ -25,7 +31,6 @@ const FundsPage = () => {
         return {
             container: {},
             button: {
-                backgroundColor: theme.palette.primary.main
             },
             divider: {
                 marginTop: 16,
@@ -33,18 +38,35 @@ const FundsPage = () => {
             },
             tableContainer: {},
             editIcon: {
-                color: brown['600']
+                color: brown['600'],
+                cursor: 'pointer'
             },
             viewIcon: {
-                color: green['600']
+                color: green['600'],
+                cursor: 'pointer'
             },
             deleteIcon: {
-                color: red['600']
+                color: red['600'],
+                cursor: 'pointer'
+            },
+            title: {
+                textTransform: 'uppercase'
             }
         }
     });
     const {token} = useSelector(state => state.auth);
     const classes = useStyles();
+
+    const [status, setStatus] = useState('All');
+    const [page, setPage] = useState(0);
+    const handlePageChange = (event, page) => {
+        setPage(page);
+    }
+
+    const handleStatusChange = event => {
+        setStatus(event.target.value);
+    }
+
 
     const dispatch = useDispatch();
 
@@ -60,13 +82,38 @@ const FundsPage = () => {
                 {loading && <LinearProgress variant="query"/>}
                 {error && <Alert title="Error">{error}</Alert>}
                 <Grid container={true} justifyContent="space-between">
-                    <Grid item={true}>
-                        <Typography variant="h4" align="center">Funds</Typography>
+                    <Grid item={true} xs={12} md={4}>
+                        <Typography
+                            color="textSecondary"
+                            className={classes.title}
+                            variant="h5"
+                            gutterBottom={true}>
+                            Funds
+                        </Typography>
                     </Grid>
-                    <Grid item={true}>
-                        <Button className={classes.button} variant="outlined" startIcon={<Add/>}>Add</Button>
+                    <Grid item={true} xs={12} md={4}>
+                        <Select
+                            onChange={handleStatusChange}
+                            fullWidth={false}
+                            label={<Typography variant="body2">Status</Typography>}
+                            margin="dense"
+                            variant="outlined"
+                            value={status}>
+                            <MenuItem value='All'>Select Status</MenuItem>
+                            <MenuItem value="Completed">Completed</MenuItem>
+                            <MenuItem value="Cancelled">Cancelled</MenuItem>
+                            <MenuItem value="Pending">Pending</MenuItem>
+                        </Select>
+                    </Grid>
+                    <Grid item={true} xs={12} md={4} container={true} justifyContent="flex-end">
+                        <Button
+                            fullWidth={false}
+                            className={classes.button}
+                            variant="contained"
+                            startIcon={<Add/>}>Add</Button>
                     </Grid>
                 </Grid>
+
 
                 <Divider variant="fullWidth" className={classes.divider}/>
 
@@ -103,19 +150,13 @@ const FundsPage = () => {
                                                 <TableCell>
                                                     <Grid container={true} spacing={1}>
                                                         <Grid item={true}>
-                                                            <Avatar>
-                                                                <Visibility className={classes.viewIcon}/>
-                                                            </Avatar>
+                                                            <Visibility className={classes.viewIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
-                                                            <Avatar>
-                                                                <Edit className={classes.editIcon}/>
-                                                            </Avatar>
+                                                            <Edit className={classes.editIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
-                                                            <Avatar>
-                                                                <Delete className={classes.deleteIcon}/>
-                                                            </Avatar>
+                                                            <Delete className={classes.deleteIcon}/>
                                                         </Grid>
                                                     </Grid>
                                                 </TableCell>
@@ -124,6 +165,12 @@ const FundsPage = () => {
                                     })
                                 }
                             </TableBody>
+                            <TablePagination
+                                count={funds.length}
+                                page={page}
+                                onPageChange={handlePageChange}
+                                rowsPerPage={10}
+                            />
                         </Table>
                     </TableContainer>
                 )}

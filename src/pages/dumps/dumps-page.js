@@ -1,15 +1,21 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Layout from "../../components/layout/layout";
 import {
-    Avatar,
     Box,
     Button,
     Container,
     Divider,
     Grid,
     LinearProgress,
-    makeStyles, Paper, Table, TableBody, TableCell,
-    TableContainer, TableHead, TableRow,
+    makeStyles,
+    Paper,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TablePagination,
+    TableRow,
     Typography
 } from "@material-ui/core";
 import {brown, green, red} from "@material-ui/core/colors";
@@ -25,7 +31,6 @@ const DumpsPage = () => {
         return {
             container: {},
             button: {
-                backgroundColor: theme.palette.primary.main
             },
             divider: {
                 marginTop: 16,
@@ -33,18 +38,29 @@ const DumpsPage = () => {
             },
             tableContainer: {},
             editIcon: {
-                color: brown['600']
+                color: brown['600'],
+                cursor: 'pointer'
             },
             viewIcon: {
-                color: green['600']
+                color: green['600'],
+                cursor: 'pointer'
             },
             deleteIcon: {
-                color: red['600']
+                color: red['600'],
+                cursor: 'pointer'
+            },
+            title: {
+                textTransform: 'uppercase'
             }
         }
     });
     const {token} = useSelector(state => state.auth);
     const classes = useStyles();
+
+    const [page, setPage] = useState(0);
+    const handlePageChange = (event, page) => {
+        setPage(page);
+    }
 
     const dispatch = useDispatch();
 
@@ -61,10 +77,10 @@ const DumpsPage = () => {
                 {error && <Alert title="Error">{error}</Alert>}
                 <Grid container={true} justifyContent="space-between">
                     <Grid item={true}>
-                        <Typography variant="h4" align="center">CC Dumps</Typography>
+                        <Typography color="textSecondary" className={classes.title} variant="h5" align="center">CC Dumps</Typography>
                     </Grid>
                     <Grid item={true}>
-                        <Button className={classes.button} variant="outlined" startIcon={<Add/>}>Add</Button>
+                        <Button className={classes.button} variant="contained" startIcon={<Add/>}>Add</Button>
                     </Grid>
                 </Grid>
 
@@ -101,19 +117,13 @@ const DumpsPage = () => {
                                                 <TableCell>
                                                     <Grid container={true} spacing={1}>
                                                         <Grid item={true}>
-                                                            <Avatar>
-                                                                <Visibility className={classes.viewIcon}/>
-                                                            </Avatar>
+                                                            <Visibility className={classes.viewIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
-                                                            <Avatar>
-                                                                <Edit className={classes.editIcon}/>
-                                                            </Avatar>
+                                                            <Edit className={classes.editIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
-                                                            <Avatar>
-                                                                <Delete className={classes.deleteIcon}/>
-                                                            </Avatar>
+                                                            <Delete className={classes.deleteIcon}/>
                                                         </Grid>
                                                     </Grid>
                                                 </TableCell>
@@ -122,6 +132,12 @@ const DumpsPage = () => {
                                     })
                                 }
                             </TableBody>
+                            <TablePagination
+                                count={dumps.length}
+                                page={page}
+                                onPageChange={handlePageChange}
+                                rowsPerPage={10}
+                            />
                         </Table>
                     </TableContainer>
                 )}
