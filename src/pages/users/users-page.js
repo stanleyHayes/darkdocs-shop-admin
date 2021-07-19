@@ -22,11 +22,12 @@ import {
 } from "@material-ui/core";
 import {brown, green, red} from "@material-ui/core/colors";
 import {useDispatch, useSelector} from "react-redux";
-import {getUsers} from "../../redux/users/user-action-creators";
+import {deleteUser, getUsers} from "../../redux/users/user-action-creators";
 import {Alert} from "@material-ui/lab";
 import {Add, Delete, Edit, Visibility} from "@material-ui/icons";
 import moment from "moment";
 import AddUserDialog from "../../components/modals/users/add-user-dialog";
+import DeleteDialog from "../../components/shared/delete-dialog";
 
 const UsersPage = () => {
 
@@ -91,6 +92,29 @@ const UsersPage = () => {
     }, [dispatch, token]);
 
     const {users, loading, error} = useSelector(state => state.users);
+
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+    const [selectedID, setSelectedID] = useState(null);
+
+    const handleDeleteDialogOpen = () => {
+        setOpenDeleteDialog(true);
+    }
+
+    const handleDeleteDialogClose = () => {
+        setOpenDeleteDialog(false);
+    }
+
+    const handleDeleteItemClick = id => {
+        setSelectedID(id);
+        handleDeleteDialogOpen();
+    }
+
+    const handleDelete = () => {
+        if (selectedID !== "") {
+            dispatch(deleteUser(selectedID, token));
+            handleDeleteDialogClose();
+        }
+    }
 
     return (
         <Layout>
@@ -189,7 +213,8 @@ const UsersPage = () => {
                                                             <Edit className={classes.editIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
-                                                            <Delete className={classes.deleteIcon}/>
+                                                            <Delete onClick={() => handleDeleteItemClick(user._id)}
+                                                                    className={classes.deleteIcon}/>
                                                         </Grid>
                                                     </Grid>
                                                 </TableCell>
@@ -213,6 +238,15 @@ const UsersPage = () => {
                 openUserDialog={openUserDialog}
                 handleUserDialogClose={handleUserDialogClose}
             />}
+
+            {openDeleteDialog &&
+            <DeleteDialog
+                openDeleteDialog={openDeleteDialog}
+                handleDialogClose={handleDeleteDialogClose}
+                message="Are you sure you want to delete this user?"
+                handleConfirmAction={handleDelete}
+            />}
+
         </Layout>
     )
 }

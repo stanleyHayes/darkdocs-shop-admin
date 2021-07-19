@@ -8,7 +8,8 @@ export const dumps = [
         bankBase: 'AMERICAN EXPRESS COMPANY',
         quantity: 45,
         price: 150,
-        createdAt: '08-08-2020'
+        createdAt: '08-08-2020',
+        _id: 1
     },
     {
         service: 'Track 1&2 Code 201 with Pin',
@@ -19,7 +20,8 @@ export const dumps = [
         bankBase: 'ARVEST BANK',
         quantity: 45,
         price: 150,
-        createdAt: '08-08-2020'
+        createdAt: '08-08-2020',
+        _id: 2
     },
     {
         service: 'Track 1&2 Code 201 with Pin',
@@ -30,7 +32,8 @@ export const dumps = [
         bankBase: 'ORLD FINANCIAL NETWORK BANK',
         quantity: 4,
         price: 150,
-        createdAt: '08-08-2020'
+        createdAt: '08-08-2020',
+        _id: 3
     },
     {
         service: 'Track 1&2 Code 201 with Pin',
@@ -41,7 +44,8 @@ export const dumps = [
         bankBase: 'AMERICAN EXPRESS COMPANY',
         quantity: 4,
         price: 150,
-        createdAt: '08-08-2020'
+        createdAt: '08-08-2020',
+        _id: 4
     },
     {
         service: 'Track 1&2 Code 201 with Pin',
@@ -52,6 +56,7 @@ export const dumps = [
         bankBase: 'BANK OF AMERICA ,N.A',
         quantity: 4,
         price: 150,
-        createdAt: '08-08-2020'
+        createdAt: '08-08-2020',
+        _id: 5
     }
 ];

@@ -21,10 +21,11 @@ import {
 } from "@material-ui/core";
 import {brown, green, red} from "@material-ui/core/colors";
 import {useDispatch, useSelector} from "react-redux";
-import {getOrders} from "../../redux/orders/order-action-creators";
+import {deleteOrder, getOrders} from "../../redux/orders/order-action-creators";
 import {Alert} from "@material-ui/lab";
 import {Delete, Edit, Visibility} from "@material-ui/icons";
 import moment from "moment";
+import DeleteDialog from "../../components/shared/delete-dialog";
 
 const OrdersPage = () => {
 
@@ -83,6 +84,29 @@ const OrdersPage = () => {
 
     const {orders, loading, error} = useSelector(state => state.orders);
 
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+    const [selectedID, setSelectedID] = useState(null);
+
+    const handleDeleteDialogOpen = () => {
+        setOpenDeleteDialog(true);
+    }
+
+    const handleDeleteDialogClose = () => {
+        setOpenDeleteDialog(false);
+    }
+
+    const handleDeleteItemClick = id => {
+        setSelectedID(id);
+        handleDeleteDialogOpen();
+    }
+
+    const handleDelete = () => {
+        if (selectedID !== "") {
+            dispatch(deleteOrder(selectedID, token));
+            handleDeleteDialogClose();
+        }
+    }
+
     return (
         <Layout>
             <Container className={classes.container}>
@@ -135,7 +159,8 @@ const OrdersPage = () => {
                     <Box>
                         <Typography align="center" variant="h6">No orders available</Typography>
                     </Box>) : (
-                    <TableContainer elevation={1} variant="outlined" component={Paper} className={classes.tableContainer}>
+                    <TableContainer elevation={1} variant="outlined" component={Paper}
+                                    className={classes.tableContainer}>
                         <Table>
                             <TableHead>
                                 <TableRow hover={true}>
@@ -145,7 +170,6 @@ const OrdersPage = () => {
                                     <TableCell>Type</TableCell>
                                     <TableCell>Price</TableCell>
                                     <TableCell>Date Created</TableCell>
-                                    <TableCell>Date Updated</TableCell>
                                     <TableCell>Actions</TableCell>
                                 </TableRow>
                             </TableHead>
@@ -160,7 +184,6 @@ const OrdersPage = () => {
                                                 <TableCell>{order.type}</TableCell>
                                                 <TableCell>${parseFloat(order.price).toFixed(2)}</TableCell>
                                                 <TableCell>{moment(order.createdAt).fromNow()}</TableCell>
-                                                <TableCell>{moment(order.updatedAt).fromNow()}</TableCell>
                                                 <TableCell>
                                                     <Grid container={true} spacing={1}>
                                                         <Grid item={true}>
@@ -170,7 +193,7 @@ const OrdersPage = () => {
                                                             <Edit className={classes.editIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
-                                                            <Delete className={classes.deleteIcon}/>
+                                                            <Delete onClick={() => handleDeleteItemClick(order._id)} className={classes.deleteIcon}/>
                                                         </Grid>
                                                     </Grid>
                                                 </TableCell>
@@ -189,6 +212,15 @@ const OrdersPage = () => {
                     </TableContainer>
                 )}
             </Container>
+
+            {openDeleteDialog &&
+            <DeleteDialog
+                openDeleteDialog={openDeleteDialog}
+                handleDialogClose={handleDeleteDialogClose}
+                message="Are you sure you want to delete this order?"
+                handleConfirmAction={handleDelete}
+            />}
+
         </Layout>
     )
 }

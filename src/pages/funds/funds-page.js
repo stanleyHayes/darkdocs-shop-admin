@@ -22,7 +22,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {Alert} from "@material-ui/lab";
 import {Delete, Edit, Visibility} from "@material-ui/icons";
 import moment from "moment";
-import {getFunds} from "../../redux/funds/funds-action-creators";
+import {deleteFund, getFunds} from "../../redux/funds/funds-action-creators";
+import DeleteDialog from "../../components/shared/delete-dialog";
 
 const FundsPage = () => {
 
@@ -74,6 +75,29 @@ const FundsPage = () => {
 
     const {funds, loading, error} = useSelector(state => state.funds);
 
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+    const [selectedID, setSelectedID] = useState(null);
+
+    const handleDeleteDialogOpen = () => {
+        setOpenDeleteDialog(true);
+    }
+
+    const handleDeleteDialogClose = () => {
+        setOpenDeleteDialog(false);
+    }
+
+    const handleDeleteItemClick = id => {
+        setSelectedID(id);
+        handleDeleteDialogOpen();
+    }
+
+    const handleDelete = () => {
+        if(selectedID !== ""){
+            dispatch(deleteFund(selectedID, token));
+            handleDeleteDialogClose();
+        }
+    }
+
     return (
         <Layout>
             <Container className={classes.container}>
@@ -123,7 +147,6 @@ const FundsPage = () => {
                                     <TableCell>Address</TableCell>
                                     <TableCell>Amount</TableCell>
                                     <TableCell>Date Created</TableCell>
-                                    <TableCell>Date Updated</TableCell>
                                     <TableCell>Actions</TableCell>
                                 </TableRow>
                             </TableHead>
@@ -138,7 +161,6 @@ const FundsPage = () => {
                                                 <TableCell>{fund.address}</TableCell>
                                                 <TableCell>${parseFloat(fund.amount).toFixed(2)}</TableCell>
                                                 <TableCell>{moment(fund.createdAt).fromNow()}</TableCell>
-                                                <TableCell>{moment(fund.updatedAt).fromNow()}</TableCell>
                                                 <TableCell>
                                                     <Grid container={true} spacing={1}>
                                                         <Grid item={true}>
@@ -148,7 +170,7 @@ const FundsPage = () => {
                                                             <Edit className={classes.editIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
-                                                            <Delete className={classes.deleteIcon}/>
+                                                            <Delete onClick={() => handleDeleteItemClick(fund._id)} className={classes.deleteIcon}/>
                                                         </Grid>
                                                     </Grid>
                                                 </TableCell>
@@ -167,6 +189,15 @@ const FundsPage = () => {
                     </TableContainer>
                 )}
             </Container>
+
+            {openDeleteDialog &&
+            <DeleteDialog
+                openDeleteDialog={openDeleteDialog}
+                handleDialogClose={handleDeleteDialogClose}
+                message="Are you sure you want to delete this Fund?"
+                handleConfirmAction={handleDelete}
+            />}
+
         </Layout>
     )
 }

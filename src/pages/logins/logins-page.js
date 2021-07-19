@@ -25,8 +25,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {Alert} from "@material-ui/lab";
 import {Add, Delete, Edit, Visibility} from "@material-ui/icons";
 import moment from "moment";
-import {getLogins} from "../../redux/logins/logins-action-creators";
+import {deleteLogin, getLogins} from "../../redux/logins/logins-action-creators";
 import AddBankLoginDialog from "../../components/modals/logins/add-logins-dialog";
+import DeleteDialog from "../../components/shared/delete-dialog";
 
 const LoginsPage = () => {
 
@@ -89,6 +90,29 @@ const LoginsPage = () => {
 
     const {logins, loading, error} = useSelector(state => state.logins);
 
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+    const [selectedID, setSelectedID] = useState(null);
+
+    const handleDeleteDialogOpen = () => {
+        setOpenDeleteDialog(true);
+    }
+
+    const handleDeleteDialogClose = () => {
+        setOpenDeleteDialog(false);
+    }
+
+    const handleDeleteItemClick = id => {
+        setSelectedID(id);
+        handleDeleteDialogOpen();
+    }
+
+    const handleDelete = () => {
+        if (selectedID !== "") {
+            dispatch(deleteLogin(selectedID, token));
+            handleDeleteDialogClose();
+        }
+    }
+
     return (
         <Layout>
             <Container className={classes.container}>
@@ -144,7 +168,6 @@ const LoginsPage = () => {
                                     <TableCell>Balance</TableCell>
                                     <TableCell>Price</TableCell>
                                     <TableCell>Date Created</TableCell>
-                                    <TableCell>Date Updated</TableCell>
                                     <TableCell>Actions</TableCell>
                                 </TableRow>
                             </TableHead>
@@ -159,7 +182,6 @@ const LoginsPage = () => {
                                                 <TableCell>${parseFloat(login.balance).toFixed(2)}</TableCell>
                                                 <TableCell>${parseFloat(login.price).toFixed(2)}</TableCell>
                                                 <TableCell>{moment(login.createdAt).fromNow()}</TableCell>
-                                                <TableCell>{moment(login.updatedAt).fromNow()}</TableCell>
                                                 <TableCell>
                                                     <Grid container={true} spacing={1}>
                                                         <Grid item={true}>
@@ -169,7 +191,7 @@ const LoginsPage = () => {
                                                             <Edit className={classes.editIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
-                                                            <Delete className={classes.deleteIcon}/>
+                                                            <Delete onClick={() => handleDeleteItemClick(login._id)} className={classes.deleteIcon}/>
                                                         </Grid>
                                                     </Grid>
                                                 </TableCell>
@@ -192,6 +214,14 @@ const LoginsPage = () => {
             <AddBankLoginDialog
                 openBankLoginDialog={openBankLoginDialog}
                 handleBankLoginDialogClose={handleBankLoginClose}
+            />}
+
+            {openDeleteDialog &&
+            <DeleteDialog
+                openDeleteDialog={openDeleteDialog}
+                handleDialogClose={handleDeleteDialogClose}
+                message="Are you sure you want to delete this Bank Login?"
+                handleConfirmAction={handleDelete}
             />}
         </Layout>
     )

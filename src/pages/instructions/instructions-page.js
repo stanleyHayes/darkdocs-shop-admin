@@ -22,9 +22,10 @@ import {Add, Delete, Edit, Visibility} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
 import moment from "moment";
 import {Alert} from '@material-ui/lab';
-import {getInstructions} from "../../redux/instructions/instructions-action-creators";
+import {deleteInstruction, getInstructions} from "../../redux/instructions/instructions-action-creators";
 import {brown, green, red} from "@material-ui/core/colors";
 import AddInstructionDialog from "../../components/modals/instructions/add-instruction-dialog";
+import DeleteDialog from "../../components/shared/delete-dialog";
 
 const InstructionsPage = () => {
 
@@ -79,6 +80,29 @@ const InstructionsPage = () => {
     }, [dispatch, token]);
 
     const {instructions, loading, error} = useSelector(state => state.instructions);
+
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+    const [selectedID, setSelectedID] = useState(null);
+
+    const handleDeleteDialogOpen = () => {
+        setOpenDeleteDialog(true);
+    }
+
+    const handleDeleteDialogClose = () => {
+        setOpenDeleteDialog(false);
+    }
+
+    const handleDeleteItemClick = id => {
+        setSelectedID(id);
+        handleDeleteDialogOpen();
+    }
+
+    const handleDelete = () => {
+        if (selectedID !== "") {
+            dispatch(deleteInstruction(selectedID, token));
+            handleDeleteDialogClose();
+        }
+    }
 
     return (
         <Layout>
@@ -139,7 +163,9 @@ const InstructionsPage = () => {
                                                             <Edit className={classes.editIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
-                                                            <Delete className={classes.deleteIcon}/>
+                                                            <Delete
+                                                                onClick={() => handleDeleteItemClick(instruction._id)}
+                                                                className={classes.deleteIcon}/>
                                                         </Grid>
                                                     </Grid>
                                                 </TableCell>
@@ -162,6 +188,14 @@ const InstructionsPage = () => {
             <AddInstructionDialog
                 openInstructionDialog={openInstructionDialog}
                 handleInstructionDialogClose={handleInstructionClose}
+            />}
+
+            {openDeleteDialog &&
+            <DeleteDialog
+                openDeleteDialog={openDeleteDialog}
+                handleDialogClose={handleDeleteDialogClose}
+                message="Are you sure you want to delete this instruction?"
+                handleConfirmAction={handleDelete}
             />}
         </Layout>
     )

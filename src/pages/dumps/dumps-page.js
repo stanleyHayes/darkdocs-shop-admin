@@ -20,11 +20,12 @@ import {
 } from "@material-ui/core";
 import {brown, green, red} from "@material-ui/core/colors";
 import {useDispatch, useSelector} from "react-redux";
-import {getDumps} from "../../redux/dumps/dumps-action-creators";
+import {deleteDump, getDumps} from "../../redux/dumps/dumps-action-creators";
 import {Alert} from "@material-ui/lab";
 import {Add, Delete, Edit, Visibility} from "@material-ui/icons";
 import moment from "moment";
 import AddCCDumpsDialog from "../../components/modals/dumps/add-ccdumps-dialog";
+import DeleteDialog from "../../components/shared/delete-dialog";
 
 const DumpsPage = () => {
 
@@ -54,8 +55,15 @@ const DumpsPage = () => {
             }
         }
     });
-    const {token} = useSelector(state => state.auth);
     const classes = useStyles();
+    const dispatch = useDispatch();
+
+    const {token} = useSelector(state => state.auth);
+    useEffect(() => {
+        dispatch(getDumps(token));
+    }, [dispatch, token]);
+
+    const {dumps, loading, error} = useSelector(state => state.dumps);
 
     const [page, setPage] = useState(0);
     const [openCCDumpsDialog, setOpenCCDumpsDialog] = useState(false);
@@ -72,13 +80,28 @@ const DumpsPage = () => {
         setPage(page);
     }
 
-    const dispatch = useDispatch();
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+    const [selectedID, setSelectedID] = useState(null);
 
-    useEffect(() => {
-        dispatch(getDumps(token));
-    }, [dispatch, token]);
+    const handleDeleteDialogOpen = () => {
+        setOpenDeleteDialog(true);
+    }
 
-    const {dumps, loading, error} = useSelector(state => state.dumps);
+    const handleDeleteDialogClose = () => {
+        setOpenDeleteDialog(false);
+    }
+
+    const handleDeleteItemClick = id => {
+        setSelectedID(id);
+        handleDeleteDialogOpen();
+    }
+
+    const handleDelete = () => {
+        if(selectedID !== ""){
+            dispatch(deleteDump(selectedID, token));
+            handleDeleteDialogClose();
+        }
+    }
 
     return (
         <Layout>
@@ -141,7 +164,7 @@ const DumpsPage = () => {
                                                             <Edit className={classes.editIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
-                                                            <Delete className={classes.deleteIcon}/>
+                                                            <Delete onClick={() => handleDeleteItemClick(dump._id)} className={classes.deleteIcon}/>
                                                         </Grid>
                                                     </Grid>
                                                 </TableCell>
@@ -166,6 +189,15 @@ const DumpsPage = () => {
                 handleCCDumpsDialogClose={handleCCDumpsDialogClose}
                 openCCDumpsDialog={openCCDumpsDialog}
             />}
+
+            {openDeleteDialog &&
+            <DeleteDialog
+                openDeleteDialog={openDeleteDialog}
+                handleDialogClose={handleDeleteDialogClose}
+                message="Are you sure you want to delete this CC Dumps?"
+                handleConfirmAction={handleDelete}
+            />}
+
         </Layout>
     )
 }

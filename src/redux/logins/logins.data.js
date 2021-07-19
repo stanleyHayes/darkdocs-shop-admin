@@ -8,7 +8,8 @@ export const logins = [
             name: 'Chase'
         },
         createdAt: '07-06-2020',
-        updatedAt: '02-10-2020'
+        updatedAt: '02-10-2020',
+        _id: 1
     },
     {
         status: 'Available',
@@ -19,6 +20,7 @@ export const logins = [
             name: 'Barclays'
         },
         createdAt: '05-07-2020',
-        updatedAt: '01-08-2020'
+        updatedAt: '01-08-2020',
+        _id: 2
     }
 ];

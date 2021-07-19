@@ -25,8 +25,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {Alert} from "@material-ui/lab";
 import {Add, Delete, Edit, Visibility} from "@material-ui/icons";
 import moment from 'moment';
-import {getBanks} from "../../redux/banks/banks-action-creators";
+import {deleteBank, getBanks} from "../../redux/banks/banks-action-creators";
 import AddBankDialog from "../../components/modals/bank/add-bank-modal";
+import DeleteDialog from "../../components/shared/delete-dialog";
 
 const BanksPage = () => {
 
@@ -88,6 +89,28 @@ const BanksPage = () => {
 
     const {banks, loading, error} = useSelector(state => state.banks);
 
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+    const [selectedID, setSelectedID] = useState(null);
+
+    const handleDeleteDialogOpen = () => {
+        setOpenDeleteDialog(true);
+    }
+
+    const handleDeleteDialogClose = () => {
+        setOpenDeleteDialog(false);
+    }
+
+    const handleDeleteItemClick = id => {
+        setSelectedID(id);
+        handleDeleteDialogOpen();
+    }
+
+    const handleDelete = () => {
+        if(selectedID !== ""){
+            dispatch(deleteBank(selectedID, token));
+            handleDeleteDialogClose();
+        }
+    }
     return (
         <Layout>
             <Container className={classes.container}>
@@ -142,7 +165,6 @@ const BanksPage = () => {
                                     <TableCell>Name</TableCell>
                                     <TableCell>Country</TableCell>
                                     <TableCell>Date Created</TableCell>
-                                    <TableCell>Date Updated</TableCell>
                                     <TableCell>Actions</TableCell>
                                 </TableRow>
                             </TableHead>
@@ -155,7 +177,6 @@ const BanksPage = () => {
                                                 <TableCell>{bank.name}</TableCell>
                                                 <TableCell>{bank.country}</TableCell>
                                                 <TableCell>{moment(bank.createdAt).fromNow()}</TableCell>
-                                                <TableCell>{moment(bank.updatedAt).fromNow()}</TableCell>
                                                 <TableCell>
                                                     <Grid container={true} spacing={1}>
                                                         <Grid item={true}>
@@ -165,7 +186,7 @@ const BanksPage = () => {
                                                             <Edit className={classes.editIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
-                                                            <Delete className={classes.deleteIcon}/>
+                                                            <Delete onClick={() => handleDeleteItemClick(bank._id)} className={classes.deleteIcon}/>
                                                         </Grid>
                                                     </Grid>
                                                 </TableCell>
@@ -188,6 +209,14 @@ const BanksPage = () => {
             <AddBankDialog
                 openBankDialog={openBankDialog}
                 handleBankDialogClose={handleBankDialogClose}
+            />}
+
+            {openDeleteDialog &&
+            <DeleteDialog
+                openDeleteDialog={openDeleteDialog}
+                handleDialogClose={handleDeleteDialogClose}
+                message="Are you sure you want to delete this Bank?"
+                handleConfirmAction={handleDelete}
             />}
         </Layout>
     )
