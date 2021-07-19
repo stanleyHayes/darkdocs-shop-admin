@@ -28,6 +28,7 @@ import moment from "moment";
 import {deleteLogin, getLogins} from "../../redux/logins/logins-action-creators";
 import AddBankLoginDialog from "../../components/modals/logins/add-logins-dialog";
 import DeleteDialog from "../../components/shared/delete-dialog";
+import ViewBankLoginDialog from "../../components/modals/logins/view-login-dialog";
 
 const LoginsPage = () => {
 
@@ -113,6 +114,21 @@ const LoginsPage = () => {
         }
     }
 
+    const [viewItemDialogOpen, setViewItemDialogOpen] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
+
+    const handleViewItemDialogOpen = () => {
+        setViewItemDialogOpen(true);
+    }
+
+    const handleViewItemDialogClose = () => {
+        setViewItemDialogOpen(false)
+    }
+    const handleSelectedItem = item => {
+        setSelectedItem(item);
+        handleViewItemDialogOpen();
+    }
+
     return (
         <Layout>
             <Container className={classes.container}>
@@ -185,13 +201,15 @@ const LoginsPage = () => {
                                                 <TableCell>
                                                     <Grid container={true} spacing={1}>
                                                         <Grid item={true}>
-                                                            <Visibility className={classes.viewIcon}/>
+                                                            <Visibility onClick={() => handleSelectedItem(login)}
+                                                                        className={classes.viewIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
                                                             <Edit className={classes.editIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
-                                                            <Delete onClick={() => handleDeleteItemClick(login._id)} className={classes.deleteIcon}/>
+                                                            <Delete onClick={() => handleDeleteItemClick(login._id)}
+                                                                    className={classes.deleteIcon}/>
                                                         </Grid>
                                                     </Grid>
                                                 </TableCell>
@@ -222,6 +240,13 @@ const LoginsPage = () => {
                 handleDialogClose={handleDeleteDialogClose}
                 message="Are you sure you want to delete this Bank Login?"
                 handleConfirmAction={handleDelete}
+            />}
+
+            {selectedItem &&
+            <ViewBankLoginDialog
+                openBankLoginDialog={viewItemDialogOpen}
+                handleBankLoginDialogClose={handleViewItemDialogClose}
+                bankLogin={selectedItem}
             />}
         </Layout>
     )

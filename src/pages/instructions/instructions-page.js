@@ -18,7 +18,7 @@ import {
     TableRow,
     Typography
 } from "@material-ui/core";
-import {Add, Delete, Edit, Visibility} from "@material-ui/icons";
+import {Add, Delete, Edit} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
 import moment from "moment";
 import {Alert} from '@material-ui/lab';
@@ -155,10 +155,7 @@ const InstructionsPage = () => {
                                                 <TableCell>{instruction.text}</TableCell>
                                                 <TableCell>{moment(instruction.updatedAt).fromNow()}</TableCell>
                                                 <TableCell>
-                                                    <Grid container={true}>
-                                                        <Grid item={true}>
-                                                            <Visibility className={classes.viewIcon}/>
-                                                        </Grid>
+                                                    <Grid container={true} spacing={1}>
                                                         <Grid item={true}>
                                                             <Edit className={classes.editIcon}/>
                                                         </Grid>

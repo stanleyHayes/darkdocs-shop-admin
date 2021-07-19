@@ -28,6 +28,7 @@ import {Add, Delete, Edit, Visibility} from "@material-ui/icons";
 import moment from "moment";
 import AddUserDialog from "../../components/modals/users/add-user-dialog";
 import DeleteDialog from "../../components/shared/delete-dialog";
+import ViewUserDialog from "../../components/modals/users/view-user-dialog";
 
 const UsersPage = () => {
 
@@ -116,6 +117,21 @@ const UsersPage = () => {
         }
     }
 
+    const [viewItemDialogOpen, setViewItemDialogOpen] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
+
+    const handleViewItemDialogOpen = () => {
+        setViewItemDialogOpen(true);
+    }
+
+    const handleViewItemDialogClose = () => {
+        setViewItemDialogOpen(false)
+    }
+    const handleSelectedItem = item => {
+        setSelectedItem(item);
+        handleViewItemDialogOpen();
+    }
+
     return (
         <Layout>
             <Container className={classes.container}>
@@ -184,7 +200,6 @@ const UsersPage = () => {
                                     <TableCell>Username</TableCell>
                                     <TableCell>Email</TableCell>
                                     <TableCell>Name</TableCell>
-                                    <TableCell>Status</TableCell>
                                     <TableCell>Role</TableCell>
                                     <TableCell>Balance</TableCell>
                                     <TableCell>Date Joined</TableCell>
@@ -200,14 +215,14 @@ const UsersPage = () => {
                                                 <TableCell>{user.username}</TableCell>
                                                 <TableCell>{user.email}</TableCell>
                                                 <TableCell>{user.name}</TableCell>
-                                                <TableCell>{user.status}</TableCell>
                                                 <TableCell>{user.role}</TableCell>
                                                 <TableCell>${parseFloat(user.balance).toFixed(2)}</TableCell>
                                                 <TableCell>{moment(user.createdAt).fromNow()}</TableCell>
                                                 <TableCell>
                                                     <Grid container={true} spacing={1}>
                                                         <Grid item={true}>
-                                                            <Visibility className={classes.viewIcon}/>
+                                                            <Visibility onClick={() => handleSelectedItem(user)}
+                                                                        className={classes.viewIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
                                                             <Edit className={classes.editIcon}/>
@@ -245,6 +260,13 @@ const UsersPage = () => {
                 handleDialogClose={handleDeleteDialogClose}
                 message="Are you sure you want to delete this user?"
                 handleConfirmAction={handleDelete}
+            />}
+
+            {selectedItem &&
+            <ViewUserDialog
+                openUserDialog={viewItemDialogOpen}
+                handleUserDialogClose={handleViewItemDialogClose}
+                user={selectedItem}
             />}
 
         </Layout>

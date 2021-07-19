@@ -26,6 +26,7 @@ import {Add, Delete, Edit, Visibility} from "@material-ui/icons";
 import moment from "moment";
 import AddCCDumpsDialog from "../../components/modals/dumps/add-ccdumps-dialog";
 import DeleteDialog from "../../components/shared/delete-dialog";
+import ViewDumpsDialog from "../../components/modals/dumps/view-dumps-dialog";
 
 const DumpsPage = () => {
 
@@ -97,10 +98,25 @@ const DumpsPage = () => {
     }
 
     const handleDelete = () => {
-        if(selectedID !== ""){
+        if (selectedID !== "") {
             dispatch(deleteDump(selectedID, token));
             handleDeleteDialogClose();
         }
+    }
+
+    const [viewItemDialogOpen, setViewItemDialogOpen] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
+
+    const handleViewItemDialogOpen = () => {
+        setViewItemDialogOpen(true);
+    }
+
+    const handleViewItemDialogClose = () => {
+        setViewItemDialogOpen(false)
+    }
+    const handleSelectedItem = item => {
+        setSelectedItem(item);
+        handleViewItemDialogOpen();
     }
 
     return (
@@ -158,13 +174,15 @@ const DumpsPage = () => {
                                                 <TableCell>
                                                     <Grid container={true} spacing={1}>
                                                         <Grid item={true}>
-                                                            <Visibility className={classes.viewIcon}/>
+                                                            <Visibility onClick={() => handleSelectedItem(dump)}
+                                                                        className={classes.viewIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
                                                             <Edit className={classes.editIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
-                                                            <Delete onClick={() => handleDeleteItemClick(dump._id)} className={classes.deleteIcon}/>
+                                                            <Delete onClick={() => handleDeleteItemClick(dump._id)}
+                                                                    className={classes.deleteIcon}/>
                                                         </Grid>
                                                     </Grid>
                                                 </TableCell>
@@ -196,6 +214,13 @@ const DumpsPage = () => {
                 handleDialogClose={handleDeleteDialogClose}
                 message="Are you sure you want to delete this CC Dumps?"
                 handleConfirmAction={handleDelete}
+            />}
+
+            {selectedItem &&
+            <ViewDumpsDialog
+                openViewCCDumpsDialog={viewItemDialogOpen}
+                handleCCDumpsDialogClose={handleViewItemDialogClose}
+                ccDump={selectedItem}
             />}
 
         </Layout>

@@ -26,6 +26,7 @@ import {Alert} from "@material-ui/lab";
 import {Delete, Edit, Visibility} from "@material-ui/icons";
 import moment from "moment";
 import DeleteDialog from "../../components/shared/delete-dialog";
+import ViewOrderDialog from "../../components/modals/orders/view-order-dialog";
 
 const OrdersPage = () => {
 
@@ -105,6 +106,22 @@ const OrdersPage = () => {
             dispatch(deleteOrder(selectedID, token));
             handleDeleteDialogClose();
         }
+    }
+
+
+    const [viewItemDialogOpen, setViewItemDialogOpen] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
+
+    const handleViewItemDialogOpen = () => {
+        setViewItemDialogOpen(true);
+    }
+
+    const handleViewItemDialogClose = () => {
+        setViewItemDialogOpen(false)
+    }
+    const handleSelectedItem = item => {
+        setSelectedItem(item);
+        handleViewItemDialogOpen();
     }
 
     return (
@@ -187,13 +204,15 @@ const OrdersPage = () => {
                                                 <TableCell>
                                                     <Grid container={true} spacing={1}>
                                                         <Grid item={true}>
-                                                            <Visibility className={classes.viewIcon}/>
+                                                            <Visibility onClick={() => handleSelectedItem(order)}
+                                                                        className={classes.viewIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
                                                             <Edit className={classes.editIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
-                                                            <Delete onClick={() => handleDeleteItemClick(order._id)} className={classes.deleteIcon}/>
+                                                            <Delete onClick={() => handleDeleteItemClick(order._id)}
+                                                                    className={classes.deleteIcon}/>
                                                         </Grid>
                                                     </Grid>
                                                 </TableCell>
@@ -221,6 +240,12 @@ const OrdersPage = () => {
                 handleConfirmAction={handleDelete}
             />}
 
+            {selectedItem &&
+            <ViewOrderDialog
+                openOrderDialog={viewItemDialogOpen}
+                handleOrderDialogClose={handleViewItemDialogClose}
+                order={selectedItem}
+            />}
         </Layout>
     )
 }

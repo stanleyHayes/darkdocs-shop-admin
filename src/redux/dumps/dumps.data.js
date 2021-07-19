@@ -9,7 +9,8 @@ export const dumps = [
         quantity: 45,
         price: 150,
         createdAt: '08-08-2020',
-        _id: 1
+        _id: 1,
+        status: 'Available'
     },
     {
         service: 'Track 1&2 Code 201 with Pin',
@@ -21,7 +22,8 @@ export const dumps = [
         quantity: 45,
         price: 150,
         createdAt: '08-08-2020',
-        _id: 2
+        _id: 2,
+        status: 'Available'
     },
     {
         service: 'Track 1&2 Code 201 with Pin',
@@ -33,7 +35,8 @@ export const dumps = [
         quantity: 4,
         price: 150,
         createdAt: '08-08-2020',
-        _id: 3
+        _id: 3,
+        status: 'Available'
     },
     {
         service: 'Track 1&2 Code 201 with Pin',
@@ -45,7 +48,8 @@ export const dumps = [
         quantity: 4,
         price: 150,
         createdAt: '08-08-2020',
-        _id: 4
+        _id: 4,
+        status: 'Available'
     },
     {
         service: 'Track 1&2 Code 201 with Pin',
@@ -57,6 +61,7 @@ export const dumps = [
         quantity: 4,
         price: 150,
         createdAt: '08-08-2020',
-        _id: 5
+        _id: 5,
+        status: 'Available'
     }
 ];

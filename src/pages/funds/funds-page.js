@@ -6,8 +6,10 @@ import {
     Divider,
     Grid,
     LinearProgress,
-    makeStyles, MenuItem,
-    Paper, Select,
+    makeStyles,
+    MenuItem,
+    Paper,
+    Select,
     Table,
     TableBody,
     TableCell,
@@ -17,10 +19,10 @@ import {
     TableRow,
     Typography
 } from "@material-ui/core";
-import {brown, green, red} from "@material-ui/core/colors";
+import {brown, red} from "@material-ui/core/colors";
 import {useDispatch, useSelector} from "react-redux";
 import {Alert} from "@material-ui/lab";
-import {Delete, Edit, Visibility} from "@material-ui/icons";
+import {Delete, Edit} from "@material-ui/icons";
 import moment from "moment";
 import {deleteFund, getFunds} from "../../redux/funds/funds-action-creators";
 import DeleteDialog from "../../components/shared/delete-dialog";
@@ -38,10 +40,6 @@ const FundsPage = () => {
             tableContainer: {},
             editIcon: {
                 color: brown['600'],
-                cursor: 'pointer'
-            },
-            viewIcon: {
-                color: green['600'],
                 cursor: 'pointer'
             },
             deleteIcon: {
@@ -92,7 +90,7 @@ const FundsPage = () => {
     }
 
     const handleDelete = () => {
-        if(selectedID !== ""){
+        if (selectedID !== "") {
             dispatch(deleteFund(selectedID, token));
             handleDeleteDialogClose();
         }
@@ -164,13 +162,11 @@ const FundsPage = () => {
                                                 <TableCell>
                                                     <Grid container={true} spacing={1}>
                                                         <Grid item={true}>
-                                                            <Visibility className={classes.viewIcon}/>
-                                                        </Grid>
-                                                        <Grid item={true}>
                                                             <Edit className={classes.editIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
-                                                            <Delete onClick={() => handleDeleteItemClick(fund._id)} className={classes.deleteIcon}/>
+                                                            <Delete onClick={() => handleDeleteItemClick(fund._id)}
+                                                                    className={classes.deleteIcon}/>
                                                         </Grid>
                                                     </Grid>
                                                 </TableCell>

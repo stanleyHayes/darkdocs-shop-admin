@@ -20,10 +20,10 @@ import {
     TableRow,
     Typography
 } from "@material-ui/core";
-import {brown, green, red} from "@material-ui/core/colors";
+import {brown, red} from "@material-ui/core/colors";
 import {useDispatch, useSelector} from "react-redux";
 import {Alert} from "@material-ui/lab";
-import {Add, Delete, Edit, Visibility} from "@material-ui/icons";
+import {Add, Delete, Edit} from "@material-ui/icons";
 import moment from 'moment';
 import {deleteBank, getBanks} from "../../redux/banks/banks-action-creators";
 import AddBankDialog from "../../components/modals/bank/add-bank-modal";
@@ -42,10 +42,6 @@ const BanksPage = () => {
             tableContainer: {},
             editIcon: {
                 color: brown['600'],
-                cursor: 'pointer'
-            },
-            viewIcon: {
-                color: green['600'],
                 cursor: 'pointer'
             },
             deleteIcon: {
@@ -106,7 +102,7 @@ const BanksPage = () => {
     }
 
     const handleDelete = () => {
-        if(selectedID !== ""){
+        if (selectedID !== "") {
             dispatch(deleteBank(selectedID, token));
             handleDeleteDialogClose();
         }
@@ -180,13 +176,11 @@ const BanksPage = () => {
                                                 <TableCell>
                                                     <Grid container={true} spacing={1}>
                                                         <Grid item={true}>
-                                                            <Visibility className={classes.viewIcon}/>
-                                                        </Grid>
-                                                        <Grid item={true}>
                                                             <Edit className={classes.editIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
-                                                            <Delete onClick={() => handleDeleteItemClick(bank._id)} className={classes.deleteIcon}/>
+                                                            <Delete onClick={() => handleDeleteItemClick(bank._id)}
+                                                                    className={classes.deleteIcon}/>
                                                         </Grid>
                                                     </Grid>
                                                 </TableCell>
