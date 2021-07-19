@@ -1,16 +1,6 @@
 import React, {useEffect, useState} from "react";
 import Layout from "../../components/layout/layout";
-import {
-    Button,
-    Card,
-    CardContent,
-    Container,
-    Divider,
-    Grid,
-    makeStyles,
-    TextField,
-    Typography
-} from "@material-ui/core";
+import {Button, Card, CardContent, Container, Grid, makeStyles, TextField, Typography} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {updateInformation} from "../../redux/information/information-action-creators";
@@ -75,23 +65,23 @@ const InformationPage = () => {
     const handleSubmit = event => {
         event.preventDefault();
         const updatedInfo = {};
-        if(data.email !== email){
+        if (data.email !== email) {
             updatedInfo['username'] = email;
         }
-        if(data.btcAddress !== btcAddress){
+        if (data.btcAddress !== btcAddress) {
             updatedInfo['name'] = btcAddress;
         }
-        if(data.email !== email){
+        if (data.email !== email) {
             setHasError(true);
             setError({...error, 'email': 'Field required'});
         }
-        if(data.btcAddress !== btcAddress && !btcAddress){
+        if (data.btcAddress !== btcAddress && !btcAddress) {
             setHasError(true);
             setError({...error, 'BTC Address': 'Field required'});
         }
-        if(hasError){
+        if (hasError) {
 
-        }else {
+        } else {
             dispatch(updateInformation(updatedInfo, token, history));
         }
     }
@@ -103,7 +93,8 @@ const InformationPage = () => {
                     <Grid item={true} xs={12} md={8} lg={6}>
                         <Card elevation={1} variant="outlined">
                             <CardContent>
-                                <Typography color="textSecondary" className={classes.title} gutterBottom={true} variant="h6" align="center">
+                                <Typography color="textSecondary" className={classes.title} gutterBottom={true}
+                                            variant="h6" align="center">
                                     Update Information
                                 </Typography>
 

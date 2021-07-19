@@ -1,12 +1,13 @@
 import React, {useState} from "react";
 import {
     Avatar,
-    Box,
-    Button, Chip,
+    Button,
+    Chip,
     Dialog,
     DialogActions,
     DialogContent,
-    Divider, Grid,
+    Divider,
+    Grid,
     makeStyles,
     TextField,
     Typography
