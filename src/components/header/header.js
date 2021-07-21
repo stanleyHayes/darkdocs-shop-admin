@@ -1,5 +1,5 @@
 import React from "react";
-import {Box, Hidden} from "@material-ui/core";
+import {AppBar, Hidden} from "@material-ui/core";
 import DesktopHeader from "./desktop-header";
 import MobileHeader from "./mobile-header";
 import TabletHeader from "./tablet-header";
@@ -7,7 +7,7 @@ import TabletHeader from "./tablet-header";
 
 const Header = ({handleDrawerOpen}) => {
     return (
-        <Box>
+        <AppBar variant="outlined">
             <Hidden mdDown={true}>
                 <DesktopHeader/>
             </Hidden>
@@ -17,7 +17,7 @@ const Header = ({handleDrawerOpen}) => {
             <Hidden only={['xs', 'sm', 'lg', 'xl']}>
                 <TabletHeader/>
             </Hidden>
-        </Box>
+        </AppBar>
     )
 }
 

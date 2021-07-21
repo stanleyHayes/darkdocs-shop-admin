@@ -13,6 +13,7 @@ import {
     VerifiedUser
 } from "@material-ui/icons";
 import {useSelector} from "react-redux";
+import millify from "millify";
 
 const DashboardPage = () => {
 
@@ -95,7 +96,9 @@ const DashboardPage = () => {
                                         </Avatar>
                                     </Grid>
                                 </Grid>
-                                <Typography variant="h1" align="center">5</Typography>
+                                <Typography variant="h3" align="center">
+                                    {millify(5)}
+                                </Typography>
                                 <Typography variant="body2" align="center">Super Admin</Typography>
                             </CardContent>
                         </Card>
@@ -111,7 +114,7 @@ const DashboardPage = () => {
                                         </Avatar>
                                     </Grid>
                                 </Grid>
-                                <Typography variant="h1" align="center">16</Typography>
+                                <Typography variant="h3" align="center">{millify(16)}</Typography>
                                 <Typography variant="body2" align="center">Admin</Typography>
                             </CardContent>
                         </Card>
@@ -127,7 +130,7 @@ const DashboardPage = () => {
                                         </Avatar>
                                     </Grid>
                                 </Grid>
-                                <Typography variant="h1" align="center">2000</Typography>
+                                <Typography variant="h3" align="center">{millify(10000)}</Typography>
                                 <Typography variant="body2" align="center">Users</Typography>
                             </CardContent>
                         </Card>
@@ -149,7 +152,7 @@ const DashboardPage = () => {
                                         </Avatar>
                                     </Grid>
                                 </Grid>
-                                <Typography variant="h1" align="center">50</Typography>
+                                <Typography variant="h3" align="center">{millify(45)}</Typography>
                                 <Typography variant="body2" align="center">USA Banks</Typography>
                             </CardContent>
                         </Card>
@@ -165,7 +168,7 @@ const DashboardPage = () => {
                                         </Avatar>
                                     </Grid>
                                 </Grid>
-                                <Typography variant="h1" align="center">16</Typography>
+                                <Typography variant="h3" align="center">{millify(35)}</Typography>
                                 <Typography variant="body2" align="center">UK Banks</Typography>
                             </CardContent>
                         </Card>
@@ -181,7 +184,7 @@ const DashboardPage = () => {
                                         </Avatar>
                                     </Grid>
                                 </Grid>
-                                <Typography variant="h1" align="center">20</Typography>
+                                <Typography variant="h3" align="center">{millify(20)}</Typography>
                                 <Typography variant="body2" align="center">Canada Banks</Typography>
                             </CardContent>
                         </Card>
@@ -203,7 +206,7 @@ const DashboardPage = () => {
                                         </Avatar>
                                     </Grid>
                                 </Grid>
-                                <Typography variant="h1" align="center">50</Typography>
+                                <Typography variant="h3" align="center">{millify(5000)}</Typography>
                                 <Typography variant="body2" align="center">Bank Logins</Typography>
                             </CardContent>
                         </Card>
@@ -219,7 +222,7 @@ const DashboardPage = () => {
                                         </Avatar>
                                     </Grid>
                                 </Grid>
-                                <Typography variant="h1" align="center">16</Typography>
+                                <Typography variant="h3" align="center">{millify(50000)}</Typography>
                                 <Typography variant="body2" align="center">CC Dumps + Pins</Typography>
                             </CardContent>
                         </Card>
@@ -235,7 +238,7 @@ const DashboardPage = () => {
                                         </Avatar>
                                     </Grid>
                                 </Grid>
-                                <Typography variant="h1" align="center">20</Typography>
+                                <Typography variant="h3" align="center">{millify(789065)}</Typography>
                                 <Typography variant="body2" align="center">Cheques</Typography>
                             </CardContent>
                         </Card>
@@ -257,7 +260,7 @@ const DashboardPage = () => {
                                         </Avatar>
                                     </Grid>
                                 </Grid>
-                                <Typography variant="h1" align="center">50</Typography>
+                                <Typography variant="h3" align="center">{millify(57484757)}</Typography>
                                 <Typography variant="body2" align="center">Completed</Typography>
                             </CardContent>
                         </Card>
@@ -273,7 +276,7 @@ const DashboardPage = () => {
                                         </Avatar>
                                     </Grid>
                                 </Grid>
-                                <Typography variant="h1" align="center">16</Typography>
+                                <Typography variant="h3" align="center">{millify(4565)}</Typography>
                                 <Typography variant="body2" align="center">Pending</Typography>
                             </CardContent>
                         </Card>
@@ -289,7 +292,7 @@ const DashboardPage = () => {
                                         </Avatar>
                                     </Grid>
                                 </Grid>
-                                <Typography variant="h1" align="center">20</Typography>
+                                <Typography variant="h3" align="center">{millify(678 )}</Typography>
                                 <Typography variant="body2" align="center">Cancelled</Typography>
                             </CardContent>
                         </Card>
@@ -311,7 +314,7 @@ const DashboardPage = () => {
                                         </Avatar>
                                     </Grid>
                                 </Grid>
-                                <Typography variant="h1" align="center">50</Typography>
+                                <Typography variant="h3" align="center">{millify(46 )}</Typography>
                                 <Typography variant="body2" align="center">Pending</Typography>
                             </CardContent>
                         </Card>
@@ -327,7 +330,7 @@ const DashboardPage = () => {
                                         </Avatar>
                                     </Grid>
                                 </Grid>
-                                <Typography variant="h1" align="center">16</Typography>
+                                <Typography variant="h3" align="center">{millify(6345643 )}</Typography>
                                 <Typography variant="body2" align="center">Completed</Typography>
                             </CardContent>
                         </Card>
@@ -343,7 +346,7 @@ const DashboardPage = () => {
                                         </Avatar>
                                     </Grid>
                                 </Grid>
-                                <Typography variant="h1" align="center">20</Typography>
+                                <Typography variant="h3" align="center">{millify(54467 )}</Typography>
                                 <Typography variant="body2" align="center">Cancelled</Typography>
                             </CardContent>
                         </Card>

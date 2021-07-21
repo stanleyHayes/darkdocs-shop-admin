@@ -16,7 +16,7 @@ const Layout = ({children}) => {
             },
             content: {
                 backgroundColor: theme.palette.background.default,
-                paddingTop: 32,
+                paddingTop: 84,
                 paddingBottom: 32
             }
         }

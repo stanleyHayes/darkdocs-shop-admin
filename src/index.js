@@ -18,8 +18,8 @@ const theme = createTheme({
     },
     palette: {
         background: {
-            default: '#E5E5E5',
-            paper: 'white'
+            default: 'rgba(229,229,229,0.65)',
+            paper: '#ffffff'
         },
         primary: {
             light: grey['100'],

@@ -1,5 +1,5 @@
 import React from "react";
-import {Avatar, Grid, makeStyles, Toolbar, Typography} from "@material-ui/core";
+import {Grid, makeStyles, Toolbar, Typography} from "@material-ui/core";
 import {Link} from "react-router-dom";
 import {Menu} from '@material-ui/icons';
 
@@ -12,7 +12,7 @@ const MobileHeader = ({handleDrawerOpen}) => {
                 color: theme.palette.text.secondary
             },
             toolbar: {
-                backgroundColor: theme.palette.primary.dark
+                backgroundColor: 'white'
             },
             button: {
                 color: theme.palette.text.primary,
@@ -22,16 +22,12 @@ const MobileHeader = ({handleDrawerOpen}) => {
             menuButton: {
                 color: theme.palette.text.primary
             },
-            logo: {
-                width: 30,
-                height: 30
-            },
             menu: {
                 cursor: 'pointer'
             },
             image: {
-                maxHeight: '100%',
-                maxWidth: '100%',
+                maxHeight: 50,
+                maxWidth: 50,
                 objectFit: 'cover',
                 objectPosition: 'center'
             },
@@ -41,16 +37,14 @@ const MobileHeader = ({handleDrawerOpen}) => {
     const classes = useStyles();
 
     return (
-        <Toolbar className={classes.toolbar} variant="regular">
+        <Toolbar className={classes.toolbar} variant="dense">
             <Grid container={true} justifyContent="space-between" alignItems="center">
-                <Grid item={true} xs={2}>
+                <Grid item={true} xs={2} sm={2}>
                     <Link className={classes.link} to="/">
-                        <Avatar className={classes.logo} variant="rounded">
-                            <img className={classes.image} alt="logo" src="/images/logo.png"/>
-                        </Avatar>
+                        <img className={classes.image} alt="logo" src="/images/logo.png"/>
                     </Link>
                 </Grid>
-                <Grid container={true} alignItems="center" justifyContent="flex-start" item={true} xs={8}>
+                <Grid container={true} alignItems="center" justifyContent="flex-start" item={true} xs={9} sm={9}>
                     <Grid item={true}>
                         <Typography
                             className={classes.button}

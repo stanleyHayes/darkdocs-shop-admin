@@ -18,9 +18,12 @@ const DrawerContent = () => {
     const useStyles = makeStyles(theme => {
         return {
             container: {
-                paddingTop: 32,
+                paddingTop: 84,
                 paddingBottom: 32,
-                backgroundColor: 'white'
+                backgroundColor: 'white',
+                [theme.breakpoints.down('sm')]: {
+                    paddingTop: 32
+                }
             },
             title: {
                 textTransform: 'uppercase',
@@ -55,8 +58,8 @@ const DrawerContent = () => {
             },
             initials: {},
             avatar: {
-                width: 100,
-                height: 100
+                width: 70,
+                height: 70
             }
         }
     });

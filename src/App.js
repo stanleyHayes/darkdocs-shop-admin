@@ -1,5 +1,5 @@
 import './App.css';
-import {Switch, Route} from "react-router-dom";
+import {Route, Switch} from "react-router-dom";
 import DashboardPage from "./pages/dashboard/dashboard-page";
 import InformationPage from "./pages/information/information-page";
 import BanksPage from "./pages/banks/banks-page";
@@ -15,26 +15,29 @@ import ChangePasswordPage from "./pages/authentication/change-password-page";
 import LoginPage from "./pages/authentication/login-page";
 import EditProfilePage from "./pages/profile/edit-profile-page";
 import ProfilePage from "./pages/profile/profile-page";
+import ScrollToTop from "./components/shared/scroll-top-top";
 
 function App() {
     return (
-        <Switch className="App">
-            <Route path="/" exact={true} component={DashboardPage}/>
-            <Route path="/dumps" exact={true} component={DumpsPage}/>
-            <Route path="/funds" exact={true} component={FundsPage}/>
-            <Route path="/instructions" exact={true} component={InstructionsPage}/>
-            <Route path="/logins" exact={true} component={LoginsPage}/>
-            <Route path="/users" exact={true} component={UsersPage}/>
-            <Route path="/orders" exact={true} component={OrdersPage}/>
-            <Route path="/information" exact={true} component={InformationPage}/>
-            <Route path="/banks" exact={true} component={BanksPage}/>
-            <Route path="/profile" exact={true} component={ProfilePage}/>
-            <Route path="/edit-profile" exact={true} component={EditProfilePage}/>
-            <Route path="/auth/login" exact={true} component={LoginPage}/>
-            <Route path="/auth/change-password" exact={true} component={ChangePasswordPage}/>
-            <Route path="/auth/reset-password" exact={true} component={ResetPasswordPage}/>
-            <Route path="/auth/forgot-password" exact={true} component={ForgotPasswordPage}/>
-        </Switch>
+        <ScrollToTop>
+            <Switch>
+                <Route path="/" exact={true} component={DashboardPage}/>
+                <Route path="/dumps" exact={true} component={DumpsPage}/>
+                <Route path="/funds" exact={true} component={FundsPage}/>
+                <Route path="/instructions" exact={true} component={InstructionsPage}/>
+                <Route path="/logins" exact={true} component={LoginsPage}/>
+                <Route path="/users" exact={true} component={UsersPage}/>
+                <Route path="/orders" exact={true} component={OrdersPage}/>
+                <Route path="/information" exact={true} component={InformationPage}/>
+                <Route path="/banks" exact={true} component={BanksPage}/>
+                <Route path="/profile" exact={true} component={ProfilePage}/>
+                <Route path="/edit-profile" exact={true} component={EditProfilePage}/>
+                <Route path="/auth/login" exact={true} component={LoginPage}/>
+                <Route path="/auth/change-password" exact={true} component={ChangePasswordPage}/>
+                <Route path="/auth/reset-password" exact={true} component={ResetPasswordPage}/>
+                <Route path="/auth/forgot-password" exact={true} component={ForgotPasswordPage}/>
+            </Switch>
+        </ScrollToTop>
     );
 }
 
