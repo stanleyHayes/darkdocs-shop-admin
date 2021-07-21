@@ -146,7 +146,7 @@ const DumpsPage = () => {
                     <Box>
                         <Typography align="center" variant="h6">No CC Dumps available</Typography>
                     </Box>) : (
-                    <TableContainer elevation={1} variant="outlined" component={Paper}
+                    <TableContainer elevation={1} variant="elevation" component={Paper}
                                     className={classes.tableContainer}>
                         <Table>
                             <TableHead>

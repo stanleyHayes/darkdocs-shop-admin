@@ -191,7 +191,7 @@ const UsersPage = () => {
                     <Box>
                         <Typography align="center" variant="h6">No users available</Typography>
                     </Box>) : (
-                    <TableContainer component={Paper} variant="outlined" elevation={1}
+                    <TableContainer component={Paper} variant="elevation" elevation={1}
                                     className={classes.tableContainer}>
                         <Table>
                             <TableHead>

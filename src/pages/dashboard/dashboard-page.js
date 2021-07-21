@@ -48,7 +48,7 @@ const DashboardPage = () => {
 
                 <Grid container={true} spacing={2} className={classes.gridContainer}>
                     <Grid item={true}  xs={12} md={6}>
-                        <Card variant="outlined">
+                        <Card variant="elevation" elevation={1}>
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
@@ -63,7 +63,7 @@ const DashboardPage = () => {
                         </Card>
                     </Grid>
                     <Grid item={true}  xs={12} md={6}>
-                        <Card variant="outlined">
+                        <Card variant="elevation" elevation={1}>
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
@@ -87,7 +87,7 @@ const DashboardPage = () => {
 
                 <Grid container={true} spacing={2} className={classes.gridContainer}>
                     <Grid item={true} xs={12} md={4}>
-                        <Card variant="outlined">
+                        <Card variant="elevation" elevation={1}>
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
@@ -105,7 +105,7 @@ const DashboardPage = () => {
                     </Grid>
 
                     <Grid item={true} xs={12} md={4}>
-                        <Card variant="outlined">
+                        <Card variant="elevation" elevation={1}>
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
@@ -121,7 +121,7 @@ const DashboardPage = () => {
                     </Grid>
 
                     <Grid item={true} xs={12} md={4}>
-                        <Card variant="outlined">
+                        <Card variant="elevation" elevation={1}>
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
@@ -143,7 +143,7 @@ const DashboardPage = () => {
 
                 <Grid container={true} spacing={2} className={classes.gridContainer}>
                     <Grid item={true} xs={12} md={4}>
-                        <Card variant="outlined">
+                        <Card variant="elevation" elevation={1}>
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
@@ -159,7 +159,7 @@ const DashboardPage = () => {
                     </Grid>
 
                     <Grid item={true} xs={12} md={4}>
-                        <Card variant="outlined">
+                        <Card variant="elevation" elevation={1}>
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
@@ -175,7 +175,7 @@ const DashboardPage = () => {
                     </Grid>
 
                     <Grid item={true} xs={12} md={4}>
-                        <Card variant="outlined">
+                        <Card variant="elevation" elevation={1}>
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
@@ -197,7 +197,7 @@ const DashboardPage = () => {
 
                 <Grid container={true} spacing={2} className={classes.gridContainer}>
                     <Grid item={true} xs={12} md={4}>
-                        <Card variant="outlined">
+                        <Card variant="elevation" elevation={1}>
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
@@ -213,7 +213,7 @@ const DashboardPage = () => {
                     </Grid>
 
                     <Grid item={true} xs={12} md={4}>
-                        <Card variant="outlined">
+                        <Card variant="elevation" elevation={1}>
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
@@ -229,7 +229,7 @@ const DashboardPage = () => {
                     </Grid>
 
                     <Grid item={true} xs={12} md={4}>
-                        <Card variant="outlined">
+                        <Card variant="elevation" elevation={1}>
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
@@ -251,7 +251,7 @@ const DashboardPage = () => {
 
                 <Grid container={true} spacing={2} className={classes.gridContainer}>
                     <Grid item={true} xs={12} md={4}>
-                        <Card variant="outlined">
+                        <Card variant="elevation" elevation={1}>
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
@@ -267,7 +267,7 @@ const DashboardPage = () => {
                     </Grid>
 
                     <Grid item={true} xs={12} md={4}>
-                        <Card variant="outlined">
+                        <Card variant="elevation" elevation={1}>
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
@@ -283,7 +283,7 @@ const DashboardPage = () => {
                     </Grid>
 
                     <Grid item={true} xs={12} md={4}>
-                        <Card variant="outlined">
+                        <Card variant="elevation" elevation={1}>
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
@@ -305,7 +305,7 @@ const DashboardPage = () => {
 
                 <Grid container={true} spacing={2} className={classes.gridContainer}>
                     <Grid item={true} xs={12} md={4}>
-                        <Card variant="outlined">
+                        <Card variant="elevation" elevation={1}>
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
@@ -337,7 +337,7 @@ const DashboardPage = () => {
                     </Grid>
 
                     <Grid item={true} xs={12} md={4}>
-                        <Card variant="outlined">
+                        <Card variant="elevation" elevation={1}>
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>

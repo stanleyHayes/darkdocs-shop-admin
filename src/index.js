@@ -14,11 +14,11 @@ const theme = createTheme({
         fontFamily: 'Raleway, IBM Plex Serif'
     },
     shape: {
-        borderRadius: 32
+        borderRadius: 0
     },
     palette: {
         background: {
-            default: 'rgba(229,229,229,0.30)',
+            default: '#E5E5E5',
             paper: '#ffffff'
         },
         primary: {

@@ -1,4 +1,4 @@
-import {orders} from "./orders.data";
+import {orders} from "./order.data";
 
 const INITIAL_STATE = {
     orders: [...orders],

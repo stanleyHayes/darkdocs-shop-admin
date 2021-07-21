@@ -55,7 +55,7 @@ const ProfilePage = () => {
                 {loading && <LinearProgress variant="query"/>}
                 <Grid className={classes.gridContainer} container={true} justifyContent="center">
                     <Grid item={true} xs={12} md={8} lg={6}>
-                        <Card elevation={1} variant="outlined">
+                        <Card elevation={1} variant="elevation">
                             <CardContent>
                                 <Typography align="center" className={classes.title} gutterBottom={true} variant="h5">
                                     User Profile
@@ -100,7 +100,7 @@ const ProfilePage = () => {
 
                 <Grid className={classes.gridContainer} container={true} justifyContent="center">
                     <Grid item={true} xs={12} md={8} lg={6}>
-                        <Card elevation={1} variant="outlined">
+                        <Card elevation={1} variant="elevation">
                             <CardContent>
                                 <Link className={classes.link} to="/edit-profile">
                                     <Button
