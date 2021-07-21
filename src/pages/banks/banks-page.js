@@ -26,7 +26,7 @@ import {Alert} from "@material-ui/lab";
 import {Add, Delete, Edit} from "@material-ui/icons";
 import moment from 'moment';
 import {deleteBank, getBanks} from "../../redux/banks/banks-action-creators";
-import AddBankDialog from "../../components/modals/bank/add-bank-modal";
+import AddBankDialog from "../../components/modals/bank/add-bank-dialog";
 import DeleteDialog from "../../components/shared/delete-dialog";
 
 const BanksPage = () => {

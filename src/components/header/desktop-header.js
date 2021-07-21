@@ -97,11 +97,11 @@ const DesktopHeader = () => {
                         onClick={handleProfileClick}
                         endIcon={<KeyboardArrowDown/>}
                         startIcon={<Avatar className={classes.avatar}>
-                            {/*{user && getInitials(user.name)}*/}
+                            {user && getInitials(user.name)}
                             <Typography variant="body2" align="center">SH</Typography>
                         </Avatar>}
                         variant="outlined">
-                        {/*{user && user.name}*/}
+                        {user && user.name}
                         Stanley Hayford
                     </Button>
                     <Menu
