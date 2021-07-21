@@ -8,6 +8,7 @@ import fundsReducer from "./funds/funds-reducer";
 import loginsReducer from "./logins/logins-reducer";
 import dumpsReducer from "./dumps/dumps-reducer";
 import informationReducer from "./information/information-reducer";
+import chequesReducer from "./cheques/cheques-reducer";
 
 const rootReducer = combineReducers({
     auth: authReducer,
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
     funds: fundsReducer,
     logins: loginsReducer,
     dumps: dumpsReducer,
-    information: informationReducer
+    information: informationReducer,
+    cheques: chequesReducer
 });
 
 export default rootReducer;

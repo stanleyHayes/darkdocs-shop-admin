@@ -5,9 +5,15 @@ import {
     AccountBalance,
     AttachMoney,
     CreditCard,
-    Dashboard, Edit, ExitToApp,
-    Info, Input,
-    List, LockOpen, People,
+    Dashboard,
+    Edit,
+    ExitToApp,
+    Info,
+    Input,
+    List,
+    LockOpen,
+    People,
+    Receipt,
     ShoppingBasket,
     VerifiedUser
 } from "@material-ui/icons";
@@ -108,6 +114,10 @@ const DrawerContent = () => {
                 <Divider variant="fullWidth" className={classes.subDivider}/>
                 <Link to="/dumps" className={classes.link}>
                     <Button className={classes.button} startIcon={<CreditCard/>} variant="text">CC Dumps</Button>
+                </Link>
+                <Divider variant="fullWidth" className={classes.subDivider}/>
+                <Link to="/cheques" className={classes.link}>
+                    <Button className={classes.button} startIcon={<Receipt/>} variant="text">Cheques</Button>
                 </Link>
                 <Divider variant="fullWidth" className={classes.subDivider}/>
                 <Link to="/orders" className={classes.link}>

@@ -16,6 +16,7 @@ import LoginPage from "./pages/authentication/login-page";
 import EditProfilePage from "./pages/profile/edit-profile-page";
 import ProfilePage from "./pages/profile/profile-page";
 import ScrollToTop from "./components/shared/scroll-top-top";
+import ChequesPage from "./pages/cheques/cheques-page";
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
                 <Route path="/funds" exact={true} component={FundsPage}/>
                 <Route path="/instructions" exact={true} component={InstructionsPage}/>
                 <Route path="/logins" exact={true} component={LoginsPage}/>
+                <Route path="/cheques" exact={true} component={ChequesPage}/>
                 <Route path="/users" exact={true} component={UsersPage}/>
                 <Route path="/orders" exact={true} component={OrdersPage}/>
                 <Route path="/information" exact={true} component={InformationPage}/>
