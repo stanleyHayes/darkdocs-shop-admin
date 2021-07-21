@@ -32,7 +32,8 @@ const authReducer = (state = INITIAL_STATE, action) => {
         case SIGN_UP_REQUEST:
             return {
                 ...state,
-                loading: true
+                loading: true,
+                error: ""
             }
 
         case SIGN_UP_SUCCESS:
@@ -56,7 +57,8 @@ const authReducer = (state = INITIAL_STATE, action) => {
         case SIGN_IN_REQUEST:
             return {
                 ...state,
-                loading: true
+                loading: true,
+                error: ""
             }
 
         case SIGN_IN_SUCCESS:
@@ -80,7 +82,8 @@ const authReducer = (state = INITIAL_STATE, action) => {
         case VERIFY_ACCOUNT_REQUEST:
             return {
                 ...state,
-                loading: true
+                loading: true,
+                error: ""
             }
 
         case VERIFY_ACCOUNT_SUCCESS:
@@ -101,7 +104,8 @@ const authReducer = (state = INITIAL_STATE, action) => {
         case UPDATE_PROFILE_REQUEST:
             return {
                 ...state,
-                loading: true
+                loading: true,
+                error: ""
             }
 
         case UPDATE_PROFILE_SUCCESS:
@@ -116,13 +120,14 @@ const authReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 loading: false,
-                error: action.payload
+                error: action.payload,
             }
 
         case CHANGE_PASSWORD_REQUEST:
             return {
                 ...state,
-                loading: true
+                loading: true,
+                error: ""
             }
 
         case CHANGE_PASSWORD_SUCCESS:
@@ -142,7 +147,8 @@ const authReducer = (state = INITIAL_STATE, action) => {
         case FORGOT_PASSWORD_REQUEST:
             return {
                 ...state,
-                loading: true
+                loading: true,
+                error: ""
             }
 
         case FORGOT_PASSWORD_SUCCESS:
