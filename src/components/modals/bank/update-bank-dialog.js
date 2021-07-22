@@ -16,8 +16,7 @@ const UpdateBankDialog = ({openUpdateBankDialog, handleUpdateDialogClose, origin
 
     const useStyles = makeStyles(theme => {
         return {
-            closeButton: {
-            },
+            closeButton: {},
             divider: {
                 marginTop: 8,
                 marginBottom: 8
@@ -39,29 +38,29 @@ const UpdateBankDialog = ({openUpdateBankDialog, handleUpdateDialogClose, origin
 
     const classes = useStyles();
     const dispatch = useDispatch();
-    const {token} = useSelector(state =>state.auth);
+    const {token} = useSelector(state => state.auth);
     const [bank, setBank] = useState({...originalBank});
     const [error, setError] = useState({});
 
-    const handleChange = event=> {
+    const handleChange = event => {
         setBank({...bank, [event.target.name]: event.target.value});
     }
 
     const handleSubmit = event => {
         event.preventDefault();
         const updatedBank = {}
-        if(bank.name !== originalBank.name && !bank.name){
+        if (bank.name !== originalBank.name && !bank.name) {
             setError({...error, 'name': 'Field required'});
             return;
-        }else {
+        } else {
             updatedBank['name'] = bank.name;
             setError({...error, 'name': null});
         }
 
-        if(bank.country !== originalBank.country && !bank.country){
+        if (bank.country !== originalBank.country && !bank.country) {
             setError({...error, 'country': 'Field required'});
             return;
-        }else {
+        } else {
             updatedBank['country'] = bank.country;
             setError({...error, 'country': null});
         }
@@ -78,43 +77,44 @@ const UpdateBankDialog = ({openUpdateBankDialog, handleUpdateDialogClose, origin
 
                 <form onSubmit={handleSubmit}>
 
+                    <TextField
+                        variant="outlined"
+                        label="Bank Name"
+                        placeholder="Enter bank name"
+                        margin="normal"
+                        className={classes.textField}
+                        value={bank.name}
+                        type="text"
+                        onChange={handleChange}
+                        name="name"
+                        fullWidth={true}
+                        error={Boolean(error.country)}
+                        helperText={error.country}
+                    />
+
+                    <TextField
+                        variant="outlined"
+                        label="Bank Country"
+                        placeholder="Enter bank country"
+                        margin="normal"
+                        className={classes.textField}
+                        value={bank.country}
+                        type="text"
+                        onChange={handleChange}
+                        name="country"
+                        fullWidth={true}
+                        error={Boolean(error.country)}
+                        helperText={error.country}
+                    />
+
+                    <Button type="submit" onClick={handleSubmit} variant="outlined" fullWidth={true}
+                            className={classes.submitButton}>
+                        Update Bank
+                    </Button>
+
                 </form>
-                <TextField
-                    variant="outlined"
-                    label="Bank Name"
-                    placeholder="Enter bank name"
-                    margin="normal"
-                    className={classes.textField}
-                    value={bank.name}
-                    type="text"
-                    onChange={handleChange}
-                    name="name"
-                    fullWidth={true}
-                    error={Boolean(error.country)}
-                    helperText={error.country}
-                />
-
-                <TextField
-                    variant="outlined"
-                    label="Bank Country"
-                    placeholder="Enter bank country"
-                    margin="normal"
-                    className={classes.textField}
-                    value={bank.country}
-                    type="text"
-                    onChange={handleChange}
-                    name="country"
-                    fullWidth={true}
-                    error={Boolean(error.country)}
-                    helperText={error.country}
-                />
-
-                <Button type="submit" onClick={handleSubmit} variant="outlined" fullWidth={true} className={classes.submitButton}>
-                    Update Bank
-                </Button>
-
             </DialogContent>
-            <Divider className={classes.divider} variant="fullWidth" />
+            <Divider className={classes.divider} variant="fullWidth"/>
             <DialogActions>
                 <Button onClick={handleUpdateDialogClose} variant="outlined" className={classes.closeButton}>
                     Close
