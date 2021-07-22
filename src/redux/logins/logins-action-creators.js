@@ -113,14 +113,14 @@ const updateLoginFailure = error => {
     }
 }
 
-export const updateLogin = (id, fund, token) => {
+export const updateLogin = (id, login, token) => {
     return dispatch => {
         dispatch(updateLoginRequest());
         axios({
             method: 'put',
             url: `${DEVELOPMENT_SERVER}/logins/${id}`,
             headers: {Authorization: `Bearer ${token}`},
-            data: fund
+            data: login
         }).then(res => {
             const {data} = res.data;
             dispatch(updateLoginSuccess(data));

@@ -195,19 +195,6 @@ const AddBankLoginDialog = ({openBankLoginDialog, handleBankLoginDialogClose}) =
                         required={true}
                     />
 
-                    <TextField
-                        variant="outlined"
-                        label="Bank Country"
-                        placeholder="Enter bank country"
-                        margin="normal"
-                        className={classes.textField}
-                        value={login.country}
-                        type="text"
-                        onChange={handleChange}
-                        name="country"
-                        fullWidth={true}
-                        required={true}
-                    />
                     <Button variant="outlined" fullWidth={true} className={classes.submitButton}>
                         Add Bank Login
                     </Button>
