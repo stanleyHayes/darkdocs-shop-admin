@@ -5,20 +5,20 @@ import {
     DialogActions,
     DialogContent,
     Divider,
-    makeStyles, MenuItem, Select,
+    makeStyles,
+    MenuItem,
+    Select,
     TextField,
     Typography
 } from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
-import {updateInstruction} from "../../../redux/instructions/instructions-action-creators";
 import {updateFund} from "../../../redux/funds/funds-action-creators";
 
 const UpdateFundDialog = ({openUpdateFundsDialog, handleUpdateFundDialogClose, originalFund}) => {
 
     const useStyles = makeStyles(theme => {
         return {
-            closeButton: {
-            },
+            closeButton: {},
             divider: {
                 marginTop: 8,
                 marginBottom: 8
@@ -131,7 +131,7 @@ const UpdateFundDialog = ({openUpdateFundsDialog, handleUpdateFundDialogClose, o
                     </Button>
                 </form>
             </DialogContent>
-            <Divider className={classes.divider} variant="fullWidth" />
+            <Divider className={classes.divider} variant="fullWidth"/>
             <DialogActions>
                 <Button onClick={handleUpdateFundDialogClose} variant="outlined" className={classes.closeButton}>
                     Close
