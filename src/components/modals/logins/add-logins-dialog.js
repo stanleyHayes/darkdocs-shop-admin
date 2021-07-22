@@ -8,7 +8,7 @@ import {
     DialogContent,
     Divider,
     Grid,
-    makeStyles,
+    makeStyles, MenuItem, Select,
     TextField,
     Typography
 } from "@material-ui/core";
@@ -49,7 +49,7 @@ const AddBankLoginDialog = ({openBankLoginDialog, handleBankLoginDialogClose}) =
 
     const classes = useStyles();
 
-    const [login, setLogin] = useState({});
+    const [login, setLogin] = useState({type: 'Savings'});
     const [include, setInclude] = useState("");
     const [includes, setIncludes] = useState([]);
 
@@ -99,6 +99,23 @@ const AddBankLoginDialog = ({openBankLoginDialog, handleBankLoginDialogClose}) =
                         fullWidth={true}
                         required={true}
                     />
+
+                    <Typography gutterBottom={true} variant="caption" className={classes.caption} display="block">
+                        Type
+                    </Typography>
+                    <Select
+                        variant="outlined"
+                        margin="none"
+                        value={login.type}
+                        name="type"
+                        label="Type"
+                        fullWidth={true}
+                        defaultValue={login.type}
+                        className={classes.textField}
+                        onChange={handleChange}>
+                        <MenuItem value="Checkings">Checkings</MenuItem>
+                        <MenuItem value="Savings">Savings</MenuItem>
+                    </Select>
 
                     <Grid container={true} justifyContent="space-between" alignItems="center" spacing={2}>
                         <Grid item={true} xs={12} md={9}>

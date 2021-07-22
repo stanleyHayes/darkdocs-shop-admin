@@ -8,7 +8,7 @@ import {
     DialogContent,
     Divider,
     Grid,
-    makeStyles,
+    makeStyles, MenuItem, Select,
     TextField,
     Typography
 } from "@material-ui/core";
@@ -45,7 +45,11 @@ const UpdateBankLoginDialog = ({openUpdateLoginDialog, handleUpdateLoginDialogCl
             includesGrid: {},
             deleteIcon: {
                 color: red['600']
-            }
+            },
+            caption: {
+                textTransform: 'uppercase',
+                fontWeight: 'bold'
+            },
         }
     });
 
@@ -66,6 +70,15 @@ const UpdateBankLoginDialog = ({openUpdateLoginDialog, handleUpdateLoginDialogCl
         event.preventDefault();
 
         const updatedLogin = {}
+
+        if (login.type !== originalLogin.type && !login.type) {
+            setError({...error, 'type': 'Field required'});
+            return;
+        } else {
+            updatedLogin['type'] = login.type;
+            setError({...error, 'type': null});
+        }
+
         if (login.status !== originalLogin.status && !login.status) {
             setError({...error, 'status': 'Field required'});
             return;
@@ -143,6 +156,23 @@ const UpdateBankLoginDialog = ({openUpdateLoginDialog, handleUpdateLoginDialogCl
                         helperText={error.status}
 
                     />
+
+                    <Typography gutterBottom={true} variant="caption" className={classes.caption} display="block">
+                        Type
+                    </Typography>
+                    <Select
+                        variant="outlined"
+                        margin="none"
+                        value={login.type}
+                        name="type"
+                        label="Type"
+                        fullWidth={true}
+                        defaultValue={login.type}
+                        className={classes.textField}
+                        onChange={handleChange}>
+                        <MenuItem value="Checkings">Checkings</MenuItem>
+                        <MenuItem value="Savings">Savings</MenuItem>
+                    </Select>
 
                     <Grid container={true} justifyContent="space-between" alignItems="center" spacing={2}>
                         <Grid item={true} xs={12} md={9}>
