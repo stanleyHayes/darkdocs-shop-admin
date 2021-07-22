@@ -29,6 +29,7 @@ import moment from "moment";
 import AddUserDialog from "../../components/modals/users/add-user-dialog";
 import DeleteDialog from "../../components/shared/delete-dialog";
 import ViewUserDialog from "../../components/modals/users/view-user-dialog";
+import UpdateUserDialog from "../../components/modals/users/update-user-dialog";
 
 const UsersPage = () => {
 
@@ -132,6 +133,17 @@ const UsersPage = () => {
         handleViewItemDialogOpen();
     }
 
+    const [openUpdateUserDialog, setOpenUpdateUserDialog] = useState(false);
+    const [selectedUser, setSelectedUser] = useState(null);
+    const handleUpdateSelectedUserClick = user => {
+        setSelectedUser(user);
+        setOpenUpdateUserDialog(true);
+    }
+    const handleUpdateUserDialogClose = () => {
+        setSelectedUser(null);
+        setOpenUpdateUserDialog(false);
+    }
+
     return (
         <Layout>
             <Container className={classes.container}>
@@ -225,7 +237,9 @@ const UsersPage = () => {
                                                                         className={classes.viewIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
-                                                            <Edit className={classes.editIcon}/>
+                                                            <Edit
+                                                                onClick={() => handleUpdateSelectedUserClick(user)}
+                                                                className={classes.editIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
                                                             <Delete onClick={() => handleDeleteItemClick(user._id)}
@@ -267,6 +281,13 @@ const UsersPage = () => {
                 openUserDialog={viewItemDialogOpen}
                 handleUserDialogClose={handleViewItemDialogClose}
                 user={selectedItem}
+            />}
+
+            {selectedUser &&
+            <UpdateUserDialog
+                openUpdateUserDialog={openUpdateUserDialog}
+                handleUpdateUserDialogClose={handleUpdateUserDialogClose}
+                originalUser={selectedUser}
             />}
 
         </Layout>

@@ -27,6 +27,7 @@ import moment from "moment";
 import AddCCDumpsDialog from "../../components/modals/dumps/add-ccdumps-dialog";
 import DeleteDialog from "../../components/shared/delete-dialog";
 import ViewDumpsDialog from "../../components/modals/dumps/view-dumps-dialog";
+import UpdateDumpsDialog from "../../components/modals/dumps/update-dumps-dialog";
 
 const DumpsPage = () => {
 
@@ -119,12 +120,23 @@ const DumpsPage = () => {
         handleViewItemDialogOpen();
     }
 
+    const [openUpdateDumpsDialog, setOpenUpdateDumpsDialog] = useState(false);
+    const [selectedDumps, setSelectedDumps] = useState(null);
+    const handleUpdateSelectedDumpsClick = dumps => {
+        setSelectedDumps(dumps);
+        setOpenUpdateDumpsDialog(true);
+    }
+    const handleUpdateDumpsDialogClose = () => {
+        setSelectedDumps(null);
+        setOpenUpdateDumpsDialog(false);
+    }
+
     return (
         <Layout>
             <Container className={classes.container}>
                 {loading && <LinearProgress variant="query"/>}
-                {error && <Alert title="Error">{error}</Alert>}
-                <Grid container={true} justifyContent="space-between" spacing={2}>
+                {error && <Alert severity="error" title="Error">{error}</Alert>}
+                <Grid container={true} justifyContent="space-between" alignItems="center" spacing={2}>
                     <Grid item={true} xs={12} md={8}>
                         <Typography color="textSecondary" className={classes.title} variant="h5">CC Dumps</Typography>
                     </Grid>
@@ -178,7 +190,9 @@ const DumpsPage = () => {
                                                                         className={classes.viewIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
-                                                            <Edit className={classes.editIcon}/>
+                                                            <Edit
+                                                                onClick={() => handleUpdateSelectedDumpsClick(dump)}
+                                                                className={classes.editIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
                                                             <Delete onClick={() => handleDeleteItemClick(dump._id)}
@@ -223,6 +237,12 @@ const DumpsPage = () => {
                 ccDump={selectedItem}
             />}
 
+            {selectedDumps &&
+            <UpdateDumpsDialog
+                openUpdateDumpsDialog={openUpdateDumpsDialog}
+                handleUpdateDumpsDialogClose={handleUpdateDumpsDialogClose}
+                originalDumps={selectedDumps}
+            />}
         </Layout>
     )
 }

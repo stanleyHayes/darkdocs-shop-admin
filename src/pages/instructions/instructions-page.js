@@ -26,6 +26,7 @@ import {deleteInstruction, getInstructions} from "../../redux/instructions/instr
 import {brown, green, red} from "@material-ui/core/colors";
 import AddInstructionDialog from "../../components/modals/instructions/add-instruction-dialog";
 import DeleteDialog from "../../components/shared/delete-dialog";
+import UpdateInstructionDialog from "../../components/modals/instructions/update-instrucion-dialog";
 
 const InstructionsPage = () => {
 
@@ -104,11 +105,22 @@ const InstructionsPage = () => {
         }
     }
 
+    const [openUpdateInstructionDialog, setOpenUpdateInstructionDialog] = useState(false);
+    const [selectedInstruction, setSelectedInstruction] = useState(null);
+    const handleUpdateSelectedInstructionClick = instruction => {
+        setSelectedInstruction(instruction);
+        setOpenUpdateInstructionDialog(true);
+    }
+    const handleUpdateInstructionDialogClose = () => {
+        setSelectedInstruction(null);
+        setOpenUpdateInstructionDialog(false);
+    }
+
     return (
         <Layout>
             <Container className={classes.container}>
                 {loading && <LinearProgress variant="query"/>}
-                {error && <Alert title="Error">{error}</Alert>}
+                {error && <Alert severity="error" title="Error">{error}</Alert>}
                 <Grid container={true} justifyContent="space-between" spacing={2}>
                     <Grid item={true} xs={12} md={8}>
                         <Typography
@@ -135,7 +147,7 @@ const InstructionsPage = () => {
                     <Box>
                         <Typography align="center" variant="h6">No instructions available</Typography>
                     </Box>) : (
-                    <TableContainer elevation={1} variant="outlined" component={Paper}
+                    <TableContainer elevation={1} variant="elevation" component={Paper}
                                     className={classes.tableContainer}>
                         <Table>
                             <TableHead>
@@ -157,7 +169,9 @@ const InstructionsPage = () => {
                                                 <TableCell>
                                                     <Grid container={true} spacing={1}>
                                                         <Grid item={true}>
-                                                            <Edit className={classes.editIcon}/>
+                                                            <Edit
+                                                                onClick={() => handleUpdateSelectedInstructionClick(instruction)}
+                                                                className={classes.editIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
                                                             <Delete
@@ -193,6 +207,13 @@ const InstructionsPage = () => {
                 handleDialogClose={handleDeleteDialogClose}
                 message="Are you sure you want to delete this instruction?"
                 handleConfirmAction={handleDelete}
+            />}
+
+            {selectedInstruction &&
+            <UpdateInstructionDialog
+                openUpdateInstructionDialog={openUpdateInstructionDialog}
+                handleUpdateInstructionDialogClose={handleUpdateInstructionDialogClose}
+                originalInstruction={selectedInstruction}
             />}
         </Layout>
     )

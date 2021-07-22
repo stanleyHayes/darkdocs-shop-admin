@@ -23,7 +23,7 @@ import {brown, green, red} from "@material-ui/core/colors";
 import {useDispatch, useSelector} from "react-redux";
 import {deleteOrder, getOrders} from "../../redux/orders/order-action-creators";
 import {Alert} from "@material-ui/lab";
-import {Delete, Edit, Visibility} from "@material-ui/icons";
+import {Delete, Visibility} from "@material-ui/icons";
 import moment from "moment";
 import DeleteDialog from "../../components/shared/delete-dialog";
 import ViewOrderDialog from "../../components/modals/orders/view-order-dialog";
@@ -183,7 +183,6 @@ const OrdersPage = () => {
                                 <TableRow hover={true}>
                                     <TableCell>#</TableCell>
                                     <TableCell>User</TableCell>
-                                    <TableCell>Status</TableCell>
                                     <TableCell>Type</TableCell>
                                     <TableCell>Price</TableCell>
                                     <TableCell>Date Created</TableCell>
@@ -197,7 +196,6 @@ const OrdersPage = () => {
                                             <TableRow hover={true} key={index}>
                                                 <TableCell>{index + 1}</TableCell>
                                                 <TableCell>{order.user.name}</TableCell>
-                                                <TableCell>{order.status}</TableCell>
                                                 <TableCell>{order.type}</TableCell>
                                                 <TableCell>${parseFloat(order.price).toFixed(2)}</TableCell>
                                                 <TableCell>{moment(order.createdAt).fromNow()}</TableCell>
@@ -206,9 +204,6 @@ const OrdersPage = () => {
                                                         <Grid item={true}>
                                                             <Visibility onClick={() => handleSelectedItem(order)}
                                                                         className={classes.viewIcon}/>
-                                                        </Grid>
-                                                        <Grid item={true}>
-                                                            <Edit className={classes.editIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
                                                             <Delete onClick={() => handleDeleteItemClick(order._id)}

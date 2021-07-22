@@ -26,6 +26,7 @@ import {Delete, Edit} from "@material-ui/icons";
 import moment from "moment";
 import {deleteFund, getFunds} from "../../redux/funds/funds-action-creators";
 import DeleteDialog from "../../components/shared/delete-dialog";
+import UpdateFundDialog from "../../components/modals/funds/update-funds-dialog";
 
 const FundsPage = () => {
 
@@ -96,6 +97,17 @@ const FundsPage = () => {
         }
     }
 
+    const [openUpdateFundDialog, setOpenUpdateFundDialog] = useState(false);
+    const [selectedFund, setSelectedFund] = useState(null);
+    const handleUpdateSelectedFundClick = fund => {
+        setSelectedFund(fund);
+        setOpenUpdateFundDialog(true);
+    }
+    const handleUpdateFundDialogClose = () => {
+        setSelectedFund(null);
+        setOpenUpdateFundDialog(false);
+    }
+
     return (
         <Layout>
             <Container className={classes.container}>
@@ -162,7 +174,8 @@ const FundsPage = () => {
                                                 <TableCell>
                                                     <Grid container={true} spacing={1}>
                                                         <Grid item={true}>
-                                                            <Edit className={classes.editIcon}/>
+                                                            <Edit onClick={() => handleUpdateSelectedFundClick(fund)}
+                                                                  className={classes.editIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
                                                             <Delete onClick={() => handleDeleteItemClick(fund._id)}
@@ -192,6 +205,13 @@ const FundsPage = () => {
                 handleDialogClose={handleDeleteDialogClose}
                 message="Are you sure you want to delete this Fund?"
                 handleConfirmAction={handleDelete}
+            />}
+
+            {selectedFund &&
+            <UpdateFundDialog
+                openUpdateFundsDialog={openUpdateFundDialog}
+                handleUpdateFundDialogClose={handleUpdateFundDialogClose}
+                originalFund={selectedFund}
             />}
 
         </Layout>

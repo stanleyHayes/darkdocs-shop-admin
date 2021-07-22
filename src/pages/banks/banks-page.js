@@ -28,6 +28,7 @@ import moment from 'moment';
 import {deleteBank, getBanks} from "../../redux/banks/banks-action-creators";
 import AddBankDialog from "../../components/modals/bank/add-bank-dialog";
 import DeleteDialog from "../../components/shared/delete-dialog";
+import UpdateBankDialog from "../../components/modals/bank/update-bank-dialog";
 
 const BanksPage = () => {
 
@@ -107,6 +108,17 @@ const BanksPage = () => {
             handleDeleteDialogClose();
         }
     }
+
+    const [openUpdateBankDialog, setOpenUpdateBankDialog] = useState(false);
+    const [selectedBank, setSelectedBank] = useState(null);
+    const handleUpdateSelectedBank = bank => {
+        setSelectedBank(bank);
+        setOpenUpdateBankDialog(true);
+    }
+    const handleUpdateBankDialogClose = () => {
+        setSelectedBank(null);
+        setOpenUpdateBankDialog(false);
+    }
     return (
         <Layout>
             <Container className={classes.container}>
@@ -161,6 +173,7 @@ const BanksPage = () => {
                                     <TableCell>Name</TableCell>
                                     <TableCell>Country</TableCell>
                                     <TableCell>Date Created</TableCell>
+                                    <TableCell>Date Updated</TableCell>
                                     <TableCell>Actions</TableCell>
                                 </TableRow>
                             </TableHead>
@@ -173,10 +186,13 @@ const BanksPage = () => {
                                                 <TableCell>{bank.name}</TableCell>
                                                 <TableCell>{bank.country}</TableCell>
                                                 <TableCell>{moment(bank.createdAt).fromNow()}</TableCell>
+                                                <TableCell>{moment(bank.updatedAt).fromNow()}</TableCell>
                                                 <TableCell>
                                                     <Grid container={true} spacing={1}>
                                                         <Grid item={true}>
-                                                            <Edit className={classes.editIcon}/>
+                                                            <Edit
+                                                                onClick={() => handleUpdateSelectedBank(bank)}
+                                                                className={classes.editIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
                                                             <Delete onClick={() => handleDeleteItemClick(bank._id)}
@@ -211,6 +227,13 @@ const BanksPage = () => {
                 handleDialogClose={handleDeleteDialogClose}
                 message="Are you sure you want to delete this Bank?"
                 handleConfirmAction={handleDelete}
+            />}
+
+            {selectedBank &&
+            <UpdateBankDialog
+                openUpdateBankDialog={openUpdateBankDialog}
+                handleUpdateDialogClose={handleUpdateBankDialogClose}
+                originalBank={selectedBank}
             />}
         </Layout>
     )

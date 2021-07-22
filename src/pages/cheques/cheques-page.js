@@ -27,6 +27,7 @@ import moment from "moment";
 import DeleteDialog from "../../components/shared/delete-dialog";
 import {deleteCheque, getCheques} from "../../redux/cheques/cheques-action-creators";
 import ViewChequeDialog from "../../components/modals/cheques/view-cheque-dialog";
+import UpdateChequeDialog from "../../components/modals/cheques/update-cheque-dialog";
 
 const ChequesPage = () => {
 
@@ -117,6 +118,18 @@ const ChequesPage = () => {
         handleViewItemDialogOpen();
     }
 
+
+    const [openUpdateChequeDialog, setOpenUpdateChequeDialog] = useState(false);
+    const [selectedCheque, setSelectedCheque] = useState(null);
+    const handleUpdateSelectedChequeClick = instruction => {
+        setSelectedCheque(instruction);
+        setOpenUpdateChequeDialog(true);
+    }
+    const handleUpdateChequeDialogClose = () => {
+        setSelectedCheque(null);
+        setOpenUpdateChequeDialog(false);
+    }
+
     return (
         <Layout>
             <Container className={classes.container}>
@@ -187,7 +200,9 @@ const ChequesPage = () => {
                                                                         className={classes.viewIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
-                                                            <Edit className={classes.editIcon}/>
+                                                            <Edit
+                                                                onClick={() => handleUpdateSelectedChequeClick(cheque)}
+                                                                className={classes.editIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
                                                             <Delete onClick={() => handleDeleteItemClick(cheque._id)}
@@ -224,6 +239,13 @@ const ChequesPage = () => {
                 openViewChequeDialog={openViewChequeDialog}
                 handleViewChequeDialogClose={handleViewChequeDialogClose}
                 cheque={selectedItem}
+            />}
+
+            {selectedCheque &&
+            <UpdateChequeDialog
+                openUpdateChequeDialog={openUpdateChequeDialog}
+                handleUpdateChequeDialogClose={handleUpdateChequeDialogClose}
+                originalCheque={selectedCheque}
             />}
         </Layout>
     )

@@ -29,6 +29,7 @@ import {deleteLogin, getLogins} from "../../redux/logins/logins-action-creators"
 import AddBankLoginDialog from "../../components/modals/logins/add-logins-dialog";
 import DeleteDialog from "../../components/shared/delete-dialog";
 import ViewBankLoginDialog from "../../components/modals/logins/view-login-dialog";
+import UpdateBankLoginDialog from "../../components/modals/logins/update-login-dialog";
 
 const LoginsPage = () => {
 
@@ -36,7 +37,10 @@ const LoginsPage = () => {
     const useStyles = makeStyles(theme => {
         return {
             container: {},
-            button: {},
+            button: {
+                paddingTop: 8,
+                paddingBottom: 8
+            },
             divider: {
                 marginTop: 16,
                 marginBottom: 16
@@ -129,12 +133,23 @@ const LoginsPage = () => {
         handleViewItemDialogOpen();
     }
 
+    const [openUpdateLoginDialog, setOpenUpdateLoginDialog] = useState(false);
+    const [selectedLogin, setSelectedLogin] = useState(null);
+    const handleUpdateSelectedLoginClick = login => {
+        setSelectedLogin(login);
+        setOpenUpdateLoginDialog(true);
+    }
+    const handleUpdateLoginDialogClose = () => {
+        setSelectedLogin(null);
+        setOpenUpdateLoginDialog(false);
+    }
+
     return (
         <Layout>
             <Container className={classes.container}>
                 {loading && <LinearProgress variant="query"/>}
-                {error && <Alert title="Error">{error}</Alert>}
-                <Grid container={true} justifyContent="space-between" spacing={2}>
+                {error && <Alert severity="error" title="Error">{error}</Alert>}
+                <Grid container={true} justifyContent="space-between" alignItems="center" spacing={2}>
                     <Grid item={true} xs={12} md={4}>
                         <Typography
                             color="textSecondary"
@@ -205,7 +220,9 @@ const LoginsPage = () => {
                                                                         className={classes.viewIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
-                                                            <Edit className={classes.editIcon}/>
+                                                            <Edit
+                                                                onClick={() => handleUpdateSelectedLoginClick(login)}
+                                                                className={classes.editIcon}/>
                                                         </Grid>
                                                         <Grid item={true}>
                                                             <Delete onClick={() => handleDeleteItemClick(login._id)}
@@ -247,6 +264,13 @@ const LoginsPage = () => {
                 openBankLoginDialog={viewItemDialogOpen}
                 handleBankLoginDialogClose={handleViewItemDialogClose}
                 bankLogin={selectedItem}
+            />}
+
+            {selectedLogin &&
+            <UpdateBankLoginDialog
+                openUpdateLoginDialog={openUpdateLoginDialog}
+                handleUpdateLoginDialogClose={handleUpdateLoginDialogClose}
+                originalLogin={selectedLogin}
             />}
         </Layout>
     )
