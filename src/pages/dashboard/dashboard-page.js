@@ -32,7 +32,16 @@ const DashboardPage = () => {
                 marginBottom: 32
             },
             title: {
-                marginBottom: 32
+                marginBottom: 32,
+                textTransform: 'uppercase',
+                color: theme.palette.text.secondary
+            },
+            btc: {
+                fontSize: '80%',
+                fontWeight: 'bold'
+            },
+            email: {
+                fontWeight: 'bold'
             }
         }
     });
@@ -57,8 +66,8 @@ const DashboardPage = () => {
                                         </Avatar>
                                     </Grid>
                                 </Grid>
-                                <Typography variant="body2" align="center">Email</Typography>
-                                <Typography variant="body1" align="center">{information && information.email}</Typography>
+                                <Typography gutterBottom={true}  variant="body2" align="center">Email</Typography>
+                                <Typography className={classes.email} variant="body1" align="center">{information && information.email}</Typography>
                             </CardContent>
                         </Card>
                     </Grid>
@@ -72,8 +81,8 @@ const DashboardPage = () => {
                                         </Avatar>
                                     </Grid>
                                 </Grid>
-                                <Typography variant="body2" align="center">BTC Address</Typography>
-                                <Typography variant="caption" display="block" align="center">
+                                <Typography variant="body2" gutterBottom={true} align="center">BTC Address</Typography>
+                                <Typography gutterBottom={true}  className={classes.btc} variant="caption" display="block" align="center">
                                     {information && information.btcAddress}
                                 </Typography>
                             </CardContent>

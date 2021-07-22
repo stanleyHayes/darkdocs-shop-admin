@@ -51,7 +51,8 @@ const LoginPage = () => {
             },
             title: {
                 marginTop: 16,
-                marginBottom: 16
+                marginBottom: 16,
+                textTransform: 'uppercase'
             },
             image: {
                 maxHeight: '100%',
@@ -108,11 +109,11 @@ const LoginPage = () => {
 
     return (
         <div className={classes.container}>
-            <Container className={classes.gridContainer} >
+            <Container className={classes.gridContainer}>
                 <Grid container={true} justifyContent="center" alignItems="center">
                     <Grid item={true}>
                         <Avatar className={classes.logo} variant="rounded">
-                            <img className={classes.image} alt="logo" src="/images/logo.png" />
+                            <img className={classes.image} alt="logo" src="/images/logo.png"/>
                         </Avatar>
                     </Grid>
                 </Grid>

@@ -47,7 +47,8 @@ const ChangePasswordPage = () => {
             },
             title: {
                 marginTop: 16,
-                marginBottom: 16
+                marginBottom: 16,
+                textTransform: 'uppercase'
             },
             logo: {
                 width: 100,

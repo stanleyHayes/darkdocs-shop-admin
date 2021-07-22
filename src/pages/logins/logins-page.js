@@ -39,7 +39,8 @@ const LoginsPage = () => {
             container: {},
             button: {
                 paddingTop: 8,
-                paddingBottom: 8
+                paddingBottom: 8,
+                backgroundColor: 'white'
             },
             divider: {
                 marginTop: 16,

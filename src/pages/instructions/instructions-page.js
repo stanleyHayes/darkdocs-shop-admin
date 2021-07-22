@@ -33,7 +33,11 @@ const InstructionsPage = () => {
     const useStyles = makeStyles(theme => {
         return {
             container: {},
-            button: {},
+            button: {
+                paddingTop: 8,
+                paddingBottom: 8,
+                backgroundColor: 'white'
+            },
             divider: {
                 marginTop: 16,
                 marginBottom: 16

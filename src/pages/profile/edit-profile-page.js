@@ -106,7 +106,7 @@ const EditProfilePage = () => {
                     <Grid item={true} xs={12} md={8} lg={6}>
                         <Card elevation={1} variant="elevation">
                             <CardContent>
-                                <Typography className={classes.title} gutterBottom={true} variant="h6" align="center">
+                                <Typography className={classes.title} gutterBottom={true} variant="h5" align="center">
                                     Edit Profile
                                 </Typography>
 
