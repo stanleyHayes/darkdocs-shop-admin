@@ -121,8 +121,8 @@ const ChequesPage = () => {
 
     const [openUpdateChequeDialog, setOpenUpdateChequeDialog] = useState(false);
     const [selectedCheque, setSelectedCheque] = useState(null);
-    const handleUpdateSelectedChequeClick = instruction => {
-        setSelectedCheque(instruction);
+    const handleUpdateSelectedChequeClick = cheque => {
+        setSelectedCheque(cheque);
         setOpenUpdateChequeDialog(true);
     }
     const handleUpdateChequeDialogClose = () => {
@@ -178,6 +178,7 @@ const ChequesPage = () => {
                                     <TableCell>Status</TableCell>
                                     <TableCell>Address</TableCell>
                                     <TableCell>Balance</TableCell>
+                                    <TableCell>Price</TableCell>
                                     <TableCell>Date Created</TableCell>
                                     <TableCell>Actions</TableCell>
                                 </TableRow>
@@ -192,6 +193,7 @@ const ChequesPage = () => {
                                                 <TableCell>{cheque.status}</TableCell>
                                                 <TableCell>{cheque.address}</TableCell>
                                                 <TableCell>{cheque.balance}</TableCell>
+                                                <TableCell>${parseFloat(cheque.price).toFixed(2)}</TableCell>
                                                 <TableCell>{moment(cheque.createdAt).fromNow()}</TableCell>
                                                 <TableCell>
                                                     <Grid container={true} spacing={1} alignItems="center">

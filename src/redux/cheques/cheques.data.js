@@ -5,6 +5,7 @@ export const cheques = [
         updatedAt: '08-29-2020',
         status: 'Completed',
         balance: '1k - 5k',
+        price: 45,
         _id: 1,
         user: {
             name: 'Florence Kyei-Baffour'
@@ -16,6 +17,7 @@ export const cheques = [
         updatedAt: '08-29-2020',
         balance: '10k - 50k',
         status: 'Pending',
+        price: 35,
         _id: 2,
         user: {
             name: 'Stanley Hayford'
@@ -27,6 +29,7 @@ export const cheques = [
         updatedAt: '08-29-2020',
         balance: '10k - 50k',
         status: 'Pending',
+        price: 4,
         _id: 3,
         user: {
             name: 'Florence Kyei-Baffour'
@@ -39,6 +42,7 @@ export const cheques = [
         updatedAt: '08-29-2020',
         status: 'Completed',
         _id: 4,
+        price: 15,
         user: {
             name: 'Emmanuella Sangmua'
         }
@@ -49,6 +53,7 @@ export const cheques = [
         updatedAt: '08-29-2020',
         balance: '100k - 500k',
         status: 'Completed',
+        price: 25,
         _id: 5,
         user: {
             name: 'Stanley Hayford'
@@ -60,6 +65,7 @@ export const cheques = [
         updatedAt: '08-29-2020',
         balance: '1k - 5k',
         status: 'Completed',
+        price: 10,
         _id: 6,
         user: {
             name: 'Florence Kyei-Baffour'
@@ -71,6 +77,7 @@ export const cheques = [
         updatedAt: '08-29-2020',
         balance: '1k - 5k',
         status: 'Pending',
+        price: 10,
         _id: 7,
         user: {
             name: 'Stanley Hayford'
@@ -82,6 +89,7 @@ export const cheques = [
         updatedAt: '08-29-2020',
         balance: '10k - 50k',
         status: 'Completed',
+        price: 15,
         _id: 8,
         user: {
             name: 'Victoria Samson'
@@ -93,6 +101,7 @@ export const cheques = [
         updatedAt: '08-29-2020',
         balance: '100k - 500k',
         status: 'Pending',
+        price: 45,
         _id: 9,
         user: {
             name: 'Emmanuella Sangmua'
@@ -104,6 +113,7 @@ export const cheques = [
         updatedAt: '08-29-2020',
         balance: '1k - 5k',
         status: 'Cancelled',
+        price: 10,
         _id: 10,
         user: {
             name: 'Stanley Hayford'
@@ -115,6 +125,7 @@ export const cheques = [
         updatedAt: '08-29-2020',
         balance: '10k - 50k',
         status: 'Completed',
+        price: 15,
         _id: 11,
         user: {
             name: 'Anoinette Dewortor'
@@ -126,6 +137,7 @@ export const cheques = [
         updatedAt: '08-29-2020',
         balance: '1k - 5k',
         status: 'Completed',
+        price: 10,
         _id: 12,
         user: {
             name: 'Victoria Samson'
@@ -137,6 +149,7 @@ export const cheques = [
         updatedAt: '08-29-2020',
         status: 'Pending',
         balance: '10k - 50k',
+        price: 15,
         _id: 13,
         user: {
             name: 'Emmanuella Sangmua'
@@ -148,6 +161,7 @@ export const cheques = [
         updatedAt: '08-29-2020',
         balance: '100k - 500k',
         status: 'Completed',
+        price: 45,
         _id: 14,
         user: {
             name: 'Anoinette Dewortor'
@@ -159,6 +173,7 @@ export const cheques = [
         updatedAt: '08-29-2020',
         balance: '1k - 5k',
         status: 'Completed',
+        price: 10,
         _id: 15,
         user: {
             name: 'Stanley Hayford'
@@ -170,6 +185,7 @@ export const cheques = [
         updatedAt: '08-29-2020',
         status: 'Completed',
         balance: '1k - 5k',
+        price: 10,
         _id: 16,
         user: {
             name: 'Victoria Samson'
@@ -181,6 +197,7 @@ export const cheques = [
         updatedAt: '08-29-2020',
         status: 'Pending',
         balance: '10k - 50k',
+        price: 15,
         _id: 17,
         user: {
             name: 'Anoinette Dewortor'
@@ -192,6 +209,7 @@ export const cheques = [
         updatedAt: '08-29-2020',
         balance: '1k - 5k',
         status: 'Completed',
+        price: 15,
         _id: 18,
         user: {
             name: 'Stanley Hayford'
