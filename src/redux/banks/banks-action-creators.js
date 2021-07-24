@@ -1,19 +1,19 @@
 import {
+    CREATE_BANK_FAILURE,
+    CREATE_BANK_REQUEST,
     CREATE_BANK_SUCCESS,
-    DELETE_BANK_SUCCESS,
     DELETE_BANK_FAILURE,
     DELETE_BANK_REQUEST,
+    DELETE_BANK_SUCCESS,
     GET_BANK_FAILURE,
+    GET_BANK_REQUEST,
+    GET_BANK_SUCCESS,
     GET_BANKS_FAILURE,
     GET_BANKS_REQUEST,
-    UPDATE_BANK_FAILURE,
-    GET_BANK_SUCCESS,
     GET_BANKS_SUCCESS,
+    UPDATE_BANK_FAILURE,
     UPDATE_BANK_REQUEST,
-    UPDATE_BANK_SUCCESS,
-    CREATE_BANK_FAILURE,
-    GET_BANK_REQUEST,
-    CREATE_BANK_REQUEST
+    UPDATE_BANK_SUCCESS
 } from "./banks-action-types";
 import axios from "axios";
 import {SERVER_BASE_URL} from "../../constants/constants";
@@ -49,9 +49,9 @@ export const createBank = (bank, token, showNotification) => {
         }).then(res => {
             const {data, message} = res.data;
             dispatch(createBankSuccess(data));
-            showNotification(message,{variant: 'success'});
+            showNotification(message, {variant: 'success'});
         }).catch(error => {
-            showNotification(error.response.data.message,{variant: 'error'});
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(createBankFailure(error.response.data.message));
         });
     }
@@ -115,7 +115,7 @@ const updateBankFailure = error => {
     }
 }
 
-export const updateBank = (id, bank, token) => {
+export const updateBank = (id, bank, token, showNotification) => {
     return dispatch => {
         dispatch(updateBankRequest());
         axios({
@@ -124,9 +124,11 @@ export const updateBank = (id, bank, token) => {
             headers: {Authorization: `Bearer ${token}`},
             data: bank
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
+            showNotification(message, {variant: 'success'});
             dispatch(updateBankSuccess(data));
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'success'});
             dispatch(updateBankFailure(error.response.data.message));
         });
     }
@@ -199,10 +201,10 @@ export const getBanks = (token, showNotification) => {
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data, message} = res.data;
-            showNotification(message,{variant: 'success'});
+            showNotification(message, {variant: 'success'});
             dispatch(getBanksSuccess(data));
         }).catch(error => {
-            showNotification(error.response.data.message,{variant: 'error'});
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(getBanksFailure(error.response.data.message));
         });
     }

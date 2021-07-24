@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     Button,
     Dialog,
@@ -10,7 +10,8 @@ import {
     Typography
 } from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
-import {updateBank} from "../../../redux/banks/banks-action-creators";
+import {getBanks, updateBank} from "../../../redux/banks/banks-action-creators";
+import {useSnackbar} from "notistack";
 
 const UpdateBankDialog = ({openUpdateBankDialog, handleUpdateDialogClose, originalBank}) => {
 
@@ -42,6 +43,12 @@ const UpdateBankDialog = ({openUpdateBankDialog, handleUpdateDialogClose, origin
     const [bank, setBank] = useState({...originalBank});
     const [error, setError] = useState({});
 
+    const {enqueueSnackbar} = useSnackbar();
+
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
+
     const handleChange = event => {
         setBank({...bank, [event.target.name]: event.target.value});
     }
@@ -64,7 +71,7 @@ const UpdateBankDialog = ({openUpdateBankDialog, handleUpdateDialogClose, origin
             updatedBank['country'] = bank.country;
             setError({...error, 'country': null});
         }
-        dispatch(updateBank(originalBank._id, updatedBank, token));
+        dispatch(updateBank(originalBank._id, updatedBank, token, showNotification));
         handleUpdateDialogClose();
     }
 
