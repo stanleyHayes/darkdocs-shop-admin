@@ -29,6 +29,7 @@ import {deleteBank, getBanks} from "../../redux/banks/banks-action-creators";
 import AddBankDialog from "../../components/modals/bank/add-bank-dialog";
 import DeleteDialog from "../../components/shared/delete-dialog";
 import UpdateBankDialog from "../../components/modals/bank/update-bank-dialog";
+import {useSnackbar} from "notistack";
 
 const BanksPage = () => {
 
@@ -55,6 +56,13 @@ const BanksPage = () => {
             },
             title: {
                 textTransform: 'uppercase'
+            },
+            emptyText: {
+                textTransform: 'uppercase'
+            },
+            alert: {
+                marginTop: 8,
+                marginBottom: 8
             }
         }
     });
@@ -80,13 +88,18 @@ const BanksPage = () => {
     }
 
     const {token} = useSelector(state => state.auth);
+    const {enqueueSnackbar} = useSnackbar();
+
     const classes = useStyles();
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getBanks(token));
-    }, [dispatch, token]);
+        const showNotification = (message, options) => {
+            enqueueSnackbar(message, options);
+        }
+        dispatch(getBanks(token, showNotification));
+    }, [dispatch, enqueueSnackbar, token]);
 
     const {banks, loading, error} = useSelector(state => state.banks);
 
@@ -127,14 +140,13 @@ const BanksPage = () => {
         <Layout>
             <Container className={classes.container}>
                 {loading && <LinearProgress variant="query"/>}
-                {error && <Alert title="Error">{error}</Alert>}
-                <Grid container={true} justifyContent="space-between" spacing={2}>
+                {error && <Alert className={classes.alert} severity="error" title="Error">{error}</Alert>}
+                <Grid container={true} justifyContent="space-between" spacing={2} alignItems="center">
                     <Grid item={true} xs={12} md={4}>
                         <Typography
                             color="textSecondary"
                             className={classes.title}
-                            variant="h5"
-                            gutterBottom={true}>
+                            variant="h5">
                             Bank
                         </Typography>
                     </Grid>
@@ -166,7 +178,12 @@ const BanksPage = () => {
 
                 {banks && banks.length === 0 ? (
                     <Box>
-                        <Typography align="center" variant="h6">No banks available</Typography>
+                        <Typography
+                            color="textSecondary"
+                            variant="h6"
+                            className={classes.emptyText}>
+                            No banks available
+                        </Typography>
                     </Box>) : (
                     <TableContainer elevation={1} variant="elevation" component={Paper}
                                     className={classes.tableContainer}>

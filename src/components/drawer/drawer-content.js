@@ -18,6 +18,7 @@ import {
     VerifiedUser
 } from "@material-ui/icons";
 import {grey} from "@material-ui/core/colors";
+import {useSelector} from "react-redux";
 
 const DrawerContent = () => {
 
@@ -72,18 +73,31 @@ const DrawerContent = () => {
 
     const classes = useStyles();
 
+    const {user} = useSelector(state => state.auth);
+
+    const getInitials = name => {
+        const names = name.split(' ');
+        if (names.length === 1)
+            return names[0][0];
+        if (names.length === 2)
+            return `${names[0][0]}${names[1][0]}`
+        return 'S'
+    }
+
     return (
         <Container className={classes.container}>
             <Grid container={true} direction="column" alignItems="center" justifyContent="center"
                   className={classes.box}>
                 <Grid item={true}>
                     <Avatar className={classes.avatar}>
-                        <Typography className={classes.initials} variant="h5" align="center">SH</Typography>
+                        <Typography className={classes.initials} variant="h5" align="center">
+                            {user && getInitials(user.name)}
+                        </Typography>
                     </Avatar>
                 </Grid>
                 <Grid item={true}>
                     <Typography className={classes.initials} variant="h5" align="center">
-                        Stanley Hayford
+                        {user && user.name}
                     </Typography>
                 </Grid>
             </Grid>

@@ -38,7 +38,7 @@ const createBankFailure = error => {
     }
 }
 
-export const createBank = (bank, token) => {
+export const createBank = (bank, token, showNotification) => {
     return dispatch => {
         dispatch(createBankRequest());
         axios({
@@ -47,9 +47,11 @@ export const createBank = (bank, token) => {
             headers: {Authorization: `Bearer ${token}`},
             data: bank
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
             dispatch(createBankSuccess(data));
+            showNotification(message,{variant: 'success'});
         }).catch(error => {
+            showNotification(error.response.data.message,{variant: 'error'});
             dispatch(createBankFailure(error.response.data.message));
         });
     }
@@ -188,7 +190,7 @@ const getBanksFailure = error => {
     }
 }
 
-export const getBanks = (token) => {
+export const getBanks = (token, showNotification) => {
     return dispatch => {
         dispatch(getBanksRequest());
         axios({
@@ -196,9 +198,11 @@ export const getBanks = (token) => {
             url: `${SERVER_BASE_URL}/banks`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
+            showNotification(message,{variant: 'success'});
             dispatch(getBanksSuccess(data));
         }).catch(error => {
+            showNotification(error.response.data.message,{variant: 'error'});
             dispatch(getBanksFailure(error.response.data.message));
         });
     }

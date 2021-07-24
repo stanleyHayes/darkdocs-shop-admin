@@ -9,6 +9,9 @@ import {
     TextField,
     Typography
 } from "@material-ui/core";
+import {createBank} from "../../../redux/banks/banks-action-creators";
+import {useDispatch, useSelector} from "react-redux";
+import {useSnackbar} from "notistack";
 
 const AddBankDialog = ({openBankDialog, handleBankDialogClose}) => {
 
@@ -36,12 +39,36 @@ const AddBankDialog = ({openBankDialog, handleBankDialogClose}) => {
     });
 
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const {token} = useSelector(state => state.auth);
+    const {enqueueSnackbar} = useSnackbar();
+
+    const [error, setError] = useState({});
 
     const [bank, setBank] = useState({});
+
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
 
     const handleSubmit = event => {
         event.preventDefault();
 
+        if(!bank.name){
+            setError({...error, name: 'Field required'});
+            return;
+        }else {
+            setError({...error, name: null});
+        }
+
+        if(!bank.country){
+            setError({...error, country: 'Field required'});
+            return;
+        }else {
+            setError({...error, country: null});
+        }
+
+        dispatch(createBank(bank, token, showNotification));
         handleBankDialogClose();
     }
 
@@ -67,6 +94,8 @@ const AddBankDialog = ({openBankDialog, handleBankDialogClose}) => {
                         onChange={handleChange}
                         name="name"
                         fullWidth={true}
+                        error={Boolean(error.bank)}
+                        helperText={error.bank}
                     />
 
                     <TextField
@@ -81,7 +110,7 @@ const AddBankDialog = ({openBankDialog, handleBankDialogClose}) => {
                         name="country"
                         fullWidth={true}
                     />
-                    <Button variant="outlined" fullWidth={true} className={classes.submitButton}>
+                    <Button onClick={handleSubmit} variant="outlined" fullWidth={true} className={classes.submitButton}>
                         Add Bank
                     </Button>
                 </form>
