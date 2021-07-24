@@ -1,7 +1,7 @@
 import {
     CREATE_BANK_FAILURE,
     CREATE_BANK_REQUEST,
-    CREATE_BANK_SUCCESS,
+    CREATE_BANK_SUCCESS, DELETE_BANK_FAILURE, DELETE_BANK_REQUEST, DELETE_BANK_SUCCESS,
     GET_BANKS_FAILURE,
     GET_BANKS_REQUEST,
     GET_BANKS_SUCCESS,
@@ -90,7 +90,34 @@ const banksReducer = (state = INITIAL_STATE, action) => {
                 loading: false,
                 error: action.payload
             }
-        default:
+
+        case DELETE_BANK_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                error: ""
+            }
+
+        case DELETE_BANK_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: "",
+                banks: [...state.banks.map(bank => {
+                    if (bank._id === action.payload._id) {
+                        return {...action.payload}
+                    }
+                    return bank;
+                })]
+            }
+
+        case DELETE_BANK_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+            default:
             return state;
     }
 }

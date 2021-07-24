@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {
     Button,
     Dialog,
@@ -10,7 +10,7 @@ import {
     Typography
 } from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
-import {getBanks, updateBank} from "../../../redux/banks/banks-action-creators";
+import {updateBank} from "../../../redux/banks/banks-action-creators";
 import {useSnackbar} from "notistack";
 
 const UpdateBankDialog = ({openUpdateBankDialog, handleUpdateDialogClose, originalBank}) => {

@@ -20,7 +20,7 @@ import {
     TableRow,
     Typography
 } from "@material-ui/core";
-import {brown, red} from "@material-ui/core/colors";
+import {brown, green, red} from "@material-ui/core/colors";
 import {useDispatch, useSelector} from "react-redux";
 import {Alert} from "@material-ui/lab";
 import {Add, Delete, Edit} from "@material-ui/icons";
@@ -63,6 +63,18 @@ const BanksPage = () => {
             alert: {
                 marginTop: 8,
                 marginBottom: 8
+            },
+            active: {
+                color: 'white',
+                backgroundColor: green['600'],
+                borderRadius: 32,
+                padding: 8
+            },
+            deleted: {
+                color: 'white',
+                backgroundColor: red['600'],
+                borderRadius: 32,
+                padding: 8
             }
         }
     });
@@ -136,6 +148,17 @@ const BanksPage = () => {
         setSelectedBank(null);
         setOpenUpdateBankDialog(false);
     }
+
+    const renderStatus = status => {
+        switch (status) {
+            case 'Active':
+                return <Typography display="inline" variant="body2" className={classes.active}>{status}</Typography>
+            case 'Deleted':
+                return <Typography display="inline" variant="body2" className={classes.deleted}>{status}</Typography>
+            default:
+                return <Typography display="inline" variant="body2" className={classes.active}>{status}</Typography>
+        }
+    }
     return (
         <Layout>
             <Container className={classes.container}>
@@ -193,6 +216,7 @@ const BanksPage = () => {
                                     <TableCell>#</TableCell>
                                     <TableCell>Name</TableCell>
                                     <TableCell>Country</TableCell>
+                                    <TableCell>Status</TableCell>
                                     <TableCell>Date Created</TableCell>
                                     <TableCell>Date Updated</TableCell>
                                     <TableCell>Actions</TableCell>
@@ -206,6 +230,9 @@ const BanksPage = () => {
                                                 <TableCell>{index + 1}</TableCell>
                                                 <TableCell>{bank.name}</TableCell>
                                                 <TableCell>{bank.country}</TableCell>
+                                                <TableCell>
+                                                    {renderStatus(bank.status)}
+                                                </TableCell>
                                                 <TableCell>{moment(bank.createdAt).fromNow()}</TableCell>
                                                 <TableCell>{moment(bank.updatedAt).fromNow()}</TableCell>
                                                 <TableCell>
