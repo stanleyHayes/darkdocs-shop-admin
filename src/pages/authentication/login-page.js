@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     Avatar,
     Button,
@@ -16,6 +16,7 @@ import {Link, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {signIn} from "../../redux/authentication/auth-action-creators";
 import {Alert} from "@material-ui/lab";
+import {useSnackbar} from "notistack";
 
 const LoginPage = () => {
 
@@ -76,7 +77,13 @@ const LoginPage = () => {
     const [error, setError] = useState({});
     const [hasError, setHasError] = useState(false);
 
-    const {loading, error: authError} = useSelector(state => state.auth);
+    const {enqueueSnackbar} = useSnackbar();
+
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
+
+    const {loading, error: authError, token} = useSelector(state => state.auth);
 
     const handleChange = event => {
         setUser({...user, [event.target.name]: event.target.value});
@@ -99,13 +106,19 @@ const LoginPage = () => {
         if (hasError) {
             return;
         } else {
-            dispatch(signIn({email, password}, history));
+            dispatch(signIn({email, password}, history, showNotification));
         }
     }
 
     const handleShowPassword = () => {
         setVisible(!visible);
     }
+
+    useEffect(() => {
+        if(!loading && token){
+            history.push('/');
+        }
+    }, [history, loading, token]);
 
     return (
         <div className={classes.container}>
@@ -132,7 +145,7 @@ const LoginPage = () => {
                             {loading && <LinearProgress variant="query"/>}
                             <CardContent>
                                 {authError &&
-                                <Alert title="Error">
+                                <Alert severity="error" title="Error">
                                     {authError}
                                 </Alert>
                                 }

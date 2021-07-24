@@ -25,8 +25,7 @@ import axios from "axios";
 import {
     DARKDOCS_SHOP_ADMIN_TOKEN_KEY,
     DARKDOCS_SHOP_ADMIN_USER_KEY,
-    DEVELOPMENT_SERVER,
-    PRODUCTION_HEROKU_SERVER
+    SERVER_BASE_URL
 } from "../../constants/constants";
 
 const signInRequest = () => {
@@ -49,23 +48,25 @@ const signInFailure = error => {
     }
 }
 
-export const signIn = (user, history) => {
+export const signIn = (user, history, showNotification) => {
     return dispatch => {
         dispatch(signInRequest());
         axios({
             method: 'post',
-            url: `${PRODUCTION_HEROKU_SERVER}/auth/login`,
+            url: `${SERVER_BASE_URL}/auth/login`,
             data: user
         }).then(res => {
-            const {data, token} = res.data;
+            const {data, token, message} = res.data;
             if (data) {
                 dispatch(signInSuccess(data, token));
                 localStorage.setItem(DARKDOCS_SHOP_ADMIN_TOKEN_KEY, JSON.stringify(token));
                 localStorage.setItem(DARKDOCS_SHOP_ADMIN_USER_KEY, JSON.stringify(data));
                 history.push('/');
+                showNotification(message, {variant: 'success'});
             }
         }).catch(error => {
             dispatch(signInFailure(error.response.data.message));
+            showNotification(error.response.data.message, {variant: 'error'});
         });
     }
 }
@@ -95,7 +96,7 @@ export const signUp = (user, history) => {
         dispatch(signUpRequest());
         axios({
             method: 'post',
-            url: `${PRODUCTION_HEROKU_SERVER}/auth/register`,
+            url: `${SERVER_BASE_URL}/auth/register`,
             data: user
         }).then(res => {
             const {data, token} = res.data;
@@ -134,7 +135,7 @@ export const verifyAccount = (otp, token, history) => {
         dispatch(verifyAccountRequest());
         axios({
             method: 'put',
-            url: `${PRODUCTION_HEROKU_SERVER}/auth/verify-otp`,
+            url: `${SERVER_BASE_URL}/auth/verify-otp`,
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
@@ -176,7 +177,7 @@ export const updateProfile = (user, token, history) => {
         dispatch(updateProfileRequest());
         axios({
             method: 'put',
-            url: `${DEVELOPMENT_SERVER}/auth/profile`,
+            url: `${SERVER_BASE_URL}/auth/profile`,
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
@@ -218,7 +219,7 @@ export const changePassword = (passwords, token, history) => {
         dispatch(changePasswordRequest());
         axios({
             method: 'put',
-            url: `${PRODUCTION_HEROKU_SERVER}/auth/update-password`,
+            url: `${SERVER_BASE_URL}/auth/update-password`,
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
@@ -260,7 +261,7 @@ export const forgotPassword = (email, history) => {
         dispatch(forgotPasswordRequest());
         axios({
             method: 'put',
-            url: `${DEVELOPMENT_SERVER}/auth/forgot-password`,
+            url: `${SERVER_BASE_URL}/auth/forgot-password`,
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -300,7 +301,7 @@ export const signOut = (user, token, history) => {
         dispatch(signOutRequest());
         axios({
             method: 'POST',
-            url: `${DEVELOPMENT_SERVER}/auth/logout`,
+            url: `${SERVER_BASE_URL}/auth/logout`,
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
@@ -309,7 +310,8 @@ export const signOut = (user, token, history) => {
         }).then(res => {
             const {data} = res.data;
             dispatch(signOutSuccess(data));
-            localStorage.clear();
+            localStorage.removeItem(DARKDOCS_SHOP_ADMIN_TOKEN_KEY);
+            localStorage.removeItem(DARKDOCS_SHOP_ADMIN_USER_KEY);
             history.push('/auth/login');
         }).catch(error => {
             dispatch(signOutFailure(error.response.data.message));

@@ -1,5 +1,5 @@
 import axios from "axios";
-import {DEVELOPMENT_SERVER} from "../../constants/constants";
+import {SERVER_BASE_URL} from "../../constants/constants";
 import {
     GET_INFORMATION_FAILURE,
     UPDATE_INFORMATION_FAILURE,
@@ -35,7 +35,7 @@ export const getFund = (id, token) => {
         dispatch(getInformationRequest());
         axios({
             method: 'get',
-            url: `${DEVELOPMENT_SERVER}/information`,
+            url: `${SERVER_BASE_URL}/information`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;
@@ -72,7 +72,7 @@ export const updateInformation = (information, token, history) => {
         dispatch(updateInformationRequest());
         axios({
             method: 'put',
-            url: `${DEVELOPMENT_SERVER}/funds`,
+            url: `${SERVER_BASE_URL}/funds`,
             headers: {Authorization: `Bearer ${token}`},
             data: information
         }).then(res => {

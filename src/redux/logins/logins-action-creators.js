@@ -1,5 +1,5 @@
 import axios from "axios";
-import {DEVELOPMENT_SERVER} from "../../constants/constants";
+import {SERVER_BASE_URL} from "../../constants/constants";
 import {
     CREATE_LOGIN_FAILURE,
     CREATE_LOGIN_REQUEST,
@@ -43,7 +43,7 @@ export const createLogin = (login, token) => {
         dispatch(createLoginRequest());
         axios({
             method: 'post',
-            url: `${DEVELOPMENT_SERVER}/logins`,
+            url: `${SERVER_BASE_URL}/logins`,
             headers: {Authorization: `Bearer ${token}`},
             data: login
         }).then(res => {
@@ -81,7 +81,7 @@ export const getLogin = (id, token) => {
         dispatch(getLoginRequest());
         axios({
             method: 'get',
-            url: `${DEVELOPMENT_SERVER}/logins/${id}`,
+            url: `${SERVER_BASE_URL}/logins/${id}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;
@@ -118,7 +118,7 @@ export const updateLogin = (id, login, token) => {
         dispatch(updateLoginRequest());
         axios({
             method: 'put',
-            url: `${DEVELOPMENT_SERVER}/logins/${id}`,
+            url: `${SERVER_BASE_URL}/logins/${id}`,
             headers: {Authorization: `Bearer ${token}`},
             data: login
         }).then(res => {
@@ -156,7 +156,7 @@ export const deleteLogin = (id, token) => {
         dispatch(deleteLoginRequest());
         axios({
             method: 'delete',
-            url: `${DEVELOPMENT_SERVER}/logins/${id}`,
+            url: `${SERVER_BASE_URL}/logins/${id}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;
@@ -193,7 +193,7 @@ export const getLogins = (token) => {
         dispatch(getLoginsRequest());
         axios({
             method: 'get',
-            url: `${DEVELOPMENT_SERVER}/logins`,
+            url: `${SERVER_BASE_URL}/logins`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;

@@ -16,7 +16,7 @@ import {
     UPDATE_INSTRUCTION_SUCCESS
 } from "./instructions-action-types";
 import axios from "axios";
-import {DARKDOCS_SHOP_ADMIN_INSTRUCTIONS_KEY, DEVELOPMENT_SERVER} from "../../constants/constants";
+import {DARKDOCS_SHOP_ADMIN_INSTRUCTIONS_KEY, SERVER_BASE_URL} from "../../constants/constants";
 
 const addInstructionRequest = () => {
     return {
@@ -43,7 +43,7 @@ export const addInstruction = (instruction, token) => {
         dispatch(addInstructionRequest());
         axios({
             method: 'post',
-            url: `${DEVELOPMENT_SERVER}/instructions`,
+            url: `${SERVER_BASE_URL}/instructions`,
             headers: {Authorization: `Bearer ${token}`},
             data: instruction
         }).then(res => {
@@ -81,7 +81,7 @@ export const getInstruction = (id, token) => {
         dispatch(getInstructionRequest());
         axios({
             method: 'get',
-            url: `${DEVELOPMENT_SERVER}/instructions/${id}`,
+            url: `${SERVER_BASE_URL}/instructions/${id}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;
@@ -118,7 +118,7 @@ export const updateInstruction = (id, instruction, token) => {
         dispatch(updateInstructionRequest());
         axios({
             method: 'put',
-            url: `${DEVELOPMENT_SERVER}/instructions/${id}`,
+            url: `${SERVER_BASE_URL}/instructions/${id}`,
             headers: {Authorization: `Bearer ${token}`},
             data: instruction
         }).then(res => {
@@ -156,7 +156,7 @@ export const deleteInstruction = (id, token) => {
         dispatch(deleteInstructionRequest());
         axios({
             method: 'delete',
-            url: `${DEVELOPMENT_SERVER}/instructions/${id}`,
+            url: `${SERVER_BASE_URL}/instructions/${id}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;
@@ -193,7 +193,7 @@ export const getInstructions = (token) => {
         dispatch(getInstructionsRequest());
         axios({
             method: 'get',
-            url: `${DEVELOPMENT_SERVER}/instructions`,
+            url: `${SERVER_BASE_URL}/instructions`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;

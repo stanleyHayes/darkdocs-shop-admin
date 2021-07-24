@@ -96,13 +96,14 @@ const DesktopHeader = () => {
                         className={classes.name}
                         onClick={handleProfileClick}
                         endIcon={<KeyboardArrowDown/>}
-                        startIcon={<Avatar className={classes.avatar}>
-                            {user && getInitials(user.name)}
-                            <Typography variant="body2" align="center">SH</Typography>
+                        startIcon={<Avatar
+                            className={classes.avatar}>
+                            <Typography variant="body2" align="center">
+                                {user && getInitials(user.name)}
+                            </Typography>
                         </Avatar>}
                         variant="outlined">
                         {user && user.name}
-                        Stanley Hayford
                     </Button>
                     <Menu
                         anchorEl={anchorEl}
@@ -112,14 +113,16 @@ const DesktopHeader = () => {
                         onClose={handleClose}>
                         <MenuItem onClick={handleClose}>
                             <Link className={classes.link} to="/profile">
-                                <Button startIcon={<Face />} endIcon={<ChevronRight />} variant="text" size="small" className={classes.button}>
+                                <Button startIcon={<Face/>} endIcon={<ChevronRight/>} variant="text" size="small"
+                                        className={classes.button}>
                                     Profile
                                 </Button>
                             </Link>
                         </MenuItem>
                         <MenuItem onClick={handleClose}>
                             <Link className={classes.link} to="/edit-profile">
-                                <Button startIcon={<Edit />} endIcon={<ChevronRight />} variant="text" size="small" className={classes.button}>
+                                <Button startIcon={<Edit/>} endIcon={<ChevronRight/>} variant="text" size="small"
+                                        className={classes.button}>
                                     Edit Profile
                                 </Button>
                             </Link>
@@ -128,7 +131,8 @@ const DesktopHeader = () => {
                             <Link
                                 className={classes.link}
                                 to="/auth/login">
-                                <Button startIcon={<ExitToApp />} endIcon={<ChevronRight />} variant="text" size="small" className={classes.button}>
+                                <Button startIcon={<ExitToApp/>} endIcon={<ChevronRight/>} variant="text" size="small"
+                                        className={classes.button}>
                                     Logout
                                 </Button>
                             </Link>

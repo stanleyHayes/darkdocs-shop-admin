@@ -1,5 +1,5 @@
 import axios from "axios";
-import {DEVELOPMENT_SERVER} from "../../constants/constants";
+import {SERVER_BASE_URL} from "../../constants/constants";
 import {
     CREATE_USER_FAILURE,
     CREATE_USER_REQUEST,
@@ -42,7 +42,7 @@ export const createUser = (user, token) => {
         dispatch(createUserRequest());
         axios({
             method: 'post',
-            url: `${DEVELOPMENT_SERVER}/users`,
+            url: `${SERVER_BASE_URL}/users`,
             headers: {Authorization: `Bearer ${token}`},
             data: user
         }).then(res => {
@@ -80,7 +80,7 @@ export const getUser = (id, token) => {
         dispatch(getUserRequest());
         axios({
             method: 'get',
-            url: `${DEVELOPMENT_SERVER}/users/${id}`,
+            url: `${SERVER_BASE_URL}/users/${id}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;
@@ -117,7 +117,7 @@ export const updateUser = (id, user, token) => {
         dispatch(updateUserRequest());
         axios({
             method: 'put',
-            url: `${DEVELOPMENT_SERVER}/users/${id}`,
+            url: `${SERVER_BASE_URL}/users/${id}`,
             headers: {Authorization: `Bearer ${token}`},
             data: user
         }).then(res => {
@@ -155,7 +155,7 @@ export const deleteUser = (id, token) => {
         dispatch(deleteUserRequest());
         axios({
             method: 'delete',
-            url: `${DEVELOPMENT_SERVER}/users/${id}`,
+            url: `${SERVER_BASE_URL}/users/${id}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;
@@ -192,7 +192,7 @@ export const getUsers = (token) => {
         dispatch(getUsersRequest());
         axios({
             method: 'get',
-            url: `${DEVELOPMENT_SERVER}/users`,
+            url: `${SERVER_BASE_URL}/users`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;

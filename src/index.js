@@ -3,18 +3,19 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {createTheme, ThemeProvider} from "@material-ui/core";
+import {createTheme, ThemeProvider, Zoom} from "@material-ui/core";
 import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
 import store from "./redux/store";
 import {grey} from "@material-ui/core/colors";
+import {SnackbarProvider} from "notistack";
 
 const theme = createTheme({
     typography: {
         fontFamily: 'Raleway, IBM Plex Serif'
     },
     shape: {
-        borderRadius: 0
+        borderRadius: 32
     },
     palette: {
         background: {
@@ -35,7 +36,15 @@ ReactDOM.render(
         <Provider store={store}>
             <BrowserRouter>
                 <ThemeProvider theme={theme}>
-                    <App/>
+                    <SnackbarProvider
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right'
+                        }}
+                        TransitionComponent={Zoom}
+                    >
+                        <App/>
+                    </SnackbarProvider>
                 </ThemeProvider>
             </BrowserRouter>
         </Provider>

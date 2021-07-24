@@ -56,33 +56,35 @@ const DashboardPage = () => {
                 <Typography variant="h5" gutterBottom={true} className={classes.title}>Contact Information</Typography>
 
                 <Grid container={true} spacing={2} className={classes.gridContainer}>
-                    <Grid item={true}  xs={12} md={6}>
+                    <Grid item={true} xs={12} md={6}>
                         <Card variant="elevation" elevation={1}>
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
                                         <Avatar>
-                                            <Email />
+                                            <Email/>
                                         </Avatar>
                                     </Grid>
                                 </Grid>
-                                <Typography gutterBottom={true}  variant="body2" align="center">Email</Typography>
-                                <Typography className={classes.email} variant="body1" align="center">{information && information.email}</Typography>
+                                <Typography gutterBottom={true} variant="body2" align="center">Email</Typography>
+                                <Typography className={classes.email} variant="body1"
+                                            align="center">{information && information.email}</Typography>
                             </CardContent>
                         </Card>
                     </Grid>
-                    <Grid item={true}  xs={12} md={6}>
+                    <Grid item={true} xs={12} md={6}>
                         <Card variant="elevation" elevation={1}>
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
                                         <Avatar>
-                                            <Email />
+                                            <Email/>
                                         </Avatar>
                                     </Grid>
                                 </Grid>
                                 <Typography variant="body2" gutterBottom={true} align="center">BTC Address</Typography>
-                                <Typography gutterBottom={true}  className={classes.btc} variant="caption" display="block" align="center">
+                                <Typography gutterBottom={true} className={classes.btc} variant="caption"
+                                            display="block" align="center">
                                     {information && information.btcAddress}
                                 </Typography>
                             </CardContent>
@@ -101,7 +103,7 @@ const DashboardPage = () => {
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
                                         <Avatar>
-                                            <VerifiedUser />
+                                            <VerifiedUser/>
                                         </Avatar>
                                     </Grid>
                                 </Grid>
@@ -119,7 +121,7 @@ const DashboardPage = () => {
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
                                         <Avatar>
-                                            <AccountCircle />
+                                            <AccountCircle/>
                                         </Avatar>
                                     </Grid>
                                 </Grid>
@@ -135,7 +137,7 @@ const DashboardPage = () => {
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
                                         <Avatar>
-                                            <Face />
+                                            <Face/>
                                         </Avatar>
                                     </Grid>
                                 </Grid>
@@ -157,7 +159,7 @@ const DashboardPage = () => {
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
                                         <Avatar>
-                                            <Email />
+                                            <Email/>
                                         </Avatar>
                                     </Grid>
                                 </Grid>
@@ -173,7 +175,7 @@ const DashboardPage = () => {
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
                                         <Avatar>
-                                            <Email />
+                                            <Email/>
                                         </Avatar>
                                     </Grid>
                                 </Grid>
@@ -189,7 +191,7 @@ const DashboardPage = () => {
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
                                         <Avatar>
-                                            <Email />
+                                            <Email/>
                                         </Avatar>
                                     </Grid>
                                 </Grid>
@@ -211,7 +213,7 @@ const DashboardPage = () => {
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
                                         <Avatar>
-                                            <Input />
+                                            <Input/>
                                         </Avatar>
                                     </Grid>
                                 </Grid>
@@ -227,7 +229,7 @@ const DashboardPage = () => {
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
                                         <Avatar>
-                                            <CreditCard />
+                                            <CreditCard/>
                                         </Avatar>
                                     </Grid>
                                 </Grid>
@@ -243,7 +245,7 @@ const DashboardPage = () => {
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
                                         <Avatar>
-                                            <Email />
+                                            <Email/>
                                         </Avatar>
                                     </Grid>
                                 </Grid>
@@ -265,7 +267,7 @@ const DashboardPage = () => {
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
                                         <Avatar>
-                                            <CheckCircle />
+                                            <CheckCircle/>
                                         </Avatar>
                                     </Grid>
                                 </Grid>
@@ -281,7 +283,7 @@ const DashboardPage = () => {
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
                                         <Avatar>
-                                            <HourglassEmpty />
+                                            <HourglassEmpty/>
                                         </Avatar>
                                     </Grid>
                                 </Grid>
@@ -297,11 +299,11 @@ const DashboardPage = () => {
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
                                         <Avatar>
-                                            <Cancel />
+                                            <Cancel/>
                                         </Avatar>
                                     </Grid>
                                 </Grid>
-                                <Typography variant="h3" align="center">{millify(678 )}</Typography>
+                                <Typography variant="h3" align="center">{millify(678)}</Typography>
                                 <Typography variant="body2" align="center">Cancelled</Typography>
                             </CardContent>
                         </Card>
@@ -319,11 +321,11 @@ const DashboardPage = () => {
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
                                         <Avatar>
-                                            <HourglassEmpty />
+                                            <HourglassEmpty/>
                                         </Avatar>
                                     </Grid>
                                 </Grid>
-                                <Typography variant="h3" align="center">{millify(46 )}</Typography>
+                                <Typography variant="h3" align="center">{millify(46)}</Typography>
                                 <Typography variant="body2" align="center">Pending</Typography>
                             </CardContent>
                         </Card>
@@ -335,11 +337,11 @@ const DashboardPage = () => {
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
                                         <Avatar>
-                                            <CheckCircle />
+                                            <CheckCircle/>
                                         </Avatar>
                                     </Grid>
                                 </Grid>
-                                <Typography variant="h3" align="center">{millify(6345643 )}</Typography>
+                                <Typography variant="h3" align="center">{millify(6345643)}</Typography>
                                 <Typography variant="body2" align="center">Completed</Typography>
                             </CardContent>
                         </Card>
@@ -351,11 +353,11 @@ const DashboardPage = () => {
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
                                         <Avatar>
-                                            <Cancel />
+                                            <Cancel/>
                                         </Avatar>
                                     </Grid>
                                 </Grid>
-                                <Typography variant="h3" align="center">{millify(54467 )}</Typography>
+                                <Typography variant="h3" align="center">{millify(54467)}</Typography>
                                 <Typography variant="body2" align="center">Cancelled</Typography>
                             </CardContent>
                         </Card>

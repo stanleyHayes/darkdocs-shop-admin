@@ -1,5 +1,5 @@
 import './App.css';
-import {Route, Switch} from "react-router-dom";
+import {Route, Switch, useHistory} from "react-router-dom";
 import DashboardPage from "./pages/dashboard/dashboard-page";
 import InformationPage from "./pages/information/information-page";
 import BanksPage from "./pages/banks/banks-page";
@@ -17,8 +17,20 @@ import EditProfilePage from "./pages/profile/edit-profile-page";
 import ProfilePage from "./pages/profile/profile-page";
 import ScrollToTop from "./components/shared/scroll-top-top";
 import ChequesPage from "./pages/cheques/cheques-page";
+import {useSelector} from "react-redux";
+import {useEffect} from "react";
 
 function App() {
+
+    const history = useHistory();
+    const {loading: authLoading, token} = useSelector(state => state.auth);
+
+    useEffect(() => {
+        if(!authLoading && !token){
+            history.push('/auth/login');
+        }
+    }, [authLoading, history, token]);
+
     return (
         <ScrollToTop>
             <Switch>

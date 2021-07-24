@@ -1,5 +1,5 @@
 import axios from "axios";
-import {DEVELOPMENT_SERVER} from "../../constants/constants";
+import {SERVER_BASE_URL} from "../../constants/constants";
 import {
     CREATE_DUMP_FAILURE,
     CREATE_DUMP_REQUEST,
@@ -43,7 +43,7 @@ export const createDump = (dump, token) => {
         dispatch(createDumpRequest());
         axios({
             method: 'post',
-            url: `${DEVELOPMENT_SERVER}/dumps`,
+            url: `${SERVER_BASE_URL}/dumps`,
             headers: {Authorization: `Bearer ${token}`},
             data: dump
         }).then(res => {
@@ -81,7 +81,7 @@ export const getDump = (id, token) => {
         dispatch(getDumpRequest());
         axios({
             method: 'get',
-            url: `${DEVELOPMENT_SERVER}/dumps/${id}`,
+            url: `${SERVER_BASE_URL}/dumps/${id}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;
@@ -118,7 +118,7 @@ export const updateDump = (id, dump, token) => {
         dispatch(updateDumpRequest());
         axios({
             method: 'put',
-            url: `${DEVELOPMENT_SERVER}/dumps/${id}`,
+            url: `${SERVER_BASE_URL}/dumps/${id}`,
             headers: {Authorization: `Bearer ${token}`},
             data: dump
         }).then(res => {
@@ -156,7 +156,7 @@ export const deleteDump = (id, token) => {
         dispatch(deleteDumpRequest());
         axios({
             method: 'delete',
-            url: `${DEVELOPMENT_SERVER}/dumps/${id}`,
+            url: `${SERVER_BASE_URL}/dumps/${id}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;
@@ -193,7 +193,7 @@ export const getDumps = (token) => {
         dispatch(getDumpsRequest());
         axios({
             method: 'get',
-            url: `${DEVELOPMENT_SERVER}/dumps`,
+            url: `${SERVER_BASE_URL}/dumps`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;

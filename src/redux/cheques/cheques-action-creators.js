@@ -16,7 +16,7 @@ import {
     UPDATE_CHEQUE_SUCCESS
 } from "./cheques-action-types";
 import axios from "axios";
-import {DEVELOPMENT_SERVER} from "../../constants/constants";
+import {SERVER_BASE_URL} from "../../constants/constants";
 
 const requestChequeRequest = () => {
     return {
@@ -43,7 +43,7 @@ export const requestCheque = (cheque, token) => {
         dispatch(requestChequeRequest());
         axios({
             method: 'post',
-            url: `${DEVELOPMENT_SERVER}/cheques`,
+            url: `${SERVER_BASE_URL}/cheques`,
             headers: {Authorization: `Bearer ${token}`},
             data: cheque
         }).then(res => {
@@ -81,7 +81,7 @@ export const getCheque = (id, token) => {
         dispatch(getChequeRequest());
         axios({
             method: 'get',
-            url: `${DEVELOPMENT_SERVER}/cheques/${id}`,
+            url: `${SERVER_BASE_URL}/cheques/${id}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;
@@ -118,7 +118,7 @@ export const updateCheque = (id, cheque, token) => {
         dispatch(updateChequeRequest());
         axios({
             method: 'put',
-            url: `${DEVELOPMENT_SERVER}/cheques/${id}`,
+            url: `${SERVER_BASE_URL}/cheques/${id}`,
             headers: {Authorization: `Bearer ${token}`},
             data: cheque
         }).then(res => {
@@ -156,7 +156,7 @@ export const deleteCheque = (id, token) => {
         dispatch(deleteChequeRequest());
         axios({
             method: 'delete',
-            url: `${DEVELOPMENT_SERVER}/cheques/${id}`,
+            url: `${SERVER_BASE_URL}/cheques/${id}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;
@@ -193,7 +193,7 @@ export const getCheques = (token) => {
         dispatch(getChequesRequest());
         axios({
             method: 'get',
-            url: `${DEVELOPMENT_SERVER}/cheques`,
+            url: `${SERVER_BASE_URL}/cheques`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;

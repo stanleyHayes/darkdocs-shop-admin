@@ -1,5 +1,5 @@
 import axios from "axios";
-import {DEVELOPMENT_SERVER} from "../../constants/constants";
+import {SERVER_BASE_URL} from "../../constants/constants";
 import {
     CREATE_FUND_FAILURE, CREATE_FUND_REQUEST, CREATE_FUND_SUCCESS,
     DELETE_FUND_FAILURE, DELETE_FUND_REQUEST,
@@ -34,7 +34,7 @@ export const createFund = (fund, token) => {
         dispatch(createFundRequest());
         axios({
             method: 'post',
-            url: `${DEVELOPMENT_SERVER}/funds`,
+            url: `${SERVER_BASE_URL}/funds`,
             headers: {Authorization: `Bearer ${token}`},
             data: fund
         }).then(res => {
@@ -72,7 +72,7 @@ export const getFund = (id, token) => {
         dispatch(getFundRequest());
         axios({
             method: 'get',
-            url: `${DEVELOPMENT_SERVER}/banks/${id}`,
+            url: `${SERVER_BASE_URL}/banks/${id}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;
@@ -109,7 +109,7 @@ export const updateFund = (id, fund, token) => {
         dispatch(updateFundRequest());
         axios({
             method: 'put',
-            url: `${DEVELOPMENT_SERVER}/funds/${id}`,
+            url: `${SERVER_BASE_URL}/funds/${id}`,
             headers: {Authorization: `Bearer ${token}`},
             data: fund
         }).then(res => {
@@ -147,7 +147,7 @@ export const deleteFund = (id, token) => {
         dispatch(deleteFundRequest());
         axios({
             method: 'delete',
-            url: `${DEVELOPMENT_SERVER}/funds/${id}`,
+            url: `${SERVER_BASE_URL}/funds/${id}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;
@@ -184,7 +184,7 @@ export const getFunds = (token) => {
         dispatch(getFundsRequest());
         axios({
             method: 'get',
-            url: `${DEVELOPMENT_SERVER}/funds`,
+            url: `${SERVER_BASE_URL}/funds`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;
