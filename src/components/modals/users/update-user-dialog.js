@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 import {updateUser} from "../../../redux/users/user-action-creators";
+import {useSnackbar} from "notistack";
 
 const UpdateUserDialog = ({openUpdateUserDialog, handleUpdateUserDialogClose, originalUser}) => {
 
@@ -49,6 +50,11 @@ const UpdateUserDialog = ({openUpdateUserDialog, handleUpdateUserDialogClose, or
     const [error, setError] = useState({});
 
     const {token} = useSelector(state => state.auth);
+    const {enqueueSnackbar} = useSnackbar();
+
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -62,14 +68,40 @@ const UpdateUserDialog = ({openUpdateUserDialog, handleUpdateUserDialogClose, or
             setError({...error, 'name': null});
         }
 
-        if (user.country !== originalUser.country && !user.country) {
-            setError({...error, 'country': 'Field required'});
+        if (user.email !== originalUser.email && !user.email) {
+            setError({...error, 'email': 'Field required'});
             return;
         } else {
-            updatedUser['country'] = user.country;
-            setError({...error, 'country': null});
+            updatedUser['email'] = user.email;
+            setError({...error, 'email': null});
         }
-        dispatch(updateUser(originalUser._id, updatedUser, token));
+
+        if (user.username !== originalUser.username && !user.username) {
+            setError({...error, 'username': 'Field required'});
+            return;
+        } else {
+            updatedUser['username'] = user.username;
+            setError({...error, 'username': null});
+        }
+
+        if (user.role !== originalUser.role && !user.role) {
+            setError({...error, 'role': 'Field required'});
+            return;
+        } else {
+            updatedUser['role'] = user.role;
+            setError({...error, 'role': null});
+        }
+
+        if (user.status !== originalUser.status && !user.status) {
+            setError({...error, 'status': 'Field required'});
+            return;
+        } else {
+            updatedUser['status'] = user.status;
+            setError({...error, 'status': null});
+        }
+
+        console.log(updatedUser)
+        dispatch(updateUser(originalUser._id, updatedUser, token, showNotification));
         handleUpdateUserDialogClose();
     }
 

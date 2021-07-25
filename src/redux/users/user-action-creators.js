@@ -115,18 +115,20 @@ const updateUserFailure = error => {
     }
 }
 
-export const updateUser = (id, user, token) => {
+export const updateUser = (id, user, token, showNotification) => {
     return dispatch => {
         dispatch(updateUserRequest());
         axios({
             method: 'put',
-            url: `${SERVER_BASE_URL}/users/${id}`,
+            url: `${SERVER_BASE_URL}/users/${id}/update`,
             headers: {Authorization: `Bearer ${token}`},
             data: user
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
             dispatch(updateUserSuccess(data));
+            showNotification(message, {variant: 'success'});
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'success'});
             dispatch(updateUserFailure(error.response.data.message));
         });
     }

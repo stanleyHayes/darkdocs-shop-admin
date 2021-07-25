@@ -191,6 +191,7 @@ const UsersPage = () => {
                             fullWidth={true}
                             label={<Typography variant="body2">Role</Typography>}
                             margin="dense"
+                            name="role"
                             variant="outlined"
                             value={role}>
                             <MenuItem value='All'>Select Role</MenuItem>
@@ -223,9 +224,9 @@ const UsersPage = () => {
                                 <TableRow>
                                     <TableCell>#</TableCell>
                                     <TableCell>Username</TableCell>
-                                    <TableCell>Email</TableCell>
                                     <TableCell>Name</TableCell>
                                     <TableCell>Role</TableCell>
+                                    <TableCell>Status</TableCell>
                                     <TableCell>Balance</TableCell>
                                     <TableCell>Date Joined</TableCell>
                                     <TableCell>Actions</TableCell>
@@ -238,9 +239,9 @@ const UsersPage = () => {
                                             <TableRow hover={true} key={index}>
                                                 <TableCell>{index + 1}</TableCell>
                                                 <TableCell>{user.username}</TableCell>
-                                                <TableCell>{user.email}</TableCell>
                                                 <TableCell>{user.name}</TableCell>
                                                 <TableCell>{user.role === 'SUPER_ADMIN'? 'SUPER ADMIN': user.role}</TableCell>
+                                                <TableCell>{user.status}</TableCell>
                                                 <TableCell>${parseFloat(user.balance).toFixed(2)}</TableCell>
                                                 <TableCell>{moment(user.createdAt).fromNow()}</TableCell>
                                                 <TableCell>
