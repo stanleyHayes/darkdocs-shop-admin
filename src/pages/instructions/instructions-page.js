@@ -27,6 +27,7 @@ import {brown, green, red} from "@material-ui/core/colors";
 import AddInstructionDialog from "../../components/modals/instructions/add-instruction-dialog";
 import DeleteDialog from "../../components/shared/delete-dialog";
 import UpdateInstructionDialog from "../../components/modals/instructions/update-instrucion-dialog";
+import {useSnackbar} from "notistack";
 
 const InstructionsPage = () => {
 
@@ -57,10 +58,14 @@ const InstructionsPage = () => {
             },
             title: {
                 textTransform: 'uppercase'
+            },
+            emptyText: {
+                textTransform: 'uppercase'
             }
         }
     });
     const {token} = useSelector(state => state.auth);
+    const {enqueueSnackbar} = useSnackbar();
     const classes = useStyles();
 
     const dispatch = useDispatch();
@@ -81,8 +86,11 @@ const InstructionsPage = () => {
     }
 
     useEffect(() => {
-        dispatch(getInstructions(token));
-    }, [dispatch, token]);
+        const showNotification = (message, options) => {
+            enqueueSnackbar(message, options);
+        }
+        dispatch(getInstructions(token, showNotification));
+    }, [dispatch, enqueueSnackbar, token]);
 
     const {instructions, loading, error} = useSelector(state => state.instructions);
 
@@ -125,13 +133,12 @@ const InstructionsPage = () => {
             <Container className={classes.container}>
                 {loading && <LinearProgress variant="query"/>}
                 {error && <Alert severity="error" title="Error">{error}</Alert>}
-                <Grid container={true} justifyContent="space-between" spacing={2}>
+                <Grid container={true} justifyContent="space-between" spacing={2} alignItems="center">
                     <Grid item={true} xs={12} md={8}>
                         <Typography
                             color="textSecondary"
                             className={classes.title}
-                            variant="h5"
-                            gutterBottom={true}>
+                            variant="h5">
                             Do's & Don't
                         </Typography>
                     </Grid>
@@ -149,7 +156,9 @@ const InstructionsPage = () => {
 
                 {instructions && instructions.length === 0 ? (
                     <Box>
-                        <Typography align="center" variant="h6">No instructions available</Typography>
+                        <Typography color="textSecondary" className={classes.emptyText} variant="h6">
+                            No instructions available
+                        </Typography>
                     </Box>) : (
                     <TableContainer elevation={1} variant="elevation" component={Paper}
                                     className={classes.tableContainer}>

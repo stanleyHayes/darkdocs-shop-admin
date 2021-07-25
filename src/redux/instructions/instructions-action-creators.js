@@ -16,7 +16,7 @@ import {
     UPDATE_INSTRUCTION_SUCCESS
 } from "./instructions-action-types";
 import axios from "axios";
-import {DARKDOCS_SHOP_ADMIN_INSTRUCTIONS_KEY, SERVER_BASE_URL} from "../../constants/constants";
+import {SERVER_BASE_URL} from "../../constants/constants";
 
 const addInstructionRequest = () => {
     return {
@@ -188,7 +188,7 @@ const getInstructionsFailure = error => {
     }
 }
 
-export const getInstructions = (token) => {
+export const getInstructions = (token, showNotification) => {
     return dispatch => {
         dispatch(getInstructionsRequest());
         axios({
@@ -196,10 +196,13 @@ export const getInstructions = (token) => {
             url: `${SERVER_BASE_URL}/instructions`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data} = res.data;
-            dispatch(getInstructionsSuccess(data));
-            localStorage.setItem(DARKDOCS_SHOP_ADMIN_INSTRUCTIONS_KEY, JSON.stringify(data));
+            const {data, message} = res.data;
+            if (data) {
+                dispatch(getInstructionsSuccess(data));
+                showNotification(message, {variant: 'success'});
+            }
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'success'});
             dispatch(getInstructionsFailure(error.response.data.message));
         });
     }
