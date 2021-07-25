@@ -9,6 +9,9 @@ import {
     TextField,
     Typography
 } from "@material-ui/core";
+import {useDispatch, useSelector} from "react-redux";
+import {createUser} from "../../../redux/users/user-action-creators";
+import {useSnackbar} from "notistack";
 
 const AddUserDialog = ({openUserDialog, handleUserDialogClose}) => {
 
@@ -35,9 +38,18 @@ const AddUserDialog = ({openUserDialog, handleUserDialogClose}) => {
     });
 
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     const [user, setUser] = useState({role: "ADMIN"});
     const [visible, setVisible] = useState(false);
+    const [error, setError] = useState({});
+
+    const {token} = useSelector(state => state.auth);
+    const {enqueueSnackbar} = useSnackbar();
+
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
 
     const handleShowPassword = () => {
         setVisible(!visible);
@@ -46,6 +58,42 @@ const AddUserDialog = ({openUserDialog, handleUserDialogClose}) => {
     const handleSubmit = event => {
         event.preventDefault();
 
+        if(!user.name){
+            setError({...error, name: 'Field required'});
+            return;
+        }else {
+            setError({...error, name: null});
+        }
+
+        if(!user.email){
+            setError({...error, email: 'Field required'});
+            return;
+        }else {
+            setError({...error, email: null});
+        }
+
+        if(!user.username){
+            setError({...error, username: 'Field required'});
+            return;
+        }else {
+            setError({...error, username: null});
+        }
+
+        if(!user.role){
+            setError({...error, role: 'Field required'});
+            return;
+        }else {
+            setError({...error, role: null});
+        }
+
+        if(!user.password){
+            setError({...error, password: 'Field required'});
+            return;
+        }else {
+            setError({...error, password: null});
+        }
+        dispatch(createUser(user, token, showNotification));
+        handleUserDialogClose();
 
     }
 
@@ -71,6 +119,8 @@ const AddUserDialog = ({openUserDialog, handleUserDialogClose}) => {
                         onChange={handleChange}
                         name="name"
                         fullWidth={true}
+                        error={Boolean(error.name)}
+                        helperText={error.name}
                     />
 
                     <TextField
@@ -84,6 +134,8 @@ const AddUserDialog = ({openUserDialog, handleUserDialogClose}) => {
                         onChange={handleChange}
                         name="email"
                         fullWidth={true}
+                        error={Boolean(error.email)}
+                        helperText={error.email}
                     />
 
                     <TextField
@@ -97,6 +149,8 @@ const AddUserDialog = ({openUserDialog, handleUserDialogClose}) => {
                         onChange={handleChange}
                         name="username"
                         fullWidth={true}
+                        error={Boolean(error.username)}
+                        helperText={error.username}
                     />
 
                     <Select
@@ -108,6 +162,7 @@ const AddUserDialog = ({openUserDialog, handleUserDialogClose}) => {
                         value={user.role}
                         fullWidth={true}
                         defaultValue="ADMIN"
+                        error={Boolean(error.role)}
                         label="User Role">
                         <MenuItem value="">Select Role</MenuItem>
                         <MenuItem value="SUPER_ADMIN">Super Admin</MenuItem>
@@ -123,10 +178,12 @@ const AddUserDialog = ({openUserDialog, handleUserDialogClose}) => {
                         margin="normal"
                         className={classes.textField}
                         value={user.password}
-                        type="text"
+                        type={visible ? 'text': 'password'}
                         onChange={handleChange}
                         name="password"
                         fullWidth={true}
+                        error={Boolean(error.password)}
+                        helperText={error.password}
                     />
 
                     <Grid container={true} spacing={2} alignItems="center">
@@ -140,7 +197,7 @@ const AddUserDialog = ({openUserDialog, handleUserDialogClose}) => {
                         </Grid>
                     </Grid>
 
-                    <Button variant="outlined" fullWidth={true} className={classes.submitButton}>
+                    <Button onClick={handleSubmit} variant="outlined" fullWidth={true} className={classes.submitButton}>
                         Add User
                     </Button>
                 </form>

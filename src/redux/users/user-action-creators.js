@@ -7,7 +7,8 @@ import {
     DELETE_USER_FAILURE,
     DELETE_USER_REQUEST,
     DELETE_USER_SUCCESS,
-    GET_USER_FAILURE, GET_USER_REQUEST,
+    GET_USER_FAILURE,
+    GET_USER_REQUEST,
     GET_USER_SUCCESS,
     GET_USERS_FAILURE,
     GET_USERS_REQUEST,
@@ -37,7 +38,7 @@ const createUserFailure = error => {
     }
 }
 
-export const createUser = (user, token) => {
+export const createUser = (user, token, showNotification) => {
     return dispatch => {
         dispatch(createUserRequest());
         axios({
@@ -46,9 +47,11 @@ export const createUser = (user, token) => {
             headers: {Authorization: `Bearer ${token}`},
             data: user
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
             dispatch(createUserSuccess(data));
+            showNotification(message, {variant: 'success'});
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(createUserFailure(error.response.data.message));
         });
     }
@@ -187,7 +190,7 @@ const getUsersFailure = error => {
     }
 }
 
-export const getUsers = (token) => {
+export const getUsers = (token, showNotification) => {
     return dispatch => {
         dispatch(getUsersRequest());
         axios({
@@ -195,9 +198,11 @@ export const getUsers = (token) => {
             url: `${SERVER_BASE_URL}/users`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
+            showNotification(message, {variant: 'success'});
             dispatch(getUsersSuccess(data));
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(getUsersFailure(error.response.data.message));
         });
     }

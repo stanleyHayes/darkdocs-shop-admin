@@ -30,13 +30,16 @@ import AddUserDialog from "../../components/modals/users/add-user-dialog";
 import DeleteDialog from "../../components/shared/delete-dialog";
 import ViewUserDialog from "../../components/modals/users/view-user-dialog";
 import UpdateUserDialog from "../../components/modals/users/update-user-dialog";
+import {useSnackbar} from "notistack";
 
 const UsersPage = () => {
 
 
     const useStyles = makeStyles(theme => {
         return {
-            container: {},
+            container: {
+                paddingTop: 32
+            },
             button: {
                 paddingTop: 8,
                 paddingBottom: 8,
@@ -65,6 +68,7 @@ const UsersPage = () => {
         }
     });
     const {token} = useSelector(state => state.auth);
+    const {enqueueSnackbar} = useSnackbar();
     const classes = useStyles();
 
     const dispatch = useDispatch();
@@ -73,6 +77,7 @@ const UsersPage = () => {
     const [status, setStatus] = useState('All');
     const [openUserDialog, setOpenUserDialog] = useState(false);
     const [page, setPage] = useState(0);
+
     const handlePageChange = (event, page) => {
         setPage(page);
     }
@@ -94,8 +99,11 @@ const UsersPage = () => {
 
 
     useEffect(() => {
-        dispatch(getUsers(token));
-    }, [dispatch, token]);
+        const showNotification = (message, options) => {
+            enqueueSnackbar(message, options);
+        }
+        dispatch(getUsers(token, showNotification));
+    }, [dispatch, enqueueSnackbar, token]);
 
     const {users, loading, error} = useSelector(state => state.users);
 
@@ -152,7 +160,7 @@ const UsersPage = () => {
         <Layout>
             <Container className={classes.container}>
                 {loading && <LinearProgress variant="query"/>}
-                {error && <Alert title="Error">{error}</Alert>}
+                {error && <Alert severity="error" title="Error">{error}</Alert>}
                 <Grid container={true} justifyContent="space-between" spacing={2}>
                     <Grid item={true} xs={12} md={3}>
                         <Typography
@@ -201,6 +209,7 @@ const UsersPage = () => {
                     </Grid>
                 </Grid>
 
+                {loading && <LinearProgress variant="query"/>}
                 <Divider variant="fullWidth" className={classes.divider}/>
 
                 {users && users.length === 0 ? (
@@ -231,7 +240,7 @@ const UsersPage = () => {
                                                 <TableCell>{user.username}</TableCell>
                                                 <TableCell>{user.email}</TableCell>
                                                 <TableCell>{user.name}</TableCell>
-                                                <TableCell>{user.role}</TableCell>
+                                                <TableCell>{user.role === 'SUPER_ADMIN'? 'SUPER ADMIN': user.role}</TableCell>
                                                 <TableCell>${parseFloat(user.balance).toFixed(2)}</TableCell>
                                                 <TableCell>{moment(user.createdAt).fromNow()}</TableCell>
                                                 <TableCell>
