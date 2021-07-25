@@ -123,9 +123,13 @@ const UsersPage = () => {
         handleDeleteDialogOpen();
     }
 
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
+
     const handleDelete = () => {
         if (selectedID !== "") {
-            dispatch(deleteUser(selectedID, token));
+            dispatch(deleteUser(selectedID, token, showNotification));
             handleDeleteDialogClose();
         }
     }

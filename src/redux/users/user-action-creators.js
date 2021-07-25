@@ -155,7 +155,7 @@ const deleteUserFailure = error => {
     }
 }
 
-export const deleteUser = (id, token) => {
+export const deleteUser = (id, token, showNotification) => {
     return dispatch => {
         dispatch(deleteUserRequest());
         axios({
@@ -163,9 +163,11 @@ export const deleteUser = (id, token) => {
             url: `${SERVER_BASE_URL}/users/${id}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
+            showNotification(message, {variant: 'success'});
             dispatch(deleteInstructionSuccess(data));
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(deleteUserFailure(error.response.data.message));
         });
     }
