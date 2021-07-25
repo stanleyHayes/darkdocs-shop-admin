@@ -110,9 +110,13 @@ const InstructionsPage = () => {
         handleDeleteDialogOpen();
     }
 
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
+
     const handleDelete = () => {
         if (selectedID !== "") {
-            dispatch(deleteInstruction(selectedID, token));
+            dispatch(deleteInstruction(selectedID, token, showNotification));
             handleDeleteDialogClose();
         }
     }

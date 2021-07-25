@@ -38,7 +38,7 @@ const addInstructionFailure = error => {
     }
 }
 
-export const addInstruction = (instruction, token) => {
+export const addInstruction = (instruction, token, showNotification) => {
     return dispatch => {
         dispatch(addInstructionRequest());
         axios({
@@ -47,10 +47,18 @@ export const addInstruction = (instruction, token) => {
             headers: {Authorization: `Bearer ${token}`},
             data: instruction
         }).then(res => {
-            const {data} = res.data;
-            dispatch(addInstructionSuccess(data));
+            const {data, message, success} = res.data;
+            if (success) {
+                dispatch(addInstructionSuccess(data));
+                showNotification(message, {variant: 'success'});
+            }
         }).catch(error => {
-            dispatch(addInstructionFailure(error.response.data.message));
+            console.log(error.response);
+            const {message, success} = error && error.response && error.response.data;
+            if (!success) {
+                showNotification(message, {variant: 'error'});
+                dispatch(addInstructionFailure(message));
+            }
         });
     }
 }
@@ -113,7 +121,7 @@ const updateInstructionFailure = error => {
     }
 }
 
-export const updateInstruction = (id, instruction, token) => {
+export const updateInstruction = (id, instruction, token, showNotification) => {
     return dispatch => {
         dispatch(updateInstructionRequest());
         axios({
@@ -122,9 +130,11 @@ export const updateInstruction = (id, instruction, token) => {
             headers: {Authorization: `Bearer ${token}`},
             data: instruction
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
             dispatch(updateInstructionSuccess(data));
+            showNotification(message, {variant: 'success'});
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(updateInstructionFailure(error.response.data.message));
         });
     }
@@ -151,7 +161,7 @@ const deleteInstructionFailure = error => {
     }
 }
 
-export const deleteInstruction = (id, token) => {
+export const deleteInstruction = (id, token, showNotification) => {
     return dispatch => {
         dispatch(deleteInstructionRequest());
         axios({
@@ -159,9 +169,11 @@ export const deleteInstruction = (id, token) => {
             url: `${SERVER_BASE_URL}/instructions/${id}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
+            showNotification(message, {variant: 'success'});
             dispatch(deleteInstructionSuccess(data));
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(deleteInstructionFailure(error.response.data.message));
         });
     }

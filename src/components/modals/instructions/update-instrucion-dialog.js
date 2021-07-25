@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 import {updateInstruction} from "../../../redux/instructions/instructions-action-creators";
+import {useSnackbar} from "notistack";
 
 const UpdateInstructionDialog = ({
                                      openUpdateInstructionDialog,
@@ -47,6 +48,12 @@ const UpdateInstructionDialog = ({
     const {token} = useSelector(state => state.auth);
     const [error, setError] = useState({});
 
+    const {enqueueSnackbar} = useSnackbar();
+
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
+
     const handleChange = event => {
         setInstruction({...instruction, [event.target.name]: event.target.value});
     }
@@ -62,7 +69,7 @@ const UpdateInstructionDialog = ({
             setError({...error, 'text': null});
         }
 
-        dispatch(updateInstruction(originalInstruction._id, updatedInstruction, token));
+        dispatch(updateInstruction(originalInstruction._id, updatedInstruction, token, showNotification));
         handleUpdateInstructionDialogClose();
     }
 
@@ -83,7 +90,7 @@ const UpdateInstructionDialog = ({
                         value={instruction.text}
                         type="text"
                         onChange={handleChange}
-                        name="country"
+                        name="text"
                         multiline={true}
                         rows={5}
                         fullWidth={true}
