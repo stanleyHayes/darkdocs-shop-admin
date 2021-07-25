@@ -165,13 +165,12 @@ const UsersPage = () => {
             <Container className={classes.container}>
                 {loading && <LinearProgress variant="query"/>}
                 {error && <Alert severity="error" title="Error">{error}</Alert>}
-                <Grid container={true} justifyContent="space-between" spacing={2}>
+                <Grid container={true} justifyContent="space-between" alignItems="center" spacing={2}>
                     <Grid item={true} xs={12} md={3}>
                         <Typography
                             color="textSecondary"
                             className={classes.title}
-                            variant="h5"
-                            gutterBottom={true}>
+                            variant="h5">
                             Users
                         </Typography>
                     </Grid>

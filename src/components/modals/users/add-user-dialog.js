@@ -1,11 +1,15 @@
 import React, {useState} from "react";
 import {
-    Button, Checkbox,
+    Button,
+    Checkbox,
     Dialog,
     DialogActions,
     DialogContent,
-    Divider, Grid,
-    makeStyles, MenuItem, Select,
+    Divider,
+    Grid,
+    makeStyles,
+    MenuItem,
+    Select,
     TextField,
     Typography
 } from "@material-ui/core";
@@ -58,38 +62,38 @@ const AddUserDialog = ({openUserDialog, handleUserDialogClose}) => {
     const handleSubmit = event => {
         event.preventDefault();
 
-        if(!user.name){
+        if (!user.name) {
             setError({...error, name: 'Field required'});
             return;
-        }else {
+        } else {
             setError({...error, name: null});
         }
 
-        if(!user.email){
+        if (!user.email) {
             setError({...error, email: 'Field required'});
             return;
-        }else {
+        } else {
             setError({...error, email: null});
         }
 
-        if(!user.username){
+        if (!user.username) {
             setError({...error, username: 'Field required'});
             return;
-        }else {
+        } else {
             setError({...error, username: null});
         }
 
-        if(!user.role){
+        if (!user.role) {
             setError({...error, role: 'Field required'});
             return;
-        }else {
+        } else {
             setError({...error, role: null});
         }
 
-        if(!user.password){
+        if (!user.password) {
             setError({...error, password: 'Field required'});
             return;
-        }else {
+        } else {
             setError({...error, password: null});
         }
         dispatch(createUser(user, token, showNotification));
@@ -178,7 +182,7 @@ const AddUserDialog = ({openUserDialog, handleUserDialogClose}) => {
                         margin="normal"
                         className={classes.textField}
                         value={user.password}
-                        type={visible ? 'text': 'password'}
+                        type={visible ? 'text' : 'password'}
                         onChange={handleChange}
                         name="password"
                         fullWidth={true}
@@ -204,7 +208,8 @@ const AddUserDialog = ({openUserDialog, handleUserDialogClose}) => {
             </DialogContent>
             <Divider variant="fullWidth" className={classes.divider}/>
             <DialogActions>
-                <Button onClick={handleUserDialogClose} variant="outlined" className={classes.closeButton}>
+                <Button onClick={handleUserDialogClose} fullWidth={true} variant="outlined"
+                        className={classes.closeButton}>
                     Close
                 </Button>
             </DialogActions>
