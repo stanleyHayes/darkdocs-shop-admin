@@ -1,9 +1,21 @@
 import React, {useEffect, useState} from "react";
 import Layout from "../../components/layout/layout";
-import {Button, Card, CardContent, Container, Grid, makeStyles, TextField, Typography} from "@material-ui/core";
+import {
+    Button,
+    Card,
+    CardContent,
+    Container,
+    Grid,
+    LinearProgress,
+    makeStyles,
+    TextField,
+    Typography
+} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {updateInformation} from "../../redux/information/information-action-creators";
+import {useSnackbar} from "notistack";
+import {Alert} from "@material-ui/lab";
 
 const InformationPage = () => {
 
@@ -45,45 +57,47 @@ const InformationPage = () => {
     const [info, setInfo] = useState({});
     const {btcAddress, email} = info;
     const [error, setError] = useState({});
-    const [hasError, setHasError] = useState(false);
+
+    const {enqueueSnackbar} = useSnackbar();
 
     const dispatch = useDispatch();
     const history = useHistory();
+
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
 
     const handleChange = event => {
         setInfo({...info, [event.target.name]: event.target.value});
     }
 
-    const {loading, user: data, token} = useSelector(state => state.auth);
+    const {token} = useSelector(state => state.auth);
+    const {error: infoError, information, loading} = useSelector(state => state.information);
 
     useEffect(() => {
-        if (data) {
-            setInfo({...data});
+        if (information) {
+            setInfo({...information});
         }
-    }, [data]);
+    }, [information]);
 
     const handleSubmit = event => {
         event.preventDefault();
         const updatedInfo = {};
-        if (data.email !== email) {
-            updatedInfo['username'] = email;
+        if (information.email !== email) {
+            updatedInfo['email'] = email;
         }
-        if (data.btcAddress !== btcAddress) {
-            updatedInfo['name'] = btcAddress;
+        if (information.btcAddress !== btcAddress) {
+            updatedInfo['btcAddress'] = btcAddress;
         }
-        if (data.email !== email) {
-            setHasError(true);
+        if (information.email !== email) {
             setError({...error, 'email': 'Field required'});
+            return;
         }
-        if (data.btcAddress !== btcAddress && !btcAddress) {
-            setHasError(true);
-            setError({...error, 'BTC Address': 'Field required'});
+        if (information.btcAddress !== btcAddress && !btcAddress) {
+            setError({...error, btcAddress: 'Field required'});
+            return;
         }
-        if (hasError) {
-
-        } else {
-            dispatch(updateInformation(updatedInfo, token, history));
-        }
+        dispatch(updateInformation(updatedInfo, token, history, showNotification));
     }
 
     return (
@@ -92,11 +106,20 @@ const InformationPage = () => {
                 <Grid container={true} justifyContent="center">
                     <Grid item={true} xs={12} md={8} lg={6}>
                         <Card elevation={1} variant="elevation">
+                            {loading && <LinearProgress variant="buffer"/>}
                             <CardContent>
-                                <Typography color="textSecondary" className={classes.title} gutterBottom={true}
-                                            variant="h6" align="center">
+
+                                {infoError && <Alert title={infoError} severity="error">{infoError}</Alert>}
+
+                                <Typography
+                                    color="textSecondary"
+                                    className={classes.title}
+                                    gutterBottom={true}
+                                    variant="h6"
+                                    align="center">
                                     Update Information
                                 </Typography>
+
 
                                 <form onSubmit={handleSubmit}>
                                     <TextField
@@ -110,6 +133,7 @@ const InformationPage = () => {
                                         onChange={handleChange}
                                         name="email"
                                         fullWidth={true}
+                                        required={true}
                                         error={Boolean(error.email)}
                                         helperText={error.email}
                                     />
@@ -125,6 +149,7 @@ const InformationPage = () => {
                                         onChange={handleChange}
                                         name="btcAddress"
                                         fullWidth={true}
+                                        required={true}
                                         error={Boolean(error.btcAddress)}
                                         helperText={error.btcAddress}
                                     />

@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../../components/layout/layout";
-import {Avatar, Card, CardContent, Container, Divider, Grid, makeStyles, Typography} from "@material-ui/core";
+import {Card, CardContent, Container, Divider, Grid, makeStyles, Typography} from "@material-ui/core";
 import {
     AccountCircle,
     Cancel,
@@ -9,7 +9,7 @@ import {
     Email,
     Face,
     HourglassEmpty,
-    Input,
+    Input, OfflineBolt,
     VerifiedUser
 } from "@material-ui/icons";
 import {useSelector} from "react-redux";
@@ -61,9 +61,7 @@ const DashboardPage = () => {
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
-                                        <Avatar>
-                                            <Email/>
-                                        </Avatar>
+                                        <Email/>
                                     </Grid>
                                 </Grid>
                                 <Typography gutterBottom={true} variant="body2" align="center">Email</Typography>
@@ -77,9 +75,7 @@ const DashboardPage = () => {
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
-                                        <Avatar>
-                                            <Email/>
-                                        </Avatar>
+                                        <OfflineBolt/>
                                     </Grid>
                                 </Grid>
                                 <Typography variant="body2" gutterBottom={true} align="center">BTC Address</Typography>
@@ -102,9 +98,7 @@ const DashboardPage = () => {
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
-                                        <Avatar>
-                                            <VerifiedUser/>
-                                        </Avatar>
+                                        <VerifiedUser/>
                                     </Grid>
                                 </Grid>
                                 <Typography variant="h3" align="center">
@@ -120,9 +114,7 @@ const DashboardPage = () => {
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
-                                        <Avatar>
-                                            <AccountCircle/>
-                                        </Avatar>
+                                        <AccountCircle/>
                                     </Grid>
                                 </Grid>
                                 <Typography variant="h3" align="center">{millify(16)}</Typography>
@@ -136,9 +128,7 @@ const DashboardPage = () => {
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
-                                        <Avatar>
-                                            <Face/>
-                                        </Avatar>
+                                        <Face/>
                                     </Grid>
                                 </Grid>
                                 <Typography variant="h3" align="center">{millify(10000)}</Typography>
@@ -158,9 +148,7 @@ const DashboardPage = () => {
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
-                                        <Avatar>
-                                            <Email/>
-                                        </Avatar>
+                                        <Email/>
                                     </Grid>
                                 </Grid>
                                 <Typography variant="h3" align="center">{millify(45)}</Typography>
@@ -174,9 +162,7 @@ const DashboardPage = () => {
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
-                                        <Avatar>
-                                            <Email/>
-                                        </Avatar>
+                                        <Email/>
                                     </Grid>
                                 </Grid>
                                 <Typography variant="h3" align="center">{millify(35)}</Typography>
@@ -190,9 +176,7 @@ const DashboardPage = () => {
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
-                                        <Avatar>
-                                            <Email/>
-                                        </Avatar>
+                                        <Email/>
                                     </Grid>
                                 </Grid>
                                 <Typography variant="h3" align="center">{millify(20)}</Typography>
@@ -212,9 +196,7 @@ const DashboardPage = () => {
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
-                                        <Avatar>
-                                            <Input/>
-                                        </Avatar>
+                                        <Input/>
                                     </Grid>
                                 </Grid>
                                 <Typography variant="h3" align="center">{millify(5000)}</Typography>
@@ -228,9 +210,7 @@ const DashboardPage = () => {
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
-                                        <Avatar>
-                                            <CreditCard/>
-                                        </Avatar>
+                                        <CreditCard/>
                                     </Grid>
                                 </Grid>
                                 <Typography variant="h3" align="center">{millify(50000)}</Typography>
@@ -244,9 +224,7 @@ const DashboardPage = () => {
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
-                                        <Avatar>
-                                            <Email/>
-                                        </Avatar>
+                                        <Email/>
                                     </Grid>
                                 </Grid>
                                 <Typography variant="h3" align="center">{millify(789065)}</Typography>
@@ -266,9 +244,7 @@ const DashboardPage = () => {
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
-                                        <Avatar>
-                                            <CheckCircle/>
-                                        </Avatar>
+                                        <CheckCircle/>
                                     </Grid>
                                 </Grid>
                                 <Typography variant="h3" align="center">{millify(57484757)}</Typography>
@@ -282,9 +258,7 @@ const DashboardPage = () => {
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
-                                        <Avatar>
-                                            <HourglassEmpty/>
-                                        </Avatar>
+                                        <HourglassEmpty/>
                                     </Grid>
                                 </Grid>
                                 <Typography variant="h3" align="center">{millify(4565)}</Typography>
@@ -298,9 +272,7 @@ const DashboardPage = () => {
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
-                                        <Avatar>
-                                            <Cancel/>
-                                        </Avatar>
+                                        <Cancel/>
                                     </Grid>
                                 </Grid>
                                 <Typography variant="h3" align="center">{millify(678)}</Typography>
@@ -320,9 +292,7 @@ const DashboardPage = () => {
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
-                                        <Avatar>
-                                            <HourglassEmpty/>
-                                        </Avatar>
+                                        <HourglassEmpty/>
                                     </Grid>
                                 </Grid>
                                 <Typography variant="h3" align="center">{millify(46)}</Typography>
@@ -336,9 +306,7 @@ const DashboardPage = () => {
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
-                                        <Avatar>
-                                            <CheckCircle/>
-                                        </Avatar>
+                                        <CheckCircle/>
                                     </Grid>
                                 </Grid>
                                 <Typography variant="h3" align="center">{millify(6345643)}</Typography>
@@ -352,9 +320,7 @@ const DashboardPage = () => {
                             <CardContent>
                                 <Grid container={true} justifyContent="center">
                                     <Grid item={true}>
-                                        <Avatar>
-                                            <Cancel/>
-                                        </Avatar>
+                                        <Cancel/>
                                     </Grid>
                                 </Grid>
                                 <Typography variant="h3" align="center">{millify(54467)}</Typography>

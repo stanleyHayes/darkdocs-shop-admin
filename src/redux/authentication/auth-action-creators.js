@@ -187,6 +187,7 @@ export const updateProfile = (user, token, history, showNotification) => {
             const {data, message} = res.data;
             dispatch(updateProfileSuccess(data));
             showNotification(message, {variant: 'success'});
+            localStorage.setItem(DARKDOCS_SHOP_ADMIN_USER_KEY, JSON.stringify(data));
             history.push('/profile');
         }).catch(error => {
             showNotification(error.response.data.message, {variant: 'error'});
