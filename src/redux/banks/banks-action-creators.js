@@ -201,7 +201,8 @@ export const getBanks = (token, showNotification) => {
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data, message} = res.data;
-            showNotification(message, {variant: 'success'});
+            if (showNotification)
+                showNotification(message, {variant: 'success'});
             dispatch(getBanksSuccess(data));
         }).catch(error => {
             showNotification(error.response.data.message, {variant: 'error'});

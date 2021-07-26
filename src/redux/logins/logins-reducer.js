@@ -1,14 +1,64 @@
-import {logins} from "./logins.data";
+import {
+    CREATE_LOGIN_REQUEST,
+    CREATE_LOGIN_SUCCESS, GET_LOGINS_FAILURE,
+    GET_LOGINS_REQUEST,
+    GET_LOGINS_SUCCESS
+} from "./logins-action-types";
+import {CREATE_USER_FAILURE} from "../users/user-action-types";
 
 const INITIAL_STATE = {
-    logins: [...logins],
+    logins: [],
     loading: false,
     error: null,
     singleLogin: {}
 };
 
 const loginsReducer = (state = INITIAL_STATE, action) => {
-    switch (action.type){
+    switch (action.type) {
+        case CREATE_LOGIN_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                error: ""
+            }
+
+        case CREATE_LOGIN_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: "",
+                logins: [...state.logins, action.payload]
+            }
+
+        case CREATE_USER_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+
+        case GET_LOGINS_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                error: ""
+            }
+
+        case GET_LOGINS_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: "",
+                logins: action.payload
+            }
+
+        case GET_LOGINS_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+                logins: []
+            }
         default:
             return state;
     }

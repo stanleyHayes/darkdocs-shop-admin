@@ -61,6 +61,9 @@ const LoginsPage = () => {
             },
             title: {
                 textTransform: 'uppercase'
+            },
+            emptyText: {
+                textTransform: 'uppercase'
             }
         }
     });
@@ -155,8 +158,7 @@ const LoginsPage = () => {
                         <Typography
                             color="textSecondary"
                             className={classes.title}
-                            variant="h5"
-                            gutterBottom={true}>
+                            variant="h5">
                             Bank Logins
                         </Typography>
                     </Grid>
@@ -182,15 +184,22 @@ const LoginsPage = () => {
                             startIcon={<Add/>}>Add</Button>
                     </Grid>
                 </Grid>
-
+                {loading && <LinearProgress variant="query"/>}
                 <Divider variant="fullWidth" className={classes.divider}/>
 
                 {logins && logins.length === 0 ? (
                     <Box>
-                        <Typography align="center" variant="h6">No bank logins available</Typography>
+                        <Typography
+                            color="textSecondary"
+                            className={classes.emptyText}
+                            variant="h6">
+                            No bank logins available
+                        </Typography>
                     </Box>) : (
-                    <TableContainer elevation={1} variant="elevation" component={Paper}
-                                    className={classes.tableContainer}>
+                    <TableContainer
+                        elevation={1} variant="elevation"
+                        component={Paper}
+                        className={classes.tableContainer}>
                         <Table>
                             <TableHead>
                                 <TableRow hover={true}>
