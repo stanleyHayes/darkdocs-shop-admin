@@ -49,6 +49,9 @@ const FundsPage = () => {
             },
             title: {
                 textTransform: 'uppercase'
+            },
+            emptyText: {
+                textTransform: 'uppercase'
             }
         }
     });
@@ -144,10 +147,17 @@ const FundsPage = () => {
 
                 {funds && funds.length === 0 ? (
                     <Box>
-                        <Typography align="center" variant="h6">No funds available</Typography>
+                        <Typography
+                            className={classes.emptyText}
+                            color="textSecondary"
+                            variant="h6">
+                            No funds available
+                        </Typography>
                     </Box>) : (
-                    <TableContainer elevation={1} variant="elevation" component={Paper}
-                                    className={classes.tableContainer}>
+                    <TableContainer
+                        elevation={1} variant="elevation"
+                        component={Paper}
+                        className={classes.tableContainer}>
                         <Table>
                             <TableHead>
                                 <TableRow hover={true}>

@@ -55,6 +55,9 @@ const ChequesPage = () => {
                 color: green['600'],
                 cursor: 'pointer'
             },
+            emptyText: {
+                textTransform: 'uppercase'
+            }
         }
     });
     const {token} = useSelector(state => state.auth);
@@ -135,13 +138,12 @@ const ChequesPage = () => {
             <Container className={classes.container}>
                 {loading && <LinearProgress variant="query"/>}
                 {error && <Alert title="Error">{error}</Alert>}
-                <Grid container={true} justifyContent="space-between" spacing={2}>
+                <Grid container={true} justifyContent="space-between" spacing={2} alignItems="center">
                     <Grid item={true} xs={12} md={8}>
                         <Typography
                             color="textSecondary"
                             className={classes.title}
-                            variant="h5"
-                            gutterBottom={true}>
+                            variant="h5">
                             Cheques
                         </Typography>
                     </Grid>
@@ -166,7 +168,7 @@ const ChequesPage = () => {
 
                 {cheques && cheques.length === 0 ? (
                     <Box>
-                        <Typography align="center" variant="h6">No cheques available</Typography>
+                        <Typography color="textSecondary" className={classes.emptyText} variant="h6">No cheques available</Typography>
                     </Box>) : (
                     <TableContainer elevation={1} variant="elevation" component={Paper}
                                     className={classes.tableContainer}>

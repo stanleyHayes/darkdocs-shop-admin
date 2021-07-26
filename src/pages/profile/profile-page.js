@@ -66,8 +66,7 @@ const ProfilePage = () => {
                                 </Typography>
                                 {loading ? <Skeleton variant="text"/> : (
                                     <Typography variant="body1">
-                                        {/*{user && user.name}*/}
-                                        Stanley Hayford
+                                        {user && user.name}
                                     </Typography>
                                 )}
 
@@ -78,8 +77,7 @@ const ProfilePage = () => {
                                 </Typography>
                                 {loading ? <Skeleton variant="text"/> : (
                                     <Typography variant="body1">
-                                        {/*{user && user.email}*/}
-                                        hayfordstanley@gmail.com
+                                        {user && user.email}
                                     </Typography>
                                 )}
                                 <Divider variant="fullWidth" light={true} className={classes.divider}/>
@@ -90,7 +88,6 @@ const ProfilePage = () => {
                                 {loading ? <Skeleton variant="text"/> : (
                                     <Typography variant="body1">
                                         {user && user.username}
-                                        sahayford
                                     </Typography>
                                 )}
                             </CardContent>
