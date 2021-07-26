@@ -115,7 +115,7 @@ const updateLoginFailure = error => {
     }
 }
 
-export const updateLogin = (id, login, token) => {
+export const updateLogin = (id, login, token, showNotification) => {
     return dispatch => {
         dispatch(updateLoginRequest());
         axios({
@@ -124,9 +124,11 @@ export const updateLogin = (id, login, token) => {
             headers: {Authorization: `Bearer ${token}`},
             data: login
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
             dispatch(updateLoginSuccess(data));
+            showNotification(message, {variant: 'success'});
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(updateLoginFailure(error.response.data.message));
         });
     }

@@ -1,6 +1,5 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
-    Avatar,
     Button,
     Chip,
     Dialog,
@@ -8,7 +7,10 @@ import {
     DialogContent,
     Divider,
     Grid,
-    makeStyles, MenuItem, Select,
+    LinearProgress,
+    makeStyles,
+    MenuItem,
+    Select,
     TextField,
     Typography
 } from "@material-ui/core";
@@ -16,6 +18,8 @@ import {DeleteForever} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
 import {updateLogin} from "../../../redux/logins/logins-action-creators";
 import {red} from "@material-ui/core/colors";
+import {useSnackbar} from "notistack";
+import {getBanks} from "../../../redux/banks/banks-action-creators";
 
 const UpdateBankLoginDialog = ({openUpdateLoginDialog, handleUpdateLoginDialogClose, originalLogin}) => {
 
@@ -61,6 +65,14 @@ const UpdateBankLoginDialog = ({openUpdateLoginDialog, handleUpdateLoginDialogCl
     const [include, setInclude] = useState("");
     const [includes, setIncludes] = useState([...originalLogin.includes]);
     const [error, setError] = useState({});
+
+
+    const {banks, loading} = useSelector(state => state.banks);
+
+    const {enqueueSnackbar} = useSnackbar();
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
 
     const handleIncludeChange = event => {
         setInclude(event.target.value);
@@ -111,8 +123,16 @@ const UpdateBankLoginDialog = ({openUpdateLoginDialog, handleUpdateLoginDialogCl
             setError({...error, 'country': null});
         }
 
-        updatedLogin['includes'] = login.includes;
-        dispatch(updateLogin(originalLogin._id, updatedLogin, token));
+        if (login.bank !== originalLogin.bank && !login.bank) {
+            setError({...error, 'bank': 'Field required'});
+            return;
+        } else {
+            updatedLogin['bank'] = login.bank;
+            setError({...error, 'bank': null});
+        }
+
+        updatedLogin['includes'] = includes;
+        dispatch(updateLogin(originalLogin._id, updatedLogin, token, showNotification));
 
         handleUpdateLoginDialogClose();
     }
@@ -132,6 +152,10 @@ const UpdateBankLoginDialog = ({openUpdateLoginDialog, handleUpdateLoginDialogCl
         setLogin({...login, [event.target.name]: event.target.value});
     }
 
+    useEffect(() => {
+        dispatch(getBanks(token));
+    }, [dispatch, token]);
+
 
     return (
         <Dialog open={openUpdateLoginDialog} onClose={handleUpdateLoginDialogClose}>
@@ -141,21 +165,21 @@ const UpdateBankLoginDialog = ({openUpdateLoginDialog, handleUpdateLoginDialogCl
                 </Typography>
 
                 <form onSubmit={handleSubmit}>
-                    <TextField
+                    <Select
                         variant="outlined"
-                        label="Status"
-                        placeholder="Enter status"
-                        margin="normal"
-                        className={classes.textField}
+                        margin="none"
                         value={login.status}
-                        type="text"
-                        onChange={handleChange}
                         name="status"
+                        label="Status"
                         fullWidth={true}
                         error={Boolean(error.status)}
-                        helperText={error.status}
-
-                    />
+                        defaultValue={login.status}
+                        className={classes.textField}
+                        onChange={handleChange}>
+                        <MenuItem value="None">Select Availability</MenuItem>
+                        <MenuItem value="Available">Available</MenuItem>
+                        <MenuItem value="Unavailale">Unavailable</MenuItem>
+                    </Select>
 
                     <Typography gutterBottom={true} variant="caption" className={classes.caption} display="block">
                         Type
@@ -167,9 +191,11 @@ const UpdateBankLoginDialog = ({openUpdateLoginDialog, handleUpdateLoginDialogCl
                         name="type"
                         label="Type"
                         fullWidth={true}
+                        error={Boolean(error.type)}
                         defaultValue={login.type}
                         className={classes.textField}
                         onChange={handleChange}>
+                        <MenuItem value="None">Select Type</MenuItem>
                         <MenuItem value="Checkings">Checkings</MenuItem>
                         <MenuItem value="Savings">Savings</MenuItem>
                     </Select>
@@ -213,8 +239,7 @@ const UpdateBankLoginDialog = ({openUpdateLoginDialog, handleUpdateLoginDialogCl
                                             clickable={true}
                                             onClick={() => handleIncludeRemove(include)}
                                             onDelete={() => handleIncludeRemove(include)}
-                                            deleteIcon={<Avatar><DeleteForever
-                                                className={classes.deleteIcon}/></Avatar>}
+                                            deleteIcon={<DeleteForever className={classes.deleteIcon}/>}
                                         />
                                     </Grid>
                                 )
@@ -239,8 +264,9 @@ const UpdateBankLoginDialog = ({openUpdateLoginDialog, handleUpdateLoginDialogCl
                         onChange={handleChange}
                         name="balance"
                         fullWidth={true}
-                        error={Boolean(error.status)}
-                        helperText={error.status}
+                        required={true}
+                        error={Boolean(error.balance)}
+                        helperText={error.balance}
                     />
 
                     <TextField
@@ -254,8 +280,9 @@ const UpdateBankLoginDialog = ({openUpdateLoginDialog, handleUpdateLoginDialogCl
                         onChange={handleChange}
                         name="price"
                         fullWidth={true}
-                        error={Boolean(error.status)}
-                        helperText={error.status}
+                        required={true}
+                        error={Boolean(error.price)}
+                        helperText={error.price}
                     />
 
                     <TextField
@@ -269,11 +296,35 @@ const UpdateBankLoginDialog = ({openUpdateLoginDialog, handleUpdateLoginDialogCl
                         onChange={handleChange}
                         name="country"
                         fullWidth={true}
-                        error={Boolean(error.status)}
-                        helperText={error.status}
+                        required={true}
+                        error={Boolean(error.country)}
+                        helperText={error.country}
                     />
 
-                    <Button variant="outlined" fullWidth={true} className={classes.submitButton}>
+                    <Typography gutterBottom={true} variant="caption" className={classes.caption} display="block">
+                        Bank
+                    </Typography>
+                    {loading && <LinearProgress variant='query'/>}
+                    <Select
+                        variant="outlined"
+                        margin="none"
+                        value={login.bank._id}
+                        name="bank"
+                        label="Bank"
+                        fullWidth={true}
+                        error={Boolean(error.bank)}
+                        defaultValue={login.bank}
+                        className={classes.textField}
+                        onChange={handleChange}>
+                        <MenuItem value="None">Select Bank</MenuItem>
+                        {banks && banks.map((bank, index) => {
+                            return (
+                                <MenuItem key={index} value={bank._id}>{bank.name} ({bank.country})</MenuItem>
+                            )
+                        })}
+                    </Select>
+
+                    <Button onClick={handleSubmit} variant="outlined" fullWidth={true} className={classes.submitButton}>
                         Update Bank Login
                     </Button>
                 </form>

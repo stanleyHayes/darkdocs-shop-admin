@@ -56,13 +56,14 @@ const AddBankLoginDialog = ({openBankLoginDialog, handleBankLoginDialogClose}) =
     const classes = useStyles();
 
     const dispatch = useDispatch();
-    const {token} = useSelector(state => state.auth);
-    const {banks, loading} = useSelector(state => state.banks);
 
     const [login, setLogin] = useState({type: 'None', status: 'None', bank: 'None'});
     const [include, setInclude] = useState("");
     const [includes, setIncludes] = useState([]);
     const [error, setError] = useState({});
+
+    const {token} = useSelector(state => state.auth);
+    const {banks, loading} = useSelector(state => state.banks);
 
     const {enqueueSnackbar} = useSnackbar();
     const showNotification = (message, options) => {
