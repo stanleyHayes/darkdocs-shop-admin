@@ -5,6 +5,7 @@ import {makeStyles} from "@material-ui/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {updateProfile} from "../../redux/authentication/auth-action-creators";
+import {useSnackbar} from "notistack";
 
 const EditProfilePage = () => {
 
@@ -42,10 +43,14 @@ const EditProfilePage = () => {
     const [user, setUser] = useState({});
     const {username, email, name, city, country, postalCode} = user;
     const [error, setError] = useState({});
-    const [hasError, setHasError] = useState(false);
 
     const dispatch = useDispatch();
     const history = useHistory();
+    const{enqueueSnackbar} = useSnackbar();
+
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
 
     const handleChange = event => {
         setUser({...user, [event.target.name]: event.target.value});
@@ -64,39 +69,39 @@ const EditProfilePage = () => {
         const updatedUser = {};
         if (data.username !== username) {
             updatedUser['username'] = username;
+        } else {
+            setError({...error, username: 'Field required'});
         }
         if (data.email !== email) {
             updatedUser['email'] = email;
+        } else {
+            setError({...error, username: 'Field required'});
         }
+
         if (data.name !== name) {
             updatedUser['name'] = name;
+        } else {
+            setError({...error, username: 'Field required'});
         }
+
         if (city) {
             updatedUser['city'] = city;
+        } else {
+            setError({...error, username: 'Field required'});
         }
+
         if (country) {
             updatedUser['country'] = country;
+        } else {
+            setError({...error, username: 'Field required'});
         }
+
         if (postalCode) {
             updatedUser['postalCode'] = postalCode;
-        }
-        if (data.username !== username && !username) {
-            setHasError(true);
-            setError({...error, 'username': 'Field required'});
-        }
-        if (data.email !== email) {
-            setHasError(true);
-            setError({...error, 'email': 'Field required'});
-        }
-        if (data.name !== name) {
-            setHasError(true);
-            setError({...error, 'name': 'Field required'});
-        }
-        if (hasError) {
-
         } else {
-            dispatch(updateProfile(updatedUser, token, history));
+            setError({...error, username: 'Field required'});
         }
+        dispatch(updateProfile(updatedUser, token, history, showNotification));
     }
 
     return (

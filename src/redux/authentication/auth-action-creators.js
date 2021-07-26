@@ -22,11 +22,7 @@ import {
     VERIFY_ACCOUNT_SUCCESS
 } from "./auth-action-types";
 import axios from "axios";
-import {
-    DARKDOCS_SHOP_ADMIN_TOKEN_KEY,
-    DARKDOCS_SHOP_ADMIN_USER_KEY,
-    SERVER_BASE_URL
-} from "../../constants/constants";
+import {DARKDOCS_SHOP_ADMIN_TOKEN_KEY, DARKDOCS_SHOP_ADMIN_USER_KEY, SERVER_BASE_URL} from "../../constants/constants";
 
 const signInRequest = () => {
     return {
@@ -91,7 +87,7 @@ const signUpFailure = error => {
     }
 }
 
-export const signUp = (user, history) => {
+export const signUp = (user, history, showNotification) => {
     return dispatch => {
         dispatch(signUpRequest());
         axios({
@@ -99,12 +95,14 @@ export const signUp = (user, history) => {
             url: `${SERVER_BASE_URL}/auth/register`,
             data: user
         }).then(res => {
-            const {data, token} = res.data;
+            const {data, token, message} = res.data;
             dispatch(signUpSuccess(data, token));
             localStorage.setItem(DARKDOCS_SHOP_ADMIN_TOKEN_KEY, JSON.stringify(token));
             localStorage.setItem(DARKDOCS_SHOP_ADMIN_USER_KEY, JSON.stringify(data));
             history.push('/auth/verify-account');
+            showNotification(message, {variant: 'success'});
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(signUpFailure(error.response.data.message));
         });
     }
@@ -130,7 +128,7 @@ const verifyAccountFailure = error => {
     }
 }
 
-export const verifyAccount = (otp, token, history) => {
+export const verifyAccount = (otp, token, history, showNotification) => {
     return dispatch => {
         dispatch(verifyAccountRequest());
         axios({
@@ -142,10 +140,12 @@ export const verifyAccount = (otp, token, history) => {
             },
             data: {otp}
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
             dispatch(verifyAccountSuccess(data));
             history.push('/auth/login');
+            showNotification(message, {variant: 'success'});
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(verifyAccountFailure(error.response.data.message));
         });
     }
@@ -172,7 +172,7 @@ const updateProfileFailure = error => {
     }
 }
 
-export const updateProfile = (user, token, history) => {
+export const updateProfile = (user, token, history, showNotification) => {
     return dispatch => {
         dispatch(updateProfileRequest());
         axios({
@@ -184,10 +184,12 @@ export const updateProfile = (user, token, history) => {
             },
             data: user
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
             dispatch(updateProfileSuccess(data));
+            showNotification(message, {variant: 'success'});
             history.push('/profile');
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(updateProfileFailure(error.response.data.message));
         });
     }
@@ -214,7 +216,7 @@ const changePasswordFailure = error => {
     }
 }
 
-export const changePassword = (passwords, token, history) => {
+export const changePassword = (passwords, token, history, showNotification) => {
     return dispatch => {
         dispatch(changePasswordRequest());
         axios({
@@ -226,10 +228,12 @@ export const changePassword = (passwords, token, history) => {
             },
             data: passwords
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
             dispatch(changePasswordSuccess(data));
             history.push('/profile');
+            showNotification(message, {variant: 'success'});
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(changePasswordFailure(error.response.data.message));
         });
     }
@@ -256,7 +260,7 @@ const forgotPasswordFailure = error => {
     }
 }
 
-export const forgotPassword = (email, history) => {
+export const forgotPassword = (email, history, showNotification) => {
     return dispatch => {
         dispatch(forgotPasswordRequest());
         axios({
@@ -267,10 +271,12 @@ export const forgotPassword = (email, history) => {
             },
             data: email
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
             dispatch(forgotPasswordSuccess(data));
             history.push('/auth/login');
+            showNotification(message, {variant: 'success'});
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(forgotPasswordFailure(error.response.data.message));
         });
     }
@@ -296,7 +302,7 @@ const signOutFailure = error => {
     }
 }
 
-export const signOut = (user, token, history) => {
+export const signOut = (user, token, history, showNotification) => {
     return dispatch => {
         dispatch(signOutRequest());
         axios({
@@ -308,12 +314,14 @@ export const signOut = (user, token, history) => {
             },
             data: user
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
             dispatch(signOutSuccess(data));
             localStorage.removeItem(DARKDOCS_SHOP_ADMIN_TOKEN_KEY);
             localStorage.removeItem(DARKDOCS_SHOP_ADMIN_USER_KEY);
             history.push('/auth/login');
+            showNotification(message, {variant: 'success'});
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(signOutFailure(error.response.data.message));
         });
     }
