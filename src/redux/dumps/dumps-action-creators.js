@@ -38,7 +38,7 @@ const createDumpFailure = error => {
     }
 }
 
-export const createDump = (dump, token) => {
+export const createDump = (dump, token, showNotification) => {
     return dispatch => {
         dispatch(createDumpRequest());
         axios({
@@ -47,9 +47,11 @@ export const createDump = (dump, token) => {
             headers: {Authorization: `Bearer ${token}`},
             data: dump
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
+            showNotification(message, {variant: 'success'});
             dispatch(createDumpSuccess(data));
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(createDumpFailure(error.response.data.message));
         });
     }
@@ -113,7 +115,7 @@ const updateDumpFailure = error => {
     }
 }
 
-export const updateDump = (id, dump, token) => {
+export const updateDump = (id, dump, token,showNotification) => {
     return dispatch => {
         dispatch(updateDumpRequest());
         axios({
@@ -122,9 +124,11 @@ export const updateDump = (id, dump, token) => {
             headers: {Authorization: `Bearer ${token}`},
             data: dump
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
+            showNotification(message, {variant: 'success'});
             dispatch(updateDumpSuccess(data));
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(updateDumpFailure(error.response.data.message));
         });
     }
@@ -151,7 +155,7 @@ const deleteDumpFailure = error => {
     }
 }
 
-export const deleteDump = (id, token) => {
+export const deleteDump = (id, token, showNotification) => {
     return dispatch => {
         dispatch(deleteDumpRequest());
         axios({
@@ -159,9 +163,11 @@ export const deleteDump = (id, token) => {
             url: `${SERVER_BASE_URL}/dumps/${id}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
+            showNotification(message, {variant: 'success'});
             dispatch(deleteDumpSuccess(data));
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(deleteDumpFailure(error.response.data.message));
         });
     }
@@ -188,7 +194,7 @@ const getDumpsFailure = error => {
     }
 }
 
-export const getDumps = (token) => {
+export const getDumps = (token,showNotification) => {
     return dispatch => {
         dispatch(getDumpsRequest());
         axios({
@@ -196,9 +202,11 @@ export const getDumps = (token) => {
             url: `${SERVER_BASE_URL}/dumps`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
+            showNotification(message, {variant: 'success'});
             dispatch(getDumpsSuccess(data));
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(getDumpsFailure(error.response.data.message));
         });
     }

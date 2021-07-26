@@ -28,6 +28,7 @@ import AddCCDumpsDialog from "../../components/modals/dumps/add-ccdumps-dialog";
 import DeleteDialog from "../../components/shared/delete-dialog";
 import ViewDumpsDialog from "../../components/modals/dumps/view-dumps-dialog";
 import UpdateDumpsDialog from "../../components/modals/dumps/update-dumps-dialog";
+import {useSnackbar} from "notistack";
 
 const DumpsPage = () => {
 
@@ -58,16 +59,27 @@ const DumpsPage = () => {
             },
             title: {
                 textTransform: 'uppercase'
+            },
+            emptyText: {
+                textTransform: 'uppercase'
             }
         }
     });
     const classes = useStyles();
     const dispatch = useDispatch();
+    const {enqueueSnackbar} = useSnackbar();
+
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
 
     const {token} = useSelector(state => state.auth);
     useEffect(() => {
-        dispatch(getDumps(token));
-    }, [dispatch, token]);
+        const showNotification = (message, options) => {
+            enqueueSnackbar(message, options);
+        }
+        dispatch(getDumps(token, showNotification));
+    }, [dispatch, token, enqueueSnackbar]);
 
     const {dumps, loading, error} = useSelector(state => state.dumps);
 
@@ -104,7 +116,7 @@ const DumpsPage = () => {
 
     const handleDelete = () => {
         if (selectedID !== "") {
-            dispatch(deleteDump(selectedID, token));
+            dispatch(deleteDump(selectedID, token, showNotification));
             handleDeleteDialogClose();
         }
     }
@@ -160,7 +172,12 @@ const DumpsPage = () => {
 
                 {dumps && dumps.length === 0 ? (
                     <Box>
-                        <Typography align="center" variant="h6">No CC Dumps available</Typography>
+                        <Typography
+                            className={classes.emptyText}
+                            color="textSecondary"
+                            variant="h6">
+                            No CC Dumps available
+                        </Typography>
                     </Box>) : (
                     <TableContainer elevation={1} variant="elevation" component={Paper}
                                     className={classes.tableContainer}>

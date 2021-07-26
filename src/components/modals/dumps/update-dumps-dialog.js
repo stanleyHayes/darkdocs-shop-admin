@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 import {updateDump} from "../../../redux/dumps/dumps-action-creators";
+import {useSnackbar} from "notistack";
 
 const UpdateDumpsDialog = ({openUpdateDumpsDialog, handleUpdateDumpsDialogClose, originalDumps}) => {
 
@@ -43,6 +44,12 @@ const UpdateDumpsDialog = ({openUpdateDumpsDialog, handleUpdateDumpsDialogClose,
     const dispatch = useDispatch();
     const {token} = useSelector(state => state.auth);
     const [error, setError] = useState({});
+
+    const {enqueueSnackbar} = useSnackbar();
+
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -104,7 +111,7 @@ const UpdateDumpsDialog = ({openUpdateDumpsDialog, handleUpdateDumpsDialogClose,
             setError({...error, 'price': null});
         }
 
-        dispatch(updateDump(originalDumps._id, updatedCCDump, token));
+        dispatch(updateDump(originalDumps._id, updatedCCDump, token, showNotification));
 
         handleUpdateDumpsDialogClose();
     }
@@ -134,6 +141,8 @@ const UpdateDumpsDialog = ({openUpdateDumpsDialog, handleUpdateDumpsDialogClose,
                         name="service"
                         fullWidth={true}
                         required={true}
+                        error={Boolean(error.service)}
+                        helperText={error.service}
                     />
 
                     <TextField
@@ -148,6 +157,8 @@ const UpdateDumpsDialog = ({openUpdateDumpsDialog, handleUpdateDumpsDialogClose,
                         name="bin"
                         fullWidth={true}
                         required={true}
+                        error={Boolean(error.bin)}
+                        helperText={error.bin}
                     />
 
                     <TextField
@@ -162,6 +173,8 @@ const UpdateDumpsDialog = ({openUpdateDumpsDialog, handleUpdateDumpsDialogClose,
                         name="type"
                         fullWidth={true}
                         required={true}
+                        error={Boolean(error.type)}
+                        helperText={error.type}
                     />
 
                     <TextField
@@ -176,6 +189,8 @@ const UpdateDumpsDialog = ({openUpdateDumpsDialog, handleUpdateDumpsDialogClose,
                         name="countryMark"
                         fullWidth={true}
                         required={true}
+                        error={Boolean(error.countryMark)}
+                        helperText={error.countryMark}
                     />
 
 
@@ -191,6 +206,8 @@ const UpdateDumpsDialog = ({openUpdateDumpsDialog, handleUpdateDumpsDialogClose,
                         name="dumpedIn"
                         fullWidth={true}
                         required={true}
+                        error={Boolean(error.dumpedIn)}
+                        helperText={error.dumpedIn}
                     />
 
                     <TextField
@@ -205,6 +222,8 @@ const UpdateDumpsDialog = ({openUpdateDumpsDialog, handleUpdateDumpsDialogClose,
                         name="bankBase"
                         fullWidth={true}
                         required={true}
+                        error={Boolean(error.bankBase)}
+                        helperText={error.bankBase}
                     />
 
                     <TextField
@@ -219,6 +238,8 @@ const UpdateDumpsDialog = ({openUpdateDumpsDialog, handleUpdateDumpsDialogClose,
                         name="quantity"
                         fullWidth={true}
                         required={true}
+                        error={Boolean(error.quantity)}
+                        helperText={error.quantity}
                     />
 
                     <TextField
@@ -233,8 +254,10 @@ const UpdateDumpsDialog = ({openUpdateDumpsDialog, handleUpdateDumpsDialogClose,
                         name="price"
                         fullWidth={true}
                         required={true}
+                        error={Boolean(error.price)}
+                        helperText={error.price}
                     />
-                    <Button variant="outlined" fullWidth={true} className={classes.submitButton}>
+                    <Button onClick={handleSubmit} variant="outlined" fullWidth={true} className={classes.submitButton}>
                         Update CC Dumps
                     </Button>
                 </form>

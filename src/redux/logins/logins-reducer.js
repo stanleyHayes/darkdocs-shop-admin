@@ -1,11 +1,11 @@
 import {
+    CREATE_LOGIN_FAILURE,
     CREATE_LOGIN_REQUEST,
     CREATE_LOGIN_SUCCESS, DELETE_LOGIN_FAILURE, DELETE_LOGIN_REQUEST, DELETE_LOGIN_SUCCESS,
     GET_LOGINS_FAILURE,
     GET_LOGINS_REQUEST,
     GET_LOGINS_SUCCESS, UPDATE_LOGIN_FAILURE, UPDATE_LOGIN_REQUEST, UPDATE_LOGIN_SUCCESS
 } from "./logins-action-types";
-import {CREATE_USER_FAILURE} from "../users/user-action-types";
 
 const INITIAL_STATE = {
     logins: [],
@@ -31,7 +31,7 @@ const loginsReducer = (state = INITIAL_STATE, action) => {
                 logins: [...state.logins, action.payload]
             }
 
-        case CREATE_USER_FAILURE:
+        case CREATE_LOGIN_FAILURE:
             return {
                 ...state,
                 loading: false,

@@ -9,6 +9,9 @@ import {
     TextField,
     Typography
 } from "@material-ui/core";
+import {useSnackbar} from "notistack";
+import {useDispatch, useSelector} from "react-redux";
+import {createDump} from "../../../redux/dumps/dumps-action-creators";
 
 const AddCCDumpsDialog = ({openCCDumpsDialog, handleCCDumpsDialogClose}) => {
 
@@ -36,12 +39,78 @@ const AddCCDumpsDialog = ({openCCDumpsDialog, handleCCDumpsDialogClose}) => {
     });
 
     const classes = useStyles();
+    const {enqueueSnackbar} = useSnackbar();
+
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
+    const {token} = useSelector(state => state.auth);
+
+    const dispatch = useDispatch();
 
     const [dumps, setDumps] = useState({});
+    const [error, setError] = useState({});
 
     const handleSubmit = event => {
         event.preventDefault();
 
+        if(!dumps.service){
+            setError({...error, service: 'Service field required'});
+            return;
+        }else {
+            setError({...error, service: null});
+        }
+
+        if(!dumps.bin){
+            setError({...error, bin: 'Bin field required'});
+            return;
+        }else {
+            setError({...error, bin: ''});
+        }
+
+        if(!dumps.type){
+            setError({...error, type: 'Type field required'});
+            return;
+        }else {
+            setError({...error, type: ''});
+        }
+
+        if(!dumps.countryMark){
+            setError({...error, countryMark: 'Country Mark field required'});
+            return;
+        }else {
+            setError({...error, countryMark: ''});
+        }
+
+        if(!dumps.dumpedIn){
+            setError({...error, dumpedIn: 'Dumped In field required'});
+            return;
+        }else {
+            setError({...error, dumpedIn: ''});
+        }
+
+        if(!dumps.bankBase){
+            setError({...error, bankBase: 'Bank base field required'});
+            return;
+        }else {
+            setError({...error, bankBase: ''});
+        }
+
+        if(!dumps.service){
+            setError({...error, quantity: 'Quantity field required'});
+            return;
+        }else {
+            setError({...error, quantity: ''});
+        }
+
+        if(!dumps.price){
+            setError({...error, price: 'Price field required'});
+            return;
+        }else {
+            setError({...error, price: ''});
+        }
+
+        dispatch(createDump(dumps, token, showNotification));
         handleCCDumpsDialogClose();
     }
 
@@ -68,6 +137,8 @@ const AddCCDumpsDialog = ({openCCDumpsDialog, handleCCDumpsDialogClose}) => {
                         name="service"
                         fullWidth={true}
                         required={true}
+                        error={Boolean(error.service)}
+                        helperText={error.service}
                     />
 
                     <TextField
@@ -82,6 +153,8 @@ const AddCCDumpsDialog = ({openCCDumpsDialog, handleCCDumpsDialogClose}) => {
                         name="bin"
                         fullWidth={true}
                         required={true}
+                        error={Boolean(error.bin)}
+                        helperText={error.bin}
                     />
 
                     <TextField
@@ -96,6 +169,8 @@ const AddCCDumpsDialog = ({openCCDumpsDialog, handleCCDumpsDialogClose}) => {
                         name="type"
                         fullWidth={true}
                         required={true}
+                        error={Boolean(error.type)}
+                        helperText={error.type}
                     />
 
                     <TextField
@@ -110,6 +185,8 @@ const AddCCDumpsDialog = ({openCCDumpsDialog, handleCCDumpsDialogClose}) => {
                         name="countryMark"
                         fullWidth={true}
                         required={true}
+                        error={Boolean(error.countryMark)}
+                        helperText={error.countryMark}
                     />
 
 
@@ -125,6 +202,8 @@ const AddCCDumpsDialog = ({openCCDumpsDialog, handleCCDumpsDialogClose}) => {
                         name="dumpedIn"
                         fullWidth={true}
                         required={true}
+                        error={Boolean(error.dumpedIn)}
+                        helperText={error.dumpedIn}
                     />
 
                     <TextField
@@ -139,6 +218,8 @@ const AddCCDumpsDialog = ({openCCDumpsDialog, handleCCDumpsDialogClose}) => {
                         name="bankBase"
                         fullWidth={true}
                         required={true}
+                        error={Boolean(error.bankBase)}
+                        helperText={error.bankBase}
                     />
 
                     <TextField
@@ -153,6 +234,8 @@ const AddCCDumpsDialog = ({openCCDumpsDialog, handleCCDumpsDialogClose}) => {
                         name="quantity"
                         fullWidth={true}
                         required={true}
+                        error={Boolean(error.quantity)}
+                        helperText={error.quantity}
                     />
 
                     <TextField
@@ -167,8 +250,14 @@ const AddCCDumpsDialog = ({openCCDumpsDialog, handleCCDumpsDialogClose}) => {
                         name="price"
                         fullWidth={true}
                         required={true}
+                        error={Boolean(error.price)}
+                        helperText={error.price}
                     />
-                    <Button variant="outlined" fullWidth={true} className={classes.submitButton}>
+                    <Button
+                        onClick={handleSubmit}
+                        variant="outlined"
+                        fullWidth={true}
+                        className={classes.submitButton}>
                         Add CC Dumps
                     </Button>
                 </form>

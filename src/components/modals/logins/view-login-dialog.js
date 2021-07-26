@@ -11,6 +11,7 @@ import {
     makeStyles,
     Typography
 } from "@material-ui/core";
+import moment from "moment";
 
 const ViewBankLoginDialog = ({openBankLoginDialog, handleBankLoginDialogClose, bankLogin}) => {
 
@@ -40,7 +41,8 @@ const ViewBankLoginDialog = ({openBankLoginDialog, handleBankLoginDialogClose, b
     return (
         <Dialog open={openBankLoginDialog} onClose={handleBankLoginDialogClose}>
             <DialogContent>
-                <Typography className={classes.title} gutterBottom={true} variant="h6" align="center">Bank Login Detail</Typography>
+                <Typography className={classes.title} gutterBottom={true} variant="h6" align="center">Bank Login
+                    Detail</Typography>
 
                 <Typography gutterBottom={true} className={classes.caption} variant="caption">Status</Typography>
                 <Typography className={classes.value} variant="body2">{bankLogin.status}</Typography>
@@ -82,6 +84,17 @@ const ViewBankLoginDialog = ({openBankLoginDialog, handleBankLoginDialogClose, b
                         })}
                     </Grid>
                 )}
+
+                <Divider variant="fullWidth" className={classes.divider}/>
+                <Typography gutterBottom={true} className={classes.caption} variant="caption">Date Created</Typography>
+                <Typography className={classes.value}
+                            variant="body2">{moment(bankLogin.createdAt).fromNow()}</Typography>
+                <Divider variant="fullWidth" className={classes.divider}/>
+
+                <Typography gutterBottom={true} className={classes.caption} variant="caption">Date Updated</Typography>
+                <Typography className={classes.value}
+                            variant="body2">{moment(bankLogin.updatedAt).fromNow()}</Typography>
+
 
             </DialogContent>
 

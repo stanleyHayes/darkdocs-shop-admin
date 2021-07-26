@@ -1,5 +1,6 @@
 import React from "react";
 import {Button, Dialog, DialogActions, DialogContent, Divider, makeStyles, Typography} from "@material-ui/core";
+import moment from "moment";
 
 const ViewDumpsDialog = ({openViewCCDumpsDialog, handleCCDumpsDialogClose, ccDump}) => {
 
@@ -69,6 +70,15 @@ const ViewDumpsDialog = ({openViewCCDumpsDialog, handleCCDumpsDialogClose, ccDum
 
                 <Typography gutterBottom={true} className={classes.caption} variant="caption">Status</Typography>
                 <Typography className={classes.value} variant="body2">{ccDump.status}</Typography>
+
+                <Divider variant="fullWidth" className={classes.divider}/>
+                <Typography gutterBottom={true} className={classes.caption} variant="caption">Date Created</Typography>
+                <Typography className={classes.value} variant="body2">{moment(ccDump.createdAt).fromNow()}</Typography>
+                <Divider variant="fullWidth" className={classes.divider}/>
+
+                <Typography gutterBottom={true} className={classes.caption} variant="caption">Date Updated</Typography>
+                <Typography className={classes.value} variant="body2">{moment(ccDump.updatedAt).fromNow()}</Typography>
+
             </DialogContent>
 
             <Divider variant="fullWidth" className={classes.divider}/>
