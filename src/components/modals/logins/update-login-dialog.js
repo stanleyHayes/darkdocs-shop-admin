@@ -165,6 +165,9 @@ const UpdateBankLoginDialog = ({openUpdateLoginDialog, handleUpdateLoginDialogCl
                 </Typography>
 
                 <form onSubmit={handleSubmit}>
+                    <Typography gutterBottom={true} variant="caption" className={classes.caption} display="block">
+                        Status
+                    </Typography>
                     <Select
                         variant="outlined"
                         margin="none"
@@ -179,6 +182,7 @@ const UpdateBankLoginDialog = ({openUpdateLoginDialog, handleUpdateLoginDialogCl
                         <MenuItem value="None">Select Availability</MenuItem>
                         <MenuItem value="Available">Available</MenuItem>
                         <MenuItem value="Unavailale">Unavailable</MenuItem>
+                        <MenuItem value="Deleted">Deleted</MenuItem>
                     </Select>
 
                     <Typography gutterBottom={true} variant="caption" className={classes.caption} display="block">

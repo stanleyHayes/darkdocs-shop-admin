@@ -20,7 +20,7 @@ import {
     TableRow,
     Typography
 } from "@material-ui/core";
-import {brown, green, red} from "@material-ui/core/colors";
+import {brown, green, grey, red} from "@material-ui/core/colors";
 import {useDispatch, useSelector} from "react-redux";
 import {Alert} from "@material-ui/lab";
 import {Add, Delete, Edit, Visibility} from "@material-ui/icons";
@@ -30,6 +30,7 @@ import AddBankLoginDialog from "../../components/modals/logins/add-logins-dialog
 import DeleteDialog from "../../components/shared/delete-dialog";
 import ViewBankLoginDialog from "../../components/modals/logins/view-login-dialog";
 import UpdateBankLoginDialog from "../../components/modals/logins/update-login-dialog";
+import {useSnackbar} from "notistack";
 
 const LoginsPage = () => {
 
@@ -64,12 +65,34 @@ const LoginsPage = () => {
             },
             emptyText: {
                 textTransform: 'uppercase'
+            },
+            available: {
+                color: 'white',
+                backgroundColor: green['600'],
+                borderRadius: 32,
+                padding: 8
+            },
+            deleted: {
+                color: 'white',
+                backgroundColor: red['600'],
+                borderRadius: 32,
+                padding: 8
+            },
+            unavailable: {
+                color: 'white',
+                backgroundColor: grey['600'],
+                borderRadius: 32,
+                padding: 8
             }
         }
     });
     const {token} = useSelector(state => state.auth);
+    const {enqueueSnackbar} = useSnackbar();
     const classes = useStyles();
 
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
     const dispatch = useDispatch();
 
     const [status, setStatus] = useState('All');
@@ -94,8 +117,11 @@ const LoginsPage = () => {
 
 
     useEffect(() => {
-        dispatch(getLogins(token));
-    }, [dispatch, token]);
+        const showNotification = (message, options) => {
+            enqueueSnackbar(message, options);
+        }
+        dispatch(getLogins(token, showNotification));
+    }, [dispatch, enqueueSnackbar, token]);
 
     const {logins, loading, error} = useSelector(state => state.logins);
 
@@ -117,7 +143,7 @@ const LoginsPage = () => {
 
     const handleDelete = () => {
         if (selectedID !== "") {
-            dispatch(deleteLogin(selectedID, token));
+            dispatch(deleteLogin(selectedID, token, showNotification));
             handleDeleteDialogClose();
         }
     }
@@ -148,6 +174,18 @@ const LoginsPage = () => {
         setOpenUpdateLoginDialog(false);
     }
 
+    const renderStatus = status => {
+        switch (status) {
+            case 'Available':
+                return <Typography display="inline" variant="body2" className={classes.available}>{status}</Typography>
+            case 'Deleted':
+                return <Typography display="inline" variant="body2" className={classes.deleted}>{status}</Typography>
+            case 'Unavailable':
+                return <Typography display="inline" variant="body2" className={classes.unavailable}>{status}</Typography>
+            default:
+                return <Typography display="inline" variant="body2" className={classes.unavailable}>{status}</Typography>
+        }
+    }
     return (
         <Layout>
             <Container className={classes.container}>
@@ -219,7 +257,7 @@ const LoginsPage = () => {
                                             <TableRow hover={true} key={index}>
                                                 <TableCell>{index + 1}</TableCell>
                                                 <TableCell>{login.bank.name}</TableCell>
-                                                <TableCell>{login.status}</TableCell>
+                                                <TableCell>{renderStatus(login.status)}</TableCell>
                                                 <TableCell>${parseFloat(login.balance).toFixed(2)}</TableCell>
                                                 <TableCell>${parseFloat(login.price).toFixed(2)}</TableCell>
                                                 <TableCell>{moment(login.createdAt).fromNow()}</TableCell>

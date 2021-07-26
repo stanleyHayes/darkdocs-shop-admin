@@ -27,6 +27,7 @@ import {Delete, Visibility} from "@material-ui/icons";
 import moment from "moment";
 import DeleteDialog from "../../components/shared/delete-dialog";
 import ViewOrderDialog from "../../components/modals/orders/view-order-dialog";
+import {useSnackbar} from "notistack";
 
 const OrdersPage = () => {
 
@@ -59,7 +60,12 @@ const OrdersPage = () => {
         }
     });
     const {token} = useSelector(state => state.auth);
+    const {enqueueSnackbar} = useSnackbar();
     const classes = useStyles();
+
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
 
     const dispatch = useDispatch();
 
@@ -80,8 +86,11 @@ const OrdersPage = () => {
 
 
     useEffect(() => {
-        dispatch(getOrders(token));
-    }, [dispatch, token]);
+        const showNotification = (message, options) => {
+            enqueueSnackbar(message, options);
+        }
+        dispatch(getOrders(token, showNotification));
+    }, [dispatch, token, enqueueSnackbar]);
 
     const {orders, loading, error} = useSelector(state => state.orders);
 
@@ -103,7 +112,7 @@ const OrdersPage = () => {
 
     const handleDelete = () => {
         if (selectedID !== "") {
-            dispatch(deleteOrder(selectedID, token));
+            dispatch(deleteOrder(selectedID, token, showNotification));
             handleDeleteDialogClose();
         }
     }

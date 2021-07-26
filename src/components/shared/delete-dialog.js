@@ -18,7 +18,11 @@ const DeleteDialog = ({openDeleteDialog, handleDialogClose, handleConfirmAction,
             deleteButton: {
                 backgroundColor: red['900'],
                 color: 'white',
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                '&:hover': {
+                    color: red['900'],
+                    backgroundColor: 'white',
+                }
             }
         }
     });

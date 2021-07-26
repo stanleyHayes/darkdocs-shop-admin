@@ -1,6 +1,6 @@
 import {
     CREATE_LOGIN_REQUEST,
-    CREATE_LOGIN_SUCCESS,
+    CREATE_LOGIN_SUCCESS, DELETE_LOGIN_FAILURE, DELETE_LOGIN_REQUEST, DELETE_LOGIN_SUCCESS,
     GET_LOGINS_FAILURE,
     GET_LOGINS_REQUEST,
     GET_LOGINS_SUCCESS, UPDATE_LOGIN_FAILURE, UPDATE_LOGIN_REQUEST, UPDATE_LOGIN_SUCCESS
@@ -85,8 +85,34 @@ const loginsReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 loading: false,
-                error: action.payload,
-                logins: []
+                error: action.payload
+            }
+
+        case DELETE_LOGIN_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                error: ""
+            }
+
+        case DELETE_LOGIN_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: "",
+                logins: [...state.logins.map(login => {
+                    if(login._id === action.payload._id){
+                        return {...action.payload};
+                    }
+                    return login;
+                })]
+            }
+
+        case DELETE_LOGIN_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
             }
 
         default:

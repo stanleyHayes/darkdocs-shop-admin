@@ -155,7 +155,7 @@ const deleteLoginFailure = error => {
     }
 }
 
-export const deleteLogin = (id, token) => {
+export const deleteLogin = (id, token, showNotification) => {
     return dispatch => {
         dispatch(deleteLoginRequest());
         axios({
@@ -163,9 +163,11 @@ export const deleteLogin = (id, token) => {
             url: `${SERVER_BASE_URL}/logins/${id}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
+            showNotification(message, {variant: 'success'});
             dispatch(deleteLoginSuccess(data));
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(deleteLoginFailure(error.response.data.message));
         });
     }
