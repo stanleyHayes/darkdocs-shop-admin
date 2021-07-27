@@ -26,6 +26,18 @@ const theme = createTheme({
             light: grey['100'],
             main: grey['300'],
             dark: grey['400']
+        },
+        secondary: {
+            main: '#374151'
+        },
+        text: {
+            primary: grey['800'],
+            secondary: grey['800'],
+            disabled: grey['700'],
+            hint: grey['600']
+        },
+        action: {
+            active: "#374151"
         }
     }
 });

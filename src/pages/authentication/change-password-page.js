@@ -83,31 +83,31 @@ const ChangePasswordPage = () => {
         event.preventDefault();
 
         if (!passwords.currentPassword) {
-            setError({...error, "currentPassword": 'Field required'});
+            setError({error, "currentPassword": 'Field required'});
             return;
         } else {
-            setError({...error, "currentPassword": null});
+            setError({error, "currentPassword": null});
         }
 
         if (!passwords.newPassword) {
-            setError({...error, "newPassword": 'Field required'});
+            setError({error, "newPassword": 'Field required'});
             return;
         } else {
-            setError({...error, "newPassword": null});
+            setError({error, "newPassword": null});
         }
 
         if (!passwords.confirmNewPassword) {
-            setError({...error, "confirmNewPassword": 'Field required'});
+            setError({error, "confirmNewPassword": 'Field required'});
             return;
         } else {
-            setError({...error, "confirmNewPassword": null});
+            setError({error, "confirmNewPassword": null});
         }
 
         if (passwords.newPassword !== passwords.confirmNewPassword) {
-            setError({...error, "currentPassword": 'Password mismatch', "confirmNewPassword": 'Password mismatch'});
+            setError({error, "currentPassword": 'Password mismatch', "confirmNewPassword": 'Password mismatch'});
             return;
         } else {
-            setError({...error, "currentPassword": null, confirmNewPassword: null});
+            setError({error, "currentPassword": null, confirmNewPassword: null});
         }
         dispatch(changePassword(passwords, token, history, showNotification));
     }
