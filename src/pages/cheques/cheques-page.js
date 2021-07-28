@@ -62,19 +62,22 @@ const ChequesPage = () => {
                 color: 'white',
                 backgroundColor: green['600'],
                 borderRadius: 32,
-                padding: 8
+                padding: 8,
+                fontWeight:'bold'
             },
             deleted: {
                 color: 'white',
                 backgroundColor: red['600'],
                 borderRadius: 32,
-                padding: 8
+                padding: 8,
+                fontWeight:'bold'
             },
             pending: {
                 color: 'white',
                 backgroundColor: grey['600'],
                 borderRadius: 32,
-                padding: 8
+                padding: 8,
+                fontWeight:'bold'
             }
         }
     });

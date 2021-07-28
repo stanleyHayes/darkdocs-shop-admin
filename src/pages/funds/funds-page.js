@@ -19,7 +19,7 @@ import {
     TableRow,
     Typography
 } from "@material-ui/core";
-import {brown, red} from "@material-ui/core/colors";
+import {brown, green, grey, red} from "@material-ui/core/colors";
 import {useDispatch, useSelector} from "react-redux";
 import {Alert} from "@material-ui/lab";
 import {Delete, Edit} from "@material-ui/icons";
@@ -27,6 +27,7 @@ import moment from "moment";
 import {deleteFund, getFunds} from "../../redux/funds/funds-action-creators";
 import DeleteDialog from "../../components/shared/delete-dialog";
 import UpdateFundDialog from "../../components/modals/funds/update-funds-dialog";
+import {useSnackbar} from "notistack";
 
 const FundsPage = () => {
 
@@ -52,6 +53,27 @@ const FundsPage = () => {
             },
             emptyText: {
                 textTransform: 'uppercase'
+            },
+            completed: {
+                color: 'white',
+                backgroundColor: green['600'],
+                borderRadius: 32,
+                padding: 8,
+                fontWeight:'bold'
+            },
+            deleted: {
+                color: 'white',
+                backgroundColor: red['600'],
+                borderRadius: 32,
+                padding: 8,
+                fontWeight:'bold'
+            },
+            pending: {
+                color: 'white',
+                backgroundColor: grey['600'],
+                borderRadius: 32,
+                padding: 8,
+                fontWeight:'bold'
             }
         }
     });
@@ -70,10 +92,14 @@ const FundsPage = () => {
 
 
     const dispatch = useDispatch();
+    const {enqueueSnackbar} = useSnackbar();
 
     useEffect(() => {
-        dispatch(getFunds(token));
-    }, [dispatch, token]);
+        const showNotification = (message, options) => {
+            enqueueSnackbar(message, options);
+        }
+        dispatch(getFunds(token, showNotification));
+    }, [dispatch, enqueueSnackbar, token]);
 
     const {funds, loading, error} = useSelector(state => state.funds);
 
@@ -109,6 +135,19 @@ const FundsPage = () => {
     const handleUpdateFundDialogClose = () => {
         setSelectedFund(null);
         setOpenUpdateFundDialog(false);
+    }
+
+    const renderStatus = status => {
+        switch (status) {
+            case 'Pending':
+                return <Typography display="inline" variant="body2" className={classes.pending}>{status}</Typography>
+            case 'Completed':
+                return <Typography display="inline" variant="body2" className={classes.completed}>{status}</Typography>
+            case 'Deleted':
+                return <Typography display="inline" variant="body2" className={classes.deleted}>{status}</Typography>
+            default:
+                return <Typography display="inline" variant="body2" className={classes.pending}>{status}</Typography>
+        }
     }
 
     return (
@@ -177,7 +216,7 @@ const FundsPage = () => {
                                             <TableRow hover={true} key={index}>
                                                 <TableCell>{index + 1}</TableCell>
                                                 <TableCell>{fund.user.name}</TableCell>
-                                                <TableCell>{fund.status}</TableCell>
+                                                <TableCell>{renderStatus(fund.status)}</TableCell>
                                                 <TableCell>{fund.address}</TableCell>
                                                 <TableCell>${parseFloat(fund.amount).toFixed(2)}</TableCell>
                                                 <TableCell>{moment(fund.createdAt).fromNow()}</TableCell>

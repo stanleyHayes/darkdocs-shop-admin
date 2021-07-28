@@ -8,11 +8,11 @@ import {
     makeStyles,
     MenuItem,
     Select,
-    TextField,
     Typography
 } from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 import {updateFund} from "../../../redux/funds/funds-action-creators";
+import {useSnackbar} from "notistack";
 
 const UpdateFundDialog = ({openUpdateFundsDialog, handleUpdateFundDialogClose, originalFund}) => {
 
@@ -49,30 +49,28 @@ const UpdateFundDialog = ({openUpdateFundsDialog, handleUpdateFundDialogClose, o
     const {token} = useSelector(state => state.auth);
     const [error, setError] = useState({});
 
+    const {enqueueSnackbar} = useSnackbar();
+
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
+
     const handleChange = event => {
         setFund({...fund, [event.target.name]: event.target.value});
     }
 
     const handleSubmit = event => {
         event.preventDefault();
-        const updatedFund = {}
-        if (fund.amount !== originalFund.text && !originalFund.text) {
-            setError({...error, 'amount': 'Field required'});
-            return;
-        } else {
-            updatedFund['amount'] = fund.amount;
-            setError({...error, 'amount': null});
-        }
-
+        const updatedFund = {};
         if (fund.status !== originalFund.status && !originalFund.status) {
-            setError({...error, 'status': 'Field required'});
+            setError({error, status: 'Field required'});
             return;
         } else {
             updatedFund['status'] = fund.status;
-            setError({...error, 'status': null});
+            setError({error, status: null});
         }
 
-        dispatch(updateFund(originalFund._id, updatedFund, token));
+        dispatch(updateFund(originalFund._id, updatedFund, token, showNotification));
         handleUpdateFundDialogClose();
     }
 
@@ -84,20 +82,6 @@ const UpdateFundDialog = ({openUpdateFundsDialog, handleUpdateFundDialogClose, o
                 </Typography>
 
                 <form onSubmit={handleSubmit}>
-                    <TextField
-                        variant="outlined"
-                        label="Amount"
-                        placeholder="Enter amount"
-                        margin="normal"
-                        className={classes.textField}
-                        value={fund.amount}
-                        type="number"
-                        onChange={handleChange}
-                        name="amount"
-                        fullWidth={true}
-                        error={Boolean(error.amount)}
-                        helperText={error.amount}
-                    />
 
                     <Typography
                         gutterBottom={true}
@@ -110,7 +94,7 @@ const UpdateFundDialog = ({openUpdateFundsDialog, handleUpdateFundDialogClose, o
                         variant="outlined"
                         margin="none"
                         value={fund.status}
-                        name="fund"
+                        name="status"
                         label="Status"
                         fullWidth={true}
                         defaultValue={fund.status}

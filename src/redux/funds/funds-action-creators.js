@@ -1,12 +1,21 @@
 import axios from "axios";
 import {SERVER_BASE_URL} from "../../constants/constants";
 import {
-    CREATE_FUND_FAILURE, CREATE_FUND_REQUEST, CREATE_FUND_SUCCESS,
-    DELETE_FUND_FAILURE, DELETE_FUND_REQUEST,
-    DELETE_FUND_SUCCESS, GET_FUND_FAILURE, GET_FUND_REQUEST, GET_FUND_SUCCESS,
+    CREATE_FUND_FAILURE,
+    CREATE_FUND_REQUEST,
+    CREATE_FUND_SUCCESS,
+    DELETE_FUND_FAILURE,
+    DELETE_FUND_REQUEST,
+    DELETE_FUND_SUCCESS,
+    GET_FUND_FAILURE,
+    GET_FUND_REQUEST,
+    GET_FUND_SUCCESS,
     GET_FUNDS_FAILURE,
     GET_FUNDS_REQUEST,
-    GET_FUNDS_SUCCESS, UPDATE_FUND_FAILURE, UPDATE_FUND_REQUEST, UPDATE_FUND_SUCCESS
+    GET_FUNDS_SUCCESS,
+    UPDATE_FUND_FAILURE,
+    UPDATE_FUND_REQUEST,
+    UPDATE_FUND_SUCCESS
 } from "./funds-action-types";
 
 const createFundRequest = () => {
@@ -104,7 +113,7 @@ const updateFundFailure = error => {
     }
 }
 
-export const updateFund = (id, fund, token) => {
+export const updateFund = (id, fund, token, showNotification) => {
     return dispatch => {
         dispatch(updateFundRequest());
         axios({
@@ -113,9 +122,11 @@ export const updateFund = (id, fund, token) => {
             headers: {Authorization: `Bearer ${token}`},
             data: fund
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
             dispatch(updateFundSuccess(data));
+            showNotification(message, {variant: 'success'});
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'success'});
             dispatch(updateFundFailure(error.response.data.message));
         });
     }
@@ -179,7 +190,7 @@ const getFundsFailure = error => {
     }
 }
 
-export const getFunds = (token) => {
+export const getFunds = (token, showNotification) => {
     return dispatch => {
         dispatch(getFundsRequest());
         axios({
@@ -187,9 +198,11 @@ export const getFunds = (token) => {
             url: `${SERVER_BASE_URL}/funds`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
             dispatch(getFundsSuccess(data));
+            showNotification(message, {variant: 'success'});
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'success'});
             dispatch(getFundsFailure(error.response.data.message));
         });
     }
