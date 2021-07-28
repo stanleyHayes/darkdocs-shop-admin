@@ -14,7 +14,9 @@ import {
 import {makeStyles} from "@material-ui/styles";
 import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {changePassword} from "../../redux/authentication/auth-action-creators";
+import {resetPassword} from "../../redux/authentication/auth-action-creators";
+import {useSnackbar} from "notistack";
+import {Alert} from "@material-ui/lab";
 
 const ResetPasswordPage = () => {
 
@@ -70,41 +72,53 @@ const ResetPasswordPage = () => {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const [passwords, setPasswords] = useState({});
-    const [hasError, setHasError] = useState(false);
+    const [user, setUser] = useState({});
     const [error, setError] = useState({});
     const [visible, setVisible] = useState(false);
 
-    const {loading, error: authError, token} = useSelector(state => state.auth);
+    const {loading, error: authError} = useSelector(state => state.auth);
 
     const handleChange = event => {
-        setPasswords({...passwords, [event.target.name]: event.target.value});
+        setUser({...user, [event.target.name]: event.target.value});
+    }
+
+    const {enqueueSnackbar} = useSnackbar();
+
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
     }
 
     const handleSubmit = event => {
         event.preventDefault();
 
-        if (!passwords.newPassword) {
-            setHasError(true);
-            setError({...error, "newPassword": 'Field required'});
-        }
-
-        if (!passwords.confirmNewPassword) {
-            setHasError(true);
-            setError({...error, "confirmNewPassword": 'Field required'});
-        }
-
-        if (passwords.newPassword !== passwords.confirmNewPassword) {
-            setHasError(true);
-            setError({...error, "currentPassword": 'Password mismatch', "confirmNewPassword": 'Password mismatch'});
-        }
-
-        if (hasError) {
+        if (!user.email) {
+            setError({error, email: 'Field required'});
             return;
         } else {
-            console.log(error);
-            dispatch(changePassword(passwords, token, history));
+            setError({error, email: null})
         }
+
+        if (!user.newPassword) {
+            setError({error, newPassword: 'Field required'});
+            return;
+        } else {
+            setError({error, newPassword: null})
+        }
+
+        if (!user.confirmNewPassword) {
+            setError({error, confirmNewPassword: 'Field required'});
+            return;
+        } else {
+            setError({error, confirmNewPassword: null})
+        }
+
+        if (user.newPassword !== user.confirmNewPassword) {
+            setError({...error, newPassword: 'Password mismatch', confirmNewPassword: 'Password mismatch'});
+            return;
+        } else {
+            setError({error, newPassword: null, confirmNewPassword: null});
+        }
+        dispatch(resetPassword(user, history, showNotification));
     }
 
     const handleShowPassword = () => {
@@ -132,13 +146,14 @@ const ResetPasswordPage = () => {
                 </Typography>
 
                 <Grid container={true} justifyContent="center" alignItems='center'>
-                    <Grid item={true} xs={12} md={6}>
+                    <Grid item={true} xs={12} md={4}>
                         <Card variant="elevation" elevation={1}>
                             {loading && <LinearProgress variant="query"/>}
                             <CardContent>
-                                {authError && <Typography variant="body2" color="error" align="center">
+                                {authError &&
+                                <Alert variant="standard" severity="error">
                                     {authError}
-                                </Typography>}
+                                </Alert>}
                                 <form onSubmit={handleSubmit}>
                                     <Typography
                                         className={classes.title}
@@ -150,11 +165,44 @@ const ResetPasswordPage = () => {
 
                                     <TextField
                                         variant="outlined"
+                                        label="Email"
+                                        placeholder="Enter email"
+                                        margin="normal"
+                                        className={classes.textField}
+                                        value={user.email}
+                                        type="email"
+                                        onChange={handleChange}
+                                        name="email"
+                                        fullWidth={true}
+                                        required={true}
+                                        error={Boolean(error.email)}
+                                        helperText={error.email}
+                                    />
+
+                                    <TextField
+                                        variant="outlined"
+                                        label="OTP"
+                                        placeholder="Enter otp"
+                                        margin="normal"
+                                        className={classes.textField}
+                                        value={user.otp}
+                                        type="text"
+                                        onChange={handleChange}
+                                        name="otp"
+                                        fullWidth={true}
+                                        required={true}
+                                        error={Boolean(error.otp)}
+                                        helperText={error.otp}
+                                    />
+
+
+                                    <TextField
+                                        variant="outlined"
                                         label="New Password"
                                         placeholder="Enter new password"
                                         margin="normal"
                                         className={classes.textField}
-                                        value={passwords.newPassword}
+                                        value={user.newPassword}
                                         type={visible ? 'text' : 'password'}
                                         onChange={handleChange}
                                         name="newPassword"
@@ -170,7 +218,7 @@ const ResetPasswordPage = () => {
                                         placeholder="Confirm new password"
                                         margin="normal"
                                         className={classes.textField}
-                                        value={passwords.confirmNewPassword}
+                                        value={user.confirmNewPassword}
                                         type={visible ? 'text' : 'password'}
                                         onChange={handleChange}
                                         name="confirmNewPassword"
@@ -198,7 +246,7 @@ const ResetPasswordPage = () => {
                                         fullWidth={true}
                                         className={classes.button}
                                         variant="outlined"
-                                        size="small">
+                                        size="large">
                                         Reset Password
                                     </Button>
                                 </form>

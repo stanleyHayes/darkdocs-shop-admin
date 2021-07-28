@@ -15,6 +15,7 @@ import {Link, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {forgotPassword} from "../../redux/authentication/auth-action-creators";
 import {Alert} from "@material-ui/lab";
+import {useSnackbar} from "notistack";
 
 const ForgotPasswordPage = () => {
 
@@ -83,16 +84,21 @@ const ForgotPasswordPage = () => {
 
     const classes = useStyles();
 
+    const {enqueueSnackbar} = useSnackbar();
+
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
+
     const handleSubmit = event => {
         event.preventDefault();
         if (!email) {
             setError("Field required");
-        }
-        if (error) {
             return;
         } else {
-            dispatch(forgotPassword(email, history));
+            setError("");
         }
+        dispatch(forgotPassword(email, history, showNotification));
     }
 
     return (
@@ -120,7 +126,7 @@ const ForgotPasswordPage = () => {
                             {loading && <LinearProgress variant="query"/>}
                             <CardContent>
                                 {authError &&
-                                <Alert title="Error">
+                                <Alert severity="error" title={authError} variant="standard">
                                     {authError}
                                 </Alert>
                                 }
@@ -146,6 +152,8 @@ const ForgotPasswordPage = () => {
                                         onChange={handleChange}
                                         name="email"
                                         fullWidth={true}
+                                        error={Boolean(error)}
+                                        helperText={error}
                                     />
 
 
@@ -156,7 +164,7 @@ const ForgotPasswordPage = () => {
                                         fullWidth={true}
                                         className={classes.button}
                                         variant="outlined"
-                                        size="small">
+                                        size="large">
                                         Continue
                                     </Button>
 

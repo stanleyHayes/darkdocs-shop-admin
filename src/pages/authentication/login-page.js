@@ -208,7 +208,7 @@ const LoginPage = () => {
                                         fullWidth={true}
                                         className={classes.button}
                                         variant="outlined"
-                                        size="small">
+                                        size="large">
                                         Login
                                     </Button>
                                 </form>

@@ -265,16 +265,13 @@ export const forgotPassword = (email, history, showNotification) => {
     return dispatch => {
         dispatch(forgotPasswordRequest());
         axios({
-            method: 'put',
+            method: 'POST',
             url: `${SERVER_BASE_URL}/auth/forgot-password`,
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            data: email
+            data: {email}
         }).then(res => {
             const {data, message} = res.data;
             dispatch(forgotPasswordSuccess(data));
-            history.push('/auth/login');
+            history.push('/auth/reset-password');
             showNotification(message, {variant: 'success'});
         }).catch(error => {
             showNotification(error.response.data.message, {variant: 'error'});
@@ -324,6 +321,47 @@ export const signOut = (user, token, history, showNotification) => {
         }).catch(error => {
             showNotification(error.response.data.message, {variant: 'error'});
             dispatch(signOutFailure(error.response.data.message));
+        });
+    }
+}
+
+
+const resetPasswordRequest = () => {
+    return {
+        type: FORGOT_PASSWORD_REQUEST
+    }
+}
+
+const resetPasswordSuccess = user => {
+    return {
+        type: FORGOT_PASSWORD_SUCCESS,
+        payload: user
+    }
+}
+
+const resetPasswordFailure = error => {
+    return {
+        type: FORGOT_PASSWORD_FAILURE,
+        payload: error
+    }
+}
+
+export const resetPassword = (user, history, showNotification) => {
+    return dispatch => {
+        dispatch(resetPasswordRequest());
+        axios({
+            method: 'put',
+            url: `${SERVER_BASE_URL}/auth/reset-password`,
+            data: user
+        }).then(res => {
+            const {data, message} = res.data;
+            dispatch(resetPasswordSuccess(data));
+            history.push('/auth/login');
+            console.log('incorrect otp')
+            showNotification(message, {variant: 'success'});
+        }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
+            dispatch(resetPasswordFailure(error.response.data.message));
         });
     }
 }

@@ -1,22 +1,25 @@
 import {
-    SIGN_UP_SUCCESS,
-    SIGN_UP_REQUEST,
-    SIGN_UP_FAILURE,
-    SIGN_IN_SUCCESS,
-    SIGN_IN_REQUEST,
+    CHANGE_PASSWORD_FAILURE,
+    CHANGE_PASSWORD_REQUEST,
+    CHANGE_PASSWORD_SUCCESS,
+    FORGOT_PASSWORD_FAILURE,
+    FORGOT_PASSWORD_REQUEST,
+    FORGOT_PASSWORD_SUCCESS,
+    RESET_PASSWORD_FAILURE,
+    RESET_PASSWORD_REQUEST,
+    RESET_PASSWORD_SUCCESS,
     SIGN_IN_FAILURE,
-    VERIFY_ACCOUNT_SUCCESS,
-    VERIFY_ACCOUNT_FAILURE,
-    VERIFY_ACCOUNT_REQUEST,
-    UPDATE_PROFILE_SUCCESS,
+    SIGN_IN_REQUEST,
+    SIGN_IN_SUCCESS,
+    SIGN_UP_FAILURE,
+    SIGN_UP_REQUEST,
+    SIGN_UP_SUCCESS,
     UPDATE_PROFILE_FAILURE,
     UPDATE_PROFILE_REQUEST,
-    CHANGE_PASSWORD_REQUEST,
-    CHANGE_PASSWORD_FAILURE,
-    FORGOT_PASSWORD_FAILURE,
-    CHANGE_PASSWORD_SUCCESS,
-    FORGOT_PASSWORD_SUCCESS,
-    FORGOT_PASSWORD_REQUEST
+    UPDATE_PROFILE_SUCCESS,
+    VERIFY_ACCOUNT_FAILURE,
+    VERIFY_ACCOUNT_REQUEST,
+    VERIFY_ACCOUNT_SUCCESS
 } from './auth-action-types';
 import {user} from "./auth.data";
 
@@ -159,6 +162,27 @@ const authReducer = (state = INITIAL_STATE, action) => {
             }
 
         case FORGOT_PASSWORD_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+
+        case RESET_PASSWORD_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                error: ""
+            }
+
+        case RESET_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: ""
+            }
+
+        case RESET_PASSWORD_FAILURE:
             return {
                 ...state,
                 loading: false,
