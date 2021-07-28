@@ -19,7 +19,7 @@ import {
     TableRow,
     Typography
 } from "@material-ui/core";
-import {brown, green, red} from "@material-ui/core/colors";
+import {brown, green, grey, red} from "@material-ui/core/colors";
 import {useDispatch, useSelector} from "react-redux";
 import {Alert} from "@material-ui/lab";
 import {Delete, Edit, Visibility} from "@material-ui/icons";
@@ -57,6 +57,24 @@ const ChequesPage = () => {
             },
             emptyText: {
                 textTransform: 'uppercase'
+            },
+            completed: {
+                color: 'white',
+                backgroundColor: green['600'],
+                borderRadius: 32,
+                padding: 8
+            },
+            deleted: {
+                color: 'white',
+                backgroundColor: red['600'],
+                borderRadius: 32,
+                padding: 8
+            },
+            pending: {
+                color: 'white',
+                backgroundColor: grey['600'],
+                borderRadius: 32,
+                padding: 8
             }
         }
     });
@@ -133,6 +151,19 @@ const ChequesPage = () => {
         setOpenUpdateChequeDialog(false);
     }
 
+    const renderStatus = status => {
+        switch (status) {
+            case 'Pending':
+                return <Typography display="inline" variant="body2" className={classes.pending}>{status}</Typography>
+            case 'Completed':
+                return <Typography display="inline" variant="body2" className={classes.completed}>{status}</Typography>
+            case 'Deleted':
+                return <Typography display="inline" variant="body2" className={classes.deleted}>{status}</Typography>
+            default:
+                return <Typography display="inline" variant="body2" className={classes.pending}>{status}</Typography>
+        }
+    }
+
     return (
         <Layout>
             <Container className={classes.container}>
@@ -168,7 +199,12 @@ const ChequesPage = () => {
 
                 {cheques && cheques.length === 0 ? (
                     <Box>
-                        <Typography color="textSecondary" className={classes.emptyText} variant="h6">No cheques available</Typography>
+                        <Typography
+                            color="textSecondary"
+                            className={classes.emptyText}
+                            variant="h6">
+                            No cheques available
+                        </Typography>
                     </Box>) : (
                     <TableContainer elevation={1} variant="elevation" component={Paper}
                                     className={classes.tableContainer}>
@@ -192,7 +228,7 @@ const ChequesPage = () => {
                                             <TableRow hover={true} key={index}>
                                                 <TableCell>{index + 1}</TableCell>
                                                 <TableCell>{cheque.user.name}</TableCell>
-                                                <TableCell>{cheque.status}</TableCell>
+                                                <TableCell>{renderStatus(cheque.status)}</TableCell>
                                                 <TableCell>{cheque.address}</TableCell>
                                                 <TableCell>{cheque.balance}</TableCell>
                                                 <TableCell>${parseFloat(cheque.price).toFixed(2)}</TableCell>
