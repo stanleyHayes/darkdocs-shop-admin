@@ -17,26 +17,27 @@ import EditProfilePage from "./pages/profile/edit-profile-page";
 import ProfilePage from "./pages/profile/profile-page";
 import ScrollToTop from "./components/shared/scroll-top-top";
 import ChequesPage from "./pages/cheques/cheques-page";
+import ProtectedRoute from "./components/shared/protected-route";
 
 function App() {
 
     return (
         <ScrollToTop>
             <Switch>
-                <Route path="/" exact={true} component={DashboardPage}/>
-                <Route path="/dumps" exact={true} component={DumpsPage}/>
-                <Route path="/funds" exact={true} component={FundsPage}/>
-                <Route path="/instructions" exact={true} component={InstructionsPage}/>
-                <Route path="/logins" exact={true} component={LoginsPage}/>
-                <Route path="/cheques" exact={true} component={ChequesPage}/>
-                <Route path="/users" exact={true} component={UsersPage}/>
-                <Route path="/orders" exact={true} component={OrdersPage}/>
-                <Route path="/information" exact={true} component={InformationPage}/>
-                <Route path="/banks" exact={true} component={BanksPage}/>
-                <Route path="/profile" exact={true} component={ProfilePage}/>
-                <Route path="/edit-profile" exact={true} component={EditProfilePage}/>
+                <ProtectedRoute path="/" exact={true} component={DashboardPage}/>
+                <ProtectedRoute path="/dumps" exact={true} component={DumpsPage}/>
+                <ProtectedRoute path="/funds" exact={true} component={FundsPage}/>
+                <ProtectedRoute path="/instructions" exact={true} component={InstructionsPage}/>
+                <ProtectedRoute path="/logins" exact={true} component={LoginsPage}/>
+                <ProtectedRoute path="/cheques" exact={true} component={ChequesPage}/>
+                <ProtectedRoute path="/users" exact={true} component={UsersPage}/>
+                <ProtectedRoute path="/orders" exact={true} component={OrdersPage}/>
+                <ProtectedRoute path="/information" exact={true} component={InformationPage}/>
+                <ProtectedRoute path="/banks" exact={true} component={BanksPage}/>
+                <ProtectedRoute path="/profile" exact={true} component={ProfilePage}/>
+                <ProtectedRoute path="/edit-profile" exact={true} component={EditProfilePage}/>
                 <Route path="/auth/login" exact={true} component={LoginPage}/>
-                <Route path="/auth/change-password" exact={true} component={ChangePasswordPage}/>
+                <ProtectedRoute path="/auth/change-password" exact={true} component={ChangePasswordPage}/>
                 <Route path="/auth/reset-password" exact={true} component={ResetPasswordPage}/>
                 <Route path="/auth/forgot-password" exact={true} component={ForgotPasswordPage}/>
             </Switch>

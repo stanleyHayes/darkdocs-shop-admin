@@ -4,7 +4,7 @@ import {
     CHANGE_PASSWORD_SUCCESS,
     FORGOT_PASSWORD_FAILURE,
     FORGOT_PASSWORD_REQUEST,
-    FORGOT_PASSWORD_SUCCESS,
+    FORGOT_PASSWORD_SUCCESS, GET_LOGGED_IN_USER_FAILURE, GET_LOGGED_IN_USER_REQUEST, GET_LOGGED_IN_USER_SUCCESS,
     RESET_PASSWORD_FAILURE,
     RESET_PASSWORD_REQUEST,
     RESET_PASSWORD_SUCCESS,
@@ -186,6 +186,30 @@ const authReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 loading: false,
+                error: action.payload
+            }
+
+
+        case GET_LOGGED_IN_USER_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+
+        case GET_LOGGED_IN_USER_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                token: action.payload.token,
+                user: action.payload.user,
+            }
+
+        case GET_LOGGED_IN_USER_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                user: null,
+                token: null,
                 error: action.payload
             }
 

@@ -5,6 +5,9 @@ import {
     FORGOT_PASSWORD_FAILURE,
     FORGOT_PASSWORD_REQUEST,
     FORGOT_PASSWORD_SUCCESS,
+    GET_LOGGED_IN_USER_FAILURE,
+    GET_LOGGED_IN_USER_REQUEST,
+    GET_LOGGED_IN_USER_SUCCESS,
     SIGN_IN_FAILURE,
     SIGN_IN_REQUEST,
     SIGN_IN_SUCCESS,
@@ -362,6 +365,51 @@ export const resetPassword = (user, history, showNotification) => {
         }).catch(error => {
             showNotification(error.response.data.message, {variant: 'error'});
             dispatch(resetPasswordFailure(error.response.data.message));
+        });
+    }
+}
+
+
+//get logged in user action creators
+export const getLoggedInUserRequest = function () {
+    return {
+        type: GET_LOGGED_IN_USER_REQUEST
+    }
+}
+
+export const getLoggedInUserSuccess = function (user, token) {
+    return {
+        type: GET_LOGGED_IN_USER_SUCCESS,
+        payload: {user, token}
+    }
+}
+
+export const getLoggedInUserFailure = function (error) {
+    return {
+        type: GET_LOGGED_IN_USER_FAILURE,
+        payload: error
+    }
+}
+
+export const getLoggedInUser = (history, token) => {
+    return dispatch => {
+        dispatch(getLoggedInUserRequest());
+        axios({
+            method: 'get',
+            url: `${SERVER_BASE_URL}/auth/profile`,
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(response => {
+            const {data, token} = response.data;
+            dispatch(getLoggedInUserSuccess(data, token));
+            localStorage.setItem(DARKDOCS_SHOP_ADMIN_TOKEN_KEY, JSON.stringify(token));
+            localStorage.setItem(DARKDOCS_SHOP_ADMIN_USER_KEY, JSON.stringify(data));
+        }).catch(error => {
+            localStorage.removeItem(DARKDOCS_SHOP_ADMIN_TOKEN_KEY);
+            localStorage.removeItem(DARKDOCS_SHOP_ADMIN_USER_KEY);
+            dispatch(getLoggedInUserFailure(error.response.data.error));
+            history.push('/auth/login');
         });
     }
 }
