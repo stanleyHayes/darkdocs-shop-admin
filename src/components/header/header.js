@@ -7,7 +7,7 @@ import TabletHeader from "./tablet-header";
 
 const Header = ({handleDrawerOpen}) => {
     return (
-        <AppBar variant="outlined">
+        <AppBar variant="elevation" elevation={1}>
             <Hidden mdDown={true}>
                 <DesktopHeader/>
             </Hidden>

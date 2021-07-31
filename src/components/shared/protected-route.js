@@ -9,7 +9,7 @@ const ProtectedRoute = ({component: Component, ...rest}) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const token = JSON.stringify(localStorage.getItem(DARKDOCS_SHOP_ADMIN_TOKEN_KEY));
+        const token = JSON.parse(localStorage.getItem(DARKDOCS_SHOP_ADMIN_TOKEN_KEY));
         if (!token)
             return history.push('/auth/login');
         dispatch(getLoggedInUser(history, token));
@@ -17,7 +17,7 @@ const ProtectedRoute = ({component: Component, ...rest}) => {
 
     return (
         <Route {...rest} render={(location, ...props) => {
-            const token = JSON.stringify(localStorage.getItem(DARKDOCS_SHOP_ADMIN_TOKEN_KEY));
+            const token = JSON.parse(localStorage.getItem(DARKDOCS_SHOP_ADMIN_TOKEN_KEY));
             if (!token)
                 return <Redirect to="/auth/login" from={location}/>
             else

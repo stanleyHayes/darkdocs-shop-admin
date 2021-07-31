@@ -188,7 +188,7 @@ const getChequesFailure = error => {
     }
 }
 
-export const getCheques = (token) => {
+export const getCheques = (token, showNotification) => {
     return dispatch => {
         dispatch(getChequesRequest());
         axios({
@@ -196,9 +196,11 @@ export const getCheques = (token) => {
             url: `${SERVER_BASE_URL}/cheques`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
             dispatch(getChequesSuccess(data));
+            showNotification(message, {variant: 'success'});
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(getChequesFailure(error.response.data.message));
         });
     }

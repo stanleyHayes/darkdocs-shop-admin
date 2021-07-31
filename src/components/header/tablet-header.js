@@ -91,13 +91,14 @@ const TabletHeader = () => {
                         className={classes.name}
                         onClick={handleProfileClick}
                         endIcon={<KeyboardArrowDown/>}
-                        startIcon={<Avatar className={classes.avatar}>
-                            {user && getInitials(user.name)}
-                            <Typography variant="body2" align="center">SH</Typography>
-                        </Avatar>}
+                        startIcon={
+                            <Avatar className={classes.avatar}>
+                                <Typography variant="body2" align="center">
+                                    {user && getInitials(user.name)}
+                                </Typography>
+                            </Avatar>}
                         variant="outlined">
-                        {/*{user && user.name}*/}
-                        Stanley Hayford
+                        {user && user.name}
                     </Button>
                     <Menu
                         anchorEl={anchorEl}

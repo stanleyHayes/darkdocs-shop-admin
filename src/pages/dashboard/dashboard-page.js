@@ -38,10 +38,10 @@ const DashboardPage = () => {
             },
             btc: {
                 fontSize: '80%',
-                fontWeight: 'bold'
+
             },
             email: {
-                fontWeight: 'bold'
+
             }
         }
     });

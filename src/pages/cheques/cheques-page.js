@@ -28,6 +28,7 @@ import DeleteDialog from "../../components/shared/delete-dialog";
 import {deleteCheque, getCheques} from "../../redux/cheques/cheques-action-creators";
 import ViewChequeDialog from "../../components/modals/cheques/view-cheque-dialog";
 import UpdateChequeDialog from "../../components/modals/cheques/update-cheque-dialog";
+import {useSnackbar} from "notistack";
 
 const ChequesPage = () => {
 
@@ -96,10 +97,14 @@ const ChequesPage = () => {
 
 
     const dispatch = useDispatch();
+    const {enqueueSnackbar} = useSnackbar();
 
     useEffect(() => {
-        dispatch(getCheques(token));
-    }, [dispatch, token]);
+        const showNotification = (message, options) => {
+            enqueueSnackbar(message, options);
+        }
+        dispatch(getCheques(token, showNotification));
+    }, [dispatch, enqueueSnackbar, token]);
 
     const {cheques, loading, error} = useSelector(state => state.cheques);
 
