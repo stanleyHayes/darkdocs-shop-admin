@@ -40,7 +40,8 @@ const ViewUserDialog = ({openUserDialog, handleUserDialogClose, user}) => {
     return (
         <Dialog open={openUserDialog} onClose={handleUserDialogClose}>
             <DialogContent>
-                <Typography className={classes.title} gutterBottom={true} variant="h6" align="center">User Detail</Typography>
+                <Typography className={classes.title} gutterBottom={true} variant="h6" align="center">User
+                    Detail</Typography>
 
                 <Typography gutterBottom={true} className={classes.caption} variant="caption">Name</Typography>
                 <Typography className={classes.value} variant="body2">{user.name}</Typography>
@@ -52,12 +53,6 @@ const ViewUserDialog = ({openUserDialog, handleUserDialogClose, user}) => {
 
                 <Typography gutterBottom={true} className={classes.caption} variant="caption">Username</Typography>
                 <Typography className={classes.value} variant="body2">{user.username}</Typography>
-                <Divider variant="fullWidth" className={classes.divider}/>
-
-                <Typography gutterBottom={true} className={classes.caption} variant="caption">Verified
-                    Account</Typography>
-                <Typography className={classes.value}
-                            variant="body2">{user.hasVerifiedEmail ? 'Yes' : 'No'}</Typography>
                 <Divider variant="fullWidth" className={classes.divider}/>
 
                 <Typography gutterBottom={true} className={classes.caption} variant="caption">Balance</Typography>
@@ -87,12 +82,14 @@ const ViewUserDialog = ({openUserDialog, handleUserDialogClose, user}) => {
 
                 <Grid container={true} alignItems="center" spacing={2}>
                     <Grid item={true} xs={12} md={6}>
-                        <Button onClick={blockAccount} variant="outlined" fullWidth={true} className={classes.blockButton}>
+                        <Button onClick={blockAccount} variant="outlined" fullWidth={true}
+                                className={classes.blockButton}>
                             Block
                         </Button>
                     </Grid>
                     <Grid item={true} xs={12} md={6}>
-                        <Button onClick={suspendAccount} variant="outlined" fullWidth={true} className={classes.suspendButton}>
+                        <Button onClick={suspendAccount} variant="outlined" fullWidth={true}
+                                className={classes.suspendButton}>
                             Suspend
                         </Button>
                     </Grid>
