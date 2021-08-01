@@ -102,7 +102,7 @@ export const signUp = (user, history, showNotification) => {
             dispatch(signUpSuccess(data, token));
             localStorage.setItem(DARKDOCS_SHOP_ADMIN_TOKEN_KEY, JSON.stringify(token));
             localStorage.setItem(DARKDOCS_SHOP_ADMIN_USER_KEY, JSON.stringify(data));
-            history.push('/auth/verify-account');
+            history.push('/auth/login');
             showNotification(message, {variant: 'success'});
         }).catch(error => {
             showNotification(error.response.data.message, {variant: 'error'});
@@ -360,7 +360,6 @@ export const resetPassword = (user, history, showNotification) => {
             const {data, message} = res.data;
             dispatch(resetPasswordSuccess(data));
             history.push('/auth/login');
-            console.log('incorrect otp')
             showNotification(message, {variant: 'success'});
         }).catch(error => {
             showNotification(error.response.data.message, {variant: 'error'});
