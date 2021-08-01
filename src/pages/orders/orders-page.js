@@ -56,6 +56,9 @@ const OrdersPage = () => {
             },
             title: {
                 textTransform: 'uppercase'
+            },
+            emptyText: {
+                textTransform: 'uppercase'
             }
         }
     });
@@ -137,7 +140,7 @@ const OrdersPage = () => {
         <Layout>
             <Container className={classes.container}>
                 {loading && <LinearProgress variant="query"/>}
-                {error && <Alert title="Error">{error}</Alert>}
+                {error && <Alert severity="error" variant="standard" title="Error">{error}</Alert>}
                 <Grid container={true} justifyContent="space-between" spacing={2}>
                     <Grid item={true} xs={12} md={4}>
                         <Typography
@@ -183,7 +186,7 @@ const OrdersPage = () => {
 
                 {orders && orders.length === 0 ? (
                     <Box>
-                        <Typography align="center" variant="h6">No orders available</Typography>
+                        <Typography className={classes.emptyText} variant="h6">No orders available</Typography>
                     </Box>) : (
                     <TableContainer elevation={1} variant="elevation" component={Paper}
                                     className={classes.tableContainer}>

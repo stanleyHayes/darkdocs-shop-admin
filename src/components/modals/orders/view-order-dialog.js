@@ -151,11 +151,7 @@ const ViewOrderDialog = ({openOrderDialog, handleOrderDialogClose, order}) => {
                         )}
 
                     </Box>
-                ): (
-                    <Box>
-
-                    </Box>
-                )}
+                ): null}
             </DialogContent>
 
             <Divider variant="fullWidth" className={classes.divider}/>
