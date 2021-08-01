@@ -47,7 +47,7 @@ const InformationPage = () => {
                 paddingTop: 16,
                 paddingBottom: 16,
                 backgroundColor: theme.palette.primary.main
-            },
+            }
         }
     });
 
@@ -109,7 +109,11 @@ const InformationPage = () => {
                             {loading && <LinearProgress variant="buffer"/>}
                             <CardContent>
 
-                                {infoError && <Alert title={infoError} severity="error">{infoError}</Alert>}
+                                {infoError &&
+                                <Alert
+                                    variant="standard"
+                                    title={infoError}
+                                    severity="error">{infoError}</Alert>}
 
                                 <Typography
                                     color="textSecondary"

@@ -64,6 +64,9 @@ const UsersPage = () => {
             },
             title: {
                 textTransform: 'uppercase'
+            },
+            emptyText: {
+                textTransform: 'uppercase'
             }
         }
     });
@@ -218,7 +221,7 @@ const UsersPage = () => {
 
                 {users && users.length === 0 ? (
                     <Box>
-                        <Typography align="center" variant="h6">No users available</Typography>
+                        <Typography className={classes.emptyText} variant="h6">No users available</Typography>
                     </Box>) : (
                     <TableContainer component={Paper} variant="elevation" elevation={1}
                                     className={classes.tableContainer}>
