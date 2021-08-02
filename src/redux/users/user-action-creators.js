@@ -194,12 +194,12 @@ const getUsersFailure = error => {
     }
 }
 
-export const getUsers = (token, showNotification) => {
+export const getUsers = (token, query, showNotification) => {
     return dispatch => {
         dispatch(getUsersRequest());
         axios({
             method: 'get',
-            url: `${SERVER_BASE_URL}/users`,
+            url: `${SERVER_BASE_URL}/users${query ? `?${query}` : ''}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data, message} = res.data;

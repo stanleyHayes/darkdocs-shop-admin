@@ -80,6 +80,7 @@ const UsersPage = () => {
     const [status, setStatus] = useState('All');
     const [openUserDialog, setOpenUserDialog] = useState(false);
     const [page, setPage] = useState(0);
+    const query = `${role === 'All' ? '' : `role=${role}`}${role !== 'All' && status !== 'All' ? '&' : ''}${status === 'All' ? '' : `status=${status}`}`;
 
     const handlePageChange = (event, page) => {
         setPage(page);
@@ -105,8 +106,8 @@ const UsersPage = () => {
         const showNotification = (message, options) => {
             enqueueSnackbar(message, options);
         }
-        dispatch(getUsers(token, showNotification));
-    }, [dispatch, enqueueSnackbar, token]);
+        dispatch(getUsers(token, query, showNotification));
+    }, [dispatch, enqueueSnackbar, query, token]);
 
     const {users, loading, error} = useSelector(state => state.users);
 
@@ -201,9 +202,9 @@ const UsersPage = () => {
                             variant="outlined"
                             value={role}>
                             <MenuItem value='All'>Select Role</MenuItem>
-                            <MenuItem value="Cheque">Admin</MenuItem>
-                            <MenuItem value="Dump">Super Admin</MenuItem>
-                            <MenuItem value="Login">User</MenuItem>
+                            <MenuItem value="ADMIN">Admin</MenuItem>
+                            <MenuItem value="SUPER_ADMIN">Super Admin</MenuItem>
+                            <MenuItem value="USER">User</MenuItem>
                         </Select>
                     </Grid>
                     <Grid item={true} xs={12} md={3}>
@@ -246,7 +247,7 @@ const UsersPage = () => {
                                                 <TableCell>{index + 1}</TableCell>
                                                 <TableCell>{user.username}</TableCell>
                                                 <TableCell>{user.name}</TableCell>
-                                                <TableCell>{user.role === 'SUPER_ADMIN'? 'SUPER ADMIN': user.role}</TableCell>
+                                                <TableCell>{user.role === 'SUPER_ADMIN' ? 'SUPER ADMIN' : user.role}</TableCell>
                                                 <TableCell>{user.status}</TableCell>
                                                 <TableCell>${parseFloat(user.balance).toFixed(2)}</TableCell>
                                                 <TableCell>{moment(user.createdAt).fromNow()}</TableCell>
