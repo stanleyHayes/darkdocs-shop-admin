@@ -20,7 +20,7 @@ import {
     TableRow,
     Typography
 } from "@material-ui/core";
-import {brown, green, grey, red} from "@material-ui/core/colors";
+import {brown, green, red} from "@material-ui/core/colors";
 import {useDispatch, useSelector} from "react-redux";
 import {Alert} from "@material-ui/lab";
 import {Add, Delete, Edit, Visibility} from "@material-ui/icons";
@@ -31,6 +31,7 @@ import DeleteDialog from "../../components/shared/delete-dialog";
 import ViewBankLoginDialog from "../../components/modals/logins/view-login-dialog";
 import UpdateBankLoginDialog from "../../components/modals/logins/update-login-dialog";
 import {useSnackbar} from "notistack";
+import {getBanks} from "../../redux/banks/banks-action-creators";
 
 const LoginsPage = () => {
 
@@ -65,29 +66,17 @@ const LoginsPage = () => {
             },
             emptyText: {
                 textTransform: 'uppercase'
-            },
-            available: {
-                color: 'white',
-                backgroundColor: green['600'],
-                borderRadius: 32,
-                padding: 8
-            },
-            deleted: {
-                color: 'white',
-                backgroundColor: red['600'],
-                borderRadius: 32,
-                padding: 8
-            },
-            unavailable: {
-                color: 'white',
-                backgroundColor: grey['600'],
-                borderRadius: 32,
-                padding: 8
             }
         }
     });
     const {token} = useSelector(state => state.auth);
+    const [bank, setBank] = useState('All');
     const {enqueueSnackbar} = useSnackbar();
+
+    const [country, setCountry] = useState('All');
+
+    const query = `${country === 'All' ? '' : `country=${country}`}${country !== 'All' && bank !== 'All' ? '&' : ''}${bank === 'All' ? '' : `bank=${bank}`}`;
+
     const classes = useStyles();
 
     const showNotification = (message, options) => {
@@ -95,9 +84,10 @@ const LoginsPage = () => {
     }
     const dispatch = useDispatch();
 
-    const [status, setStatus] = useState('All');
     const [page, setPage] = useState(0);
     const [openBankLoginDialog, setOpenBankLoginDialog] = useState(false);
+
+    const {banks} = useSelector(state => state.banks);
 
     const handleOpenBankLoginDialog = () => {
         setOpenBankLoginDialog(true);
@@ -111,19 +101,23 @@ const LoginsPage = () => {
         setPage(page);
     }
 
-    const handleStatusChange = event => {
-        setStatus(event.target.value);
+    const handleBankChange = event => {
+        setBank(event.target.value);
     }
 
+    const {logins, loading, error} = useSelector(state => state.logins);
 
     useEffect(() => {
         const showNotification = (message, options) => {
             enqueueSnackbar(message, options);
         }
-        dispatch(getLogins(token, showNotification));
-    }, [dispatch, enqueueSnackbar, token]);
+        dispatch(getLogins(token, query, showNotification));
+    }, [dispatch, enqueueSnackbar, query, token]);
 
-    const {logins, loading, error} = useSelector(state => state.logins);
+
+    useEffect(() => {
+        dispatch(getBanks(token));
+    }, [dispatch, token]);
 
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const [selectedID, setSelectedID] = useState(null);
@@ -174,25 +168,17 @@ const LoginsPage = () => {
         setOpenUpdateLoginDialog(false);
     }
 
-    const renderStatus = status => {
-        switch (status) {
-            case 'Available':
-                return <Typography display="inline" variant="body2" className={classes.available}>{status}</Typography>
-            case 'Deleted':
-                return <Typography display="inline" variant="body2" className={classes.deleted}>{status}</Typography>
-            case 'Unavailable':
-                return <Typography display="inline" variant="body2" className={classes.unavailable}>{status}</Typography>
-            default:
-                return <Typography display="inline" variant="body2" className={classes.unavailable}>{status}</Typography>
-        }
+    const handleCountryChange = (event) => {
+        setCountry(event.target.value);
     }
+
     return (
         <Layout>
             <Container className={classes.container}>
                 {loading && <LinearProgress variant="query"/>}
                 {error && <Alert severity="error" title="Error">{error}</Alert>}
                 <Grid container={true} justifyContent="space-between" alignItems="center" spacing={2}>
-                    <Grid item={true} xs={12} md={4}>
+                    <Grid item={true} xs={12} md={6}>
                         <Typography
                             color="textSecondary"
                             className={classes.title}
@@ -200,17 +186,32 @@ const LoginsPage = () => {
                             Bank Logins
                         </Typography>
                     </Grid>
-                    <Grid item={true} xs={12} md={4}>
+                    <Grid item={true} xs={12} md={3}>
                         <Select
-                            onChange={handleStatusChange}
+                            onChange={handleCountryChange}
                             fullWidth={true}
-                            label={<Typography variant="body2">Status</Typography>}
+                            label={<Typography variant="body2">Country</Typography>}
                             margin="dense"
                             variant="outlined"
-                            value={status}>
-                            <MenuItem value='All'>Select Status</MenuItem>
-                            <MenuItem value="Active">Unavailable</MenuItem>
-                            <MenuItem value="Suspended">Available</MenuItem>
+                            value={country}>
+                            <MenuItem value='All'>Select Country</MenuItem>
+                            <MenuItem value="UK">UK</MenuItem>
+                            <MenuItem value="USA">USA</MenuItem>
+                            <MenuItem value="Canada">Canada</MenuItem>
+                        </Select>
+                    </Grid>
+                    <Grid item={true} xs={12} md={3}>
+                        <Select
+                            onChange={handleBankChange}
+                            fullWidth={true}
+                            label={<Typography variant="body2">Bank</Typography>}
+                            margin="dense"
+                            variant="outlined"
+                            value={bank}>
+                            <MenuItem value='All'>Select Bank</MenuItem>
+                            {banks && banks.map((bank, index) => {
+                                return (<MenuItem key={index} value={bank._id}>{bank.name}</MenuItem>)
+                            })}
                         </Select>
                     </Grid>
                     <Grid item={true} xs={12} md={4}>
@@ -243,7 +244,6 @@ const LoginsPage = () => {
                                 <TableRow hover={true}>
                                     <TableCell>#</TableCell>
                                     <TableCell>Bank</TableCell>
-                                    <TableCell>Status</TableCell>
                                     <TableCell>Balance</TableCell>
                                     <TableCell>Price</TableCell>
                                     <TableCell>Date Created</TableCell>
@@ -257,7 +257,6 @@ const LoginsPage = () => {
                                             <TableRow hover={true} key={index}>
                                                 <TableCell>{index + 1}</TableCell>
                                                 <TableCell>{login.bank.name}</TableCell>
-                                                <TableCell>{renderStatus(login.status)}</TableCell>
                                                 <TableCell>${parseFloat(login.balance).toFixed(2)}</TableCell>
                                                 <TableCell>${parseFloat(login.price).toFixed(2)}</TableCell>
                                                 <TableCell>{moment(login.createdAt).fromNow()}</TableCell>
