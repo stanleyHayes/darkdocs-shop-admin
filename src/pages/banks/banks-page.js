@@ -82,6 +82,7 @@ const BanksPage = () => {
     const [country, setCountry] = useState('All');
     const [page, setPage] = useState(0);
     const [openBankDialog, setOpenBankDialog] = useState(false);
+    const query = `${country === 'All' ? '' : `country=${country}`}`;
 
     const handleBankDialogOpen = () => {
         setOpenBankDialog(true);
@@ -159,6 +160,8 @@ const BanksPage = () => {
                 return <Typography display="inline" variant="body2" className={classes.active}>{status}</Typography>
         }
     }
+
+    console.log(query);
     return (
         <Layout>
             <Container className={classes.container}>
@@ -182,9 +185,9 @@ const BanksPage = () => {
                             variant="outlined"
                             value={country}>
                             <MenuItem value='All'>Select Country</MenuItem>
-                            <MenuItem value="Active">USA</MenuItem>
-                            <MenuItem value="Suspended">UK</MenuItem>
-                            <MenuItem value="Deleted">Canada</MenuItem>
+                            <MenuItem value="USA">USA</MenuItem>
+                            <MenuItem value="UK">UK</MenuItem>
+                            <MenuItem value="Canada">Canada</MenuItem>
                         </Select>
                     </Grid>
                     <Grid item={true} xs={12} md={4}>
