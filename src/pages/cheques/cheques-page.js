@@ -29,6 +29,7 @@ import {deleteCheque, getCheques} from "../../redux/cheques/cheques-action-creat
 import ViewChequeDialog from "../../components/modals/cheques/view-cheque-dialog";
 import UpdateChequeDialog from "../../components/modals/cheques/update-cheque-dialog";
 import {useSnackbar} from "notistack";
+import {getUsers} from "../../redux/users/user-action-creators";
 
 const ChequesPage = () => {
 
@@ -64,29 +65,34 @@ const ChequesPage = () => {
                 backgroundColor: green['600'],
                 borderRadius: 32,
                 padding: 8,
-                fontWeight:'bold'
+                fontWeight: 'bold'
             },
             deleted: {
                 color: 'white',
                 backgroundColor: red['600'],
                 borderRadius: 32,
                 padding: 8,
-                fontWeight:'bold'
+                fontWeight: 'bold'
             },
             pending: {
                 color: 'white',
                 backgroundColor: grey['600'],
                 borderRadius: 32,
                 padding: 8,
-                fontWeight:'bold'
+                fontWeight: 'bold'
             }
         }
     });
     const {token} = useSelector(state => state.auth);
+    const {users} = useSelector(state => state.users);
+
     const classes = useStyles();
 
     const [status, setStatus] = useState('All');
     const [page, setPage] = useState(0);
+    const [user, setUser] = useState('All');
+    const query = `${user === 'All' ? '' : `user=${user}`}${user !== 'All' && status !== 'All' ? '&' : ''}${status === 'All' ? '' : `status=${status}`}`;
+
     const handlePageChange = (event, page) => {
         setPage(page);
     }
@@ -95,18 +101,21 @@ const ChequesPage = () => {
         setStatus(event.target.value);
     }
 
+    const handleUserChange = event => {
+        setUser(event.target.value);
+    }
 
     const dispatch = useDispatch();
     const {enqueueSnackbar} = useSnackbar();
+
+    const {cheques, loading, error} = useSelector(state => state.cheques);
 
     useEffect(() => {
         const showNotification = (message, options) => {
             enqueueSnackbar(message, options);
         }
-        dispatch(getCheques(token, showNotification));
-    }, [dispatch, enqueueSnackbar, token]);
-
-    const {cheques, loading, error} = useSelector(state => state.cheques);
+        dispatch(getCheques(token, query, showNotification));
+    }, [query, dispatch, enqueueSnackbar, token]);
 
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const [selectedID, setSelectedID] = useState(null);
@@ -172,13 +181,17 @@ const ChequesPage = () => {
         }
     }
 
+    useEffect(() => {
+        dispatch(getUsers(token, null, null));
+    }, [dispatch, token]);
+
     return (
         <Layout>
             <Container className={classes.container}>
                 {loading && <LinearProgress variant="query"/>}
-                {error && <Alert title="Error">{error}</Alert>}
+                {error && <Alert severity="error" variant="standard" title="Error">{error}</Alert>}
                 <Grid container={true} justifyContent="space-between" spacing={2} alignItems="center">
-                    <Grid item={true} xs={12} md={8}>
+                    <Grid item={true} xs={12} md={6}>
                         <Typography
                             color="textSecondary"
                             className={classes.title}
@@ -186,7 +199,7 @@ const ChequesPage = () => {
                             Cheques
                         </Typography>
                     </Grid>
-                    <Grid item={true} xs={12} md={4}>
+                    <Grid item={true} xs={12} md={3}>
                         <Select
                             onChange={handleStatusChange}
                             fullWidth={true}
@@ -198,6 +211,20 @@ const ChequesPage = () => {
                             <MenuItem value="Completed">Completed</MenuItem>
                             <MenuItem value="Cancelled">Cancelled</MenuItem>
                             <MenuItem value="Pending">Pending</MenuItem>
+                        </Select>
+                    </Grid>
+                    <Grid item={true} xs={12} md={3}>
+                        <Select
+                            onChange={handleUserChange}
+                            fullWidth={true}
+                            label={<Typography variant="body2">User</Typography>}
+                            margin="dense"
+                            variant="outlined"
+                            value={user}>
+                            <MenuItem value='All'>Select User</MenuItem>
+                            {users && users.map((user, index) => {
+                                return (<MenuItem key={index} value={user._id}>{user.username}</MenuItem>)
+                            })}
                         </Select>
                     </Grid>
                 </Grid>

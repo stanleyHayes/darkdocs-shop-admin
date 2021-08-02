@@ -203,10 +203,14 @@ export const getUsers = (token, query, showNotification) => {
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data, message} = res.data;
-            showNotification(message, {variant: 'success'});
+            if (showNotification) {
+                showNotification(message, {variant: 'success'});
+            }
             dispatch(getUsersSuccess(data));
         }).catch(error => {
-            showNotification(error.response.data.message, {variant: 'error'});
+            if (showNotification) {
+                showNotification(error.response.data.message, {variant: 'error'});
+            }
             dispatch(getUsersFailure(error.response.data.message));
         });
     }
