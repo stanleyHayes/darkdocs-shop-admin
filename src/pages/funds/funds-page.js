@@ -78,10 +78,15 @@ const FundsPage = () => {
         }
     });
     const {token} = useSelector(state => state.auth);
+    const {funds, loading, error} = useSelector(state => state.funds);
+
     const classes = useStyles();
 
     const [status, setStatus] = useState('All');
     const [page, setPage] = useState(0);
+
+    const query = `${status === 'All' ? '' : `status=${status}`}`;
+
     const handlePageChange = (event, page) => {
         setPage(page);
     }
@@ -98,10 +103,8 @@ const FundsPage = () => {
         const showNotification = (message, options) => {
             enqueueSnackbar(message, options);
         }
-        dispatch(getFunds(token, showNotification));
-    }, [dispatch, enqueueSnackbar, token]);
-
-    const {funds, loading, error} = useSelector(state => state.funds);
+        dispatch(getFunds(token, query, showNotification));
+    }, [dispatch, enqueueSnackbar, query, token]);
 
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const [selectedID, setSelectedID] = useState(null);

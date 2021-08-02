@@ -101,10 +101,10 @@ const BanksPage = () => {
     }
 
     const {token} = useSelector(state => state.auth);
+    const {banks, loading, error} = useSelector(state => state.banks);
+
     const {enqueueSnackbar} = useSnackbar();
-
     const classes = useStyles();
-
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -113,8 +113,6 @@ const BanksPage = () => {
         }
         dispatch(getBanks(token, showNotification));
     }, [dispatch, enqueueSnackbar, token]);
-
-    const {banks, loading, error} = useSelector(state => state.banks);
 
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const [selectedID, setSelectedID] = useState(null);
