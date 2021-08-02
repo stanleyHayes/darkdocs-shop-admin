@@ -73,32 +73,27 @@ const OrdersPage = () => {
     const dispatch = useDispatch();
 
     const [type, setType] = useState('All');
-    const [status, setStatus] = useState('All');
     const [page, setPage] = useState(0);
     const handlePageChange = (event, page) => {
         setPage(page);
     }
 
+    const query = `${type === 'All' ? '' : `type=${type}`}`;
+
     const handleTypeChange = event => {
         setType(event.target.value);
     }
-
-    const handleStatusChange = event => {
-        setStatus(event.target.value);
-    }
-
 
     useEffect(() => {
         const showNotification = (message, options) => {
             enqueueSnackbar(message, options);
         }
-        dispatch(getOrders(token, showNotification));
-    }, [dispatch, token, enqueueSnackbar]);
-
-    const {orders, loading, error} = useSelector(state => state.orders);
+        dispatch(getOrders(token,query, showNotification));
+    }, [dispatch, token, enqueueSnackbar, query]);
 
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const [selectedID, setSelectedID] = useState(null);
+    const {orders, loading, error} = useSelector(state => state.orders);
 
     const handleDeleteDialogOpen = () => {
         setOpenDeleteDialog(true);
@@ -142,7 +137,7 @@ const OrdersPage = () => {
                 {loading && <LinearProgress variant="query"/>}
                 {error && <Alert severity="error" variant="standard" title="Error">{error}</Alert>}
                 <Grid container={true} justifyContent="space-between" spacing={2}>
-                    <Grid item={true} xs={12} md={4}>
+                    <Grid item={true} xs={12} md={8}>
                         <Typography
                             color="textSecondary"
                             className={classes.title}
@@ -150,20 +145,6 @@ const OrdersPage = () => {
                             gutterBottom={true}>
                             Orders
                         </Typography>
-                    </Grid>
-                    <Grid item={true} xs={12} md={4}>
-                        <Select
-                            onChange={handleStatusChange}
-                            fullWidth={true}
-                            label={<Typography variant="body2">Status</Typography>}
-                            margin="dense"
-                            variant="outlined"
-                            value={status}>
-                            <MenuItem value='All'>Select Status</MenuItem>
-                            <MenuItem value="Active">Completed</MenuItem>
-                            <MenuItem value="Suspended">Pending</MenuItem>
-                            <MenuItem value="Deleted">Cancelled</MenuItem>
-                        </Select>
                     </Grid>
 
                     <Grid item={true} xs={12} md={4}>
@@ -177,7 +158,6 @@ const OrdersPage = () => {
                             <MenuItem value='All'>Select Type</MenuItem>
                             <MenuItem value="Login">Bank Login</MenuItem>
                             <MenuItem value="Dumps">CC Dumps</MenuItem>
-                            <MenuItem value="Cheque">Cheque</MenuItem>
                         </Select>
                     </Grid>
                 </Grid>

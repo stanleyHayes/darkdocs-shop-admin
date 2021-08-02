@@ -188,12 +188,12 @@ const getOrdersFailure = error => {
     }
 }
 
-export const getOrders = (token, showNotification) => {
+export const getOrders = (token, query, showNotification) => {
     return dispatch => {
         dispatch(getOrdersRequest());
         axios({
             method: 'get',
-            url: `${SERVER_BASE_URL}/orders`,
+            url: `${SERVER_BASE_URL}/orders${query ? `?${query}` : ''}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data, message} = res.data;
