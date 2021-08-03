@@ -173,7 +173,7 @@ const DrawerContent = () => {
                 </Link>
                 <Divider variant="fullWidth" className={classes.subDivider}/>
                 <Button
-                    onClick={dispatch(signOut(token, history, showNotification))}
+                    onClick={() => dispatch(signOut(token, history, showNotification))}
                     className={classes.logoutButton} startIcon={<ExitToApp/>} variant="text">Logout</Button>
             </Box>
         </Container>

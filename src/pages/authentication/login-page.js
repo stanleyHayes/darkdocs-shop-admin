@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     Avatar,
     Button,
@@ -82,7 +82,7 @@ const LoginPage = () => {
         enqueueSnackbar(message, options);
     }
 
-    const {loading, error: authError} = useSelector(state => state.auth);
+    const {loading, error: authError, token} = useSelector(state => state.auth);
 
     const handleChange = event => {
         setUser({...user, [event.target.name]: event.target.value});
@@ -113,6 +113,11 @@ const LoginPage = () => {
         setVisible(!visible);
     }
 
+    useEffect(() => {
+        if(!loading && token){
+            history.push('/')
+        }
+    }, [history, loading, token]);
     return (
         <div className={classes.container}>
             <Container className={classes.gridContainer}>

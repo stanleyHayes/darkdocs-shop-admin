@@ -138,7 +138,7 @@ const DesktopHeader = () => {
                             </Link>
                         </MenuItem>
                         <MenuItem onClick={handleClose}>
-                                <Button onClick={dispatch(signOut(token, history, showNotification))} startIcon={<ExitToApp/>} endIcon={<ChevronRight/>} variant="text" size="small"
+                                <Button onClick={() => dispatch(signOut(token, history, showNotification))} startIcon={<ExitToApp/>} endIcon={<ChevronRight/>} variant="text" size="small"
                                         className={classes.button}>
                                     Logout
                                 </Button>

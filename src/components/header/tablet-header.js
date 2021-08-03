@@ -2,8 +2,10 @@ import React, {useState} from "react";
 import {Avatar, Button, Grid, Menu, MenuItem, Toolbar, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 import {ChevronRight, Edit, ExitToApp, Face, KeyboardArrowDown} from "@material-ui/icons";
-import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {Link, useHistory} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {useSnackbar} from "notistack";
+import {signOut} from "../../redux/authentication/auth-action-creators";
 
 const TabletHeader = () => {
 
@@ -45,7 +47,7 @@ const TabletHeader = () => {
         }
     });
     const classes = useStyles();
-    const {user} = useSelector(state => state.auth);
+    const {user, token} = useSelector(state => state.auth);
 
     const getInitials = name => {
         const names = name.split(' ');
@@ -67,6 +69,15 @@ const TabletHeader = () => {
         setMenuOpen(false);
         setAnchorEl(null);
     }
+
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const {enqueueSnackbar} = useSnackbar();
+
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
+
 
     return (
         <Toolbar className={classes.toolbar} variant="dense">
@@ -126,8 +137,10 @@ const TabletHeader = () => {
                             <Link
                                 className={classes.link}
                                 to="/auth/login">
-                                <Button startIcon={<ExitToApp/>} endIcon={<ChevronRight/>} variant="text" size="small"
-                                        className={classes.button}>
+                                <Button
+                                    onClick={() => dispatch(signOut(token, history, showNotification))}
+                                    startIcon={<ExitToApp/>} endIcon={<ChevronRight/>} variant="text" size="small"
+                                    className={classes.button}>
                                     Logout
                                 </Button>
                             </Link>
