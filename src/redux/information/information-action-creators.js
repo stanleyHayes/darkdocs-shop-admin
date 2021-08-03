@@ -2,11 +2,11 @@ import axios from "axios";
 import {SERVER_BASE_URL} from "../../constants/constants";
 import {
     GET_INFORMATION_FAILURE,
+    GET_INFORMATION_REQUEST,
+    GET_INFORMATION_SUCCESS,
     UPDATE_INFORMATION_FAILURE,
     UPDATE_INFORMATION_REQUEST,
-    UPDATE_INFORMATION_SUCCESS,
-    GET_INFORMATION_REQUEST,
-    GET_INFORMATION_SUCCESS
+    UPDATE_INFORMATION_SUCCESS
 } from "./information-action-types";
 
 
@@ -30,7 +30,7 @@ const getInformationFailure = error => {
     }
 }
 
-export const getFund = (id, token) => {
+export const getInformation = (token) => {
     return dispatch => {
         dispatch(getInformationRequest());
         axios({
@@ -39,6 +39,7 @@ export const getFund = (id, token) => {
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;
+            console.log(data);
             dispatch(getInformationSuccess(data));
         }).catch(error => {
             dispatch(getInformationFailure(error.response.data.message));
@@ -68,11 +69,12 @@ const updateInformationFailure = error => {
 }
 
 export const updateInformation = (information, token, history) => {
+    console.log('update information');
     return dispatch => {
         dispatch(updateInformationRequest());
         axios({
             method: 'put',
-            url: `${SERVER_BASE_URL}/funds`,
+            url: `${SERVER_BASE_URL}/information`,
             headers: {Authorization: `Bearer ${token}`},
             data: information
         }).then(res => {
