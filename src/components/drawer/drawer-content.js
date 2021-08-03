@@ -1,6 +1,6 @@
 import React from "react";
 import {Avatar, Box, Button, Container, Divider, Grid, makeStyles, Typography} from "@material-ui/core";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {
     AccountBalance,
     AttachMoney,
@@ -18,7 +18,9 @@ import {
     VerifiedUser
 } from "@material-ui/icons";
 import {grey} from "@material-ui/core/colors";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {signOut} from "../../redux/authentication/auth-action-creators";
+import {useSnackbar} from "notistack";
 
 const DrawerContent = () => {
 
@@ -73,7 +75,7 @@ const DrawerContent = () => {
 
     const classes = useStyles();
 
-    const {user} = useSelector(state => state.auth);
+    const {user, token} = useSelector(state => state.auth);
 
     const getInitials = name => {
         const names = name.split(' ');
@@ -84,6 +86,13 @@ const DrawerContent = () => {
         return 'S'
     }
 
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const {enqueueSnackbar} = useSnackbar();
+
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
     return (
         <Container className={classes.container}>
             <Grid container={true} direction="column" alignItems="center" justifyContent="center"
@@ -163,7 +172,9 @@ const DrawerContent = () => {
                     <Button className={classes.button} startIcon={<LockOpen/>} variant="text">Change Password</Button>
                 </Link>
                 <Divider variant="fullWidth" className={classes.subDivider}/>
-                <Button className={classes.logoutButton} startIcon={<ExitToApp/>} variant="text">Logout</Button>
+                <Button
+                    onClick={dispatch(signOut(token, history, showNotification))}
+                    className={classes.logoutButton} startIcon={<ExitToApp/>} variant="text">Logout</Button>
             </Box>
         </Container>
     )

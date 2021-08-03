@@ -303,7 +303,7 @@ const signOutFailure = error => {
     }
 }
 
-export const signOut = (user, token, history, showNotification) => {
+export const signOut = (token, history, showNotification) => {
     return dispatch => {
         dispatch(signOutRequest());
         axios({
@@ -312,8 +312,7 @@ export const signOut = (user, token, history, showNotification) => {
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
-            },
-            data: user
+            }
         }).then(res => {
             const {data, message} = res.data;
             dispatch(signOutSuccess(data));

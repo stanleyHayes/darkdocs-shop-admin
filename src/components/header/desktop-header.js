@@ -2,8 +2,10 @@ import React, {useState} from "react";
 import {Avatar, Button, Grid, Menu, MenuItem, Toolbar, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 import {ChevronRight, Edit, ExitToApp, Face, KeyboardArrowDown} from "@material-ui/icons";
-import {Link} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {Link, useHistory} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {signOut} from "../../redux/authentication/auth-action-creators";
+import {useSnackbar} from "notistack";
 
 const DesktopHeader = () => {
 
@@ -61,7 +63,7 @@ const DesktopHeader = () => {
         setAnchorEl(null);
     }
 
-    const {user} = useSelector(state => state.auth);
+    const {user, token} = useSelector(state => state.auth);
 
     const getInitials = name => {
         const names = name.split(' ');
@@ -70,6 +72,14 @@ const DesktopHeader = () => {
         if (names.length === 2)
             return `${names[0][0]}${names[1][0]}`
         return 'S'
+    }
+
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const {enqueueSnackbar} = useSnackbar();
+
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
     }
 
     return (
@@ -128,14 +138,10 @@ const DesktopHeader = () => {
                             </Link>
                         </MenuItem>
                         <MenuItem onClick={handleClose}>
-                            <Link
-                                className={classes.link}
-                                to="/auth/login">
-                                <Button startIcon={<ExitToApp/>} endIcon={<ChevronRight/>} variant="text" size="small"
+                                <Button onClick={dispatch(signOut(token, history, showNotification))} startIcon={<ExitToApp/>} endIcon={<ChevronRight/>} variant="text" size="small"
                                         className={classes.button}>
                                     Logout
                                 </Button>
-                            </Link>
                         </MenuItem>
                     </Menu>
                 </Grid>
