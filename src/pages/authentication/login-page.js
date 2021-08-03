@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {
     Avatar,
     Button,
@@ -75,7 +75,6 @@ const LoginPage = () => {
     const {email, password} = user;
     const [visible, setVisible] = useState(false);
     const [error, setError] = useState({});
-    const [hasError, setHasError] = useState(false);
 
     const {enqueueSnackbar} = useSnackbar();
 
@@ -83,7 +82,7 @@ const LoginPage = () => {
         enqueueSnackbar(message, options);
     }
 
-    const {loading, error: authError, token} = useSelector(state => state.auth);
+    const {loading, error: authError} = useSelector(state => state.auth);
 
     const handleChange = event => {
         setUser({...user, [event.target.name]: event.target.value});
@@ -95,30 +94,24 @@ const LoginPage = () => {
         event.preventDefault();
 
         if (!email) {
-            setError({...error, email: "Field required"});
-            setHasError(true);
-        }
-
-        if (!email) {
-            setError({...error, email: "Field required"});
-            setHasError(true);
-        }
-        if (hasError) {
+            setError({error, email: "Field required"});
             return;
         } else {
-            dispatch(signIn({email, password}, history, showNotification));
+            setError({error, email: null});
         }
+
+        if (!password) {
+            setError({...error, password: "Field required"});
+            return;
+        } else {
+            setError({error, password: null});
+        }
+        dispatch(signIn({email, password}, history, showNotification));
     }
 
     const handleShowPassword = () => {
         setVisible(!visible);
     }
-
-    useEffect(() => {
-        if(!loading && token){
-            history.push('/');
-        }
-    }, [history, loading, token]);
 
     return (
         <div className={classes.container}>
@@ -169,6 +162,8 @@ const LoginPage = () => {
                                         onChange={handleChange}
                                         name="email"
                                         fullWidth={true}
+                                        error={Boolean(error.email)}
+                                        helperText={error.email}
                                     />
 
                                     <Grid container={true} spacing={2} alignItems="center">
@@ -193,6 +188,8 @@ const LoginPage = () => {
                                         onChange={handleChange}
                                         name="password"
                                         fullWidth={true}
+                                        error={Boolean(error.password)}
+                                        helperText={error.password}
                                     />
 
                                     <Link className={classes.link} to="/auth/forgot-password">

@@ -39,7 +39,6 @@ export const getInformation = (token) => {
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;
-            console.log(data);
             dispatch(getInformationSuccess(data));
         }).catch(error => {
             dispatch(getInformationFailure(error.response.data.message));
