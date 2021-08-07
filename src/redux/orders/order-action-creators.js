@@ -174,10 +174,10 @@ const getOrdersRequest = () => {
     }
 }
 
-const getOrdersSuccess = orders => {
+const getOrdersSuccess = (orders, ordersCount) => {
     return {
         type: GET_ORDERS_SUCCESS,
-        payload: orders
+        payload: {orders, ordersCount}
     }
 }
 
@@ -196,8 +196,8 @@ export const getOrders = (token, query, showNotification) => {
             url: `${SERVER_BASE_URL}/orders${query ? `?${query}` : ''}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data, message} = res.data;
-            dispatch(getOrdersSuccess(data));
+            const {data, message, ordersCount} = res.data;
+            dispatch(getOrdersSuccess(data, ordersCount));
             showNotification(message, {variant: 'success'});
         }).catch(error => {
             showNotification(error.response.data.message, {variant: 'error'});

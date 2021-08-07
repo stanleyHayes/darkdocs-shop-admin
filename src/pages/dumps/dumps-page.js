@@ -85,7 +85,7 @@ const DumpsPage = () => {
         dispatch(getDumps(token, query, showNotification));
     }, [dispatch, token, enqueueSnackbar, query]);
 
-    const {dumps, loading, error} = useSelector(state => state.dumps);
+    const {dumps, loading, error, ccDumpsCount} = useSelector(state => state.dumps);
 
     const [openCCDumpsDialog, setOpenCCDumpsDialog] = useState(false);
 
@@ -230,7 +230,7 @@ const DumpsPage = () => {
                                 }
                             </TableBody>
                             <TablePagination
-                                count={dumps.length}
+                                count={ccDumpsCount}
                                 page={page}
                                 onPageChange={handlePageChange}
                                 rowsPerPage={20}

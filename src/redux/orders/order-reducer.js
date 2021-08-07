@@ -4,7 +4,8 @@ const INITIAL_STATE = {
     orders: [],
     loading: false,
     error: null,
-    singleOrder: {}
+    singleOrder: {},
+    ordersCount: 0
 };
 
 const ordersReducer = (state = INITIAL_STATE, action) => {
@@ -21,7 +22,8 @@ const ordersReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: false,
                 error: "",
-                orders: action.payload
+                orders: action.payload.orders,
+                ordersCount: action.payload.ordersCount
             }
 
         case GET_ORDERS_FAILURE:
@@ -29,7 +31,8 @@ const ordersReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: false,
                 error: "",
-                orders: []
+                orders: [],
+                ordersCount: 0
             }
         default:
             return state;

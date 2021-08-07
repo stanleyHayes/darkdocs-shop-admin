@@ -90,10 +90,10 @@ const InstructionsPage = () => {
         const showNotification = (message, options) => {
             enqueueSnackbar(message, options);
         }
-        dispatch(getInstructions(token, showNotification));
-    }, [dispatch, enqueueSnackbar, token]);
+        dispatch(getInstructions(token, query, showNotification));
+    }, [dispatch, enqueueSnackbar, token, query]);
 
-    const {instructions, loading, error} = useSelector(state => state.instructions);
+    const {instructions, loading, error, instructionsCount} = useSelector(state => state.instructions);
 
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const [selectedID, setSelectedID] = useState(null);
@@ -204,7 +204,7 @@ const InstructionsPage = () => {
                                 }
                             </TableBody>
                             <TablePagination
-                                count={instructions.length}
+                                count={instructionsCount}
                                 page={page}
                                 onPageChange={handlePageChange}
                                 rowsPerPage={20}

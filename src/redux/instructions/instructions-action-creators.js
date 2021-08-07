@@ -186,10 +186,10 @@ const getInstructionsRequest = () => {
     }
 }
 
-const getInstructionsSuccess = instructions => {
+const getInstructionsSuccess = (instructions, instructionsCount) => {
     return {
         type: GET_INSTRUCTIONS_SUCCESS,
-        payload: instructions
+        payload: {instructions, instructionsCount}
     }
 }
 
@@ -200,17 +200,17 @@ const getInstructionsFailure = error => {
     }
 }
 
-export const getInstructions = (token, showNotification) => {
+export const getInstructions = (token, query, showNotification) => {
     return dispatch => {
         dispatch(getInstructionsRequest());
         axios({
             method: 'get',
-            url: `${SERVER_BASE_URL}/instructions`,
+            url: `${SERVER_BASE_URL}/instructions?${query}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data, message} = res.data;
+            const {data, message, instructionsCount} = res.data;
             if (data) {
-                dispatch(getInstructionsSuccess(data));
+                dispatch(getInstructionsSuccess(data, instructionsCount));
                 showNotification(message, {variant: 'success'});
             }
         }).catch(error => {

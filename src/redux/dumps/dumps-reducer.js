@@ -17,7 +17,8 @@ const INITIAL_STATE = {
     dumps: [],
     loading: false,
     error: null,
-    singleDump: {}
+    singleDump: {},
+    ccDumpsCount: 0
 };
 
 const dumpsReducer = (state = INITIAL_STATE, action) => {
@@ -35,7 +36,8 @@ const dumpsReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: false,
                 error: "",
-                dumps: [...state.dumps, action.payload]
+                dumps: [...state.dumps, action.payload],
+                ccDumpsCount: state.ccDumpsCount + 1
             }
 
         case CREATE_DUMP_FAILURE:
@@ -57,7 +59,8 @@ const dumpsReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: false,
                 error: "",
-                dumps: action.payload
+                dumps: action.payload.dumps,
+                ccDumpsCount: action.payload.ccDumpsCount
             }
 
         case GET_DUMPS_FAILURE:
@@ -65,7 +68,8 @@ const dumpsReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: false,
                 error: action.payload,
-                dumps: []
+                dumps: [],
+                ccDumpsCount: 0
             }
 
         case UPDATE_DUMP_REQUEST:

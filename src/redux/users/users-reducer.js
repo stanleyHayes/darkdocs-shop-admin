@@ -17,7 +17,8 @@ const INITIAL_STATE = {
     users: [],
     loading: false,
     error: null,
-    singleUser: {}
+    singleUser: {},
+    usersCount: 0
 };
 
 const usersReducer = (state = INITIAL_STATE, action) => {
@@ -33,7 +34,8 @@ const usersReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 loading: false,
-                users: action.payload,
+                users: action.payload.users,
+                usersCount: action.payload.usersCount,
                 error: ""
             }
 
@@ -56,6 +58,7 @@ const usersReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: false,
                 users: [...state.users, action.payload],
+                usersCount: state.usersCount + 1,
                 error: ""
             }
 

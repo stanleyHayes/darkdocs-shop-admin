@@ -14,7 +14,8 @@ const INITIAL_STATE = {
     banks: [],
     loading: false,
     error: null,
-    singleInstruction: {}
+    singleInstruction: {},
+    banksCount: 0
 };
 
 const banksReducer = (state = INITIAL_STATE, action) => {
@@ -31,7 +32,8 @@ const banksReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: false,
                 error: "",
-                banks: action.payload
+                banks: action.payload.banks,
+                banksCount: action.payload.banksCount
             }
 
         case GET_BANKS_FAILURE:
@@ -39,7 +41,8 @@ const banksReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: false,
                 error: action.payload,
-                banks: []
+                banks: [],
+                banksCount: 0
             }
 
         case CREATE_BANK_REQUEST:
@@ -54,7 +57,8 @@ const banksReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: false,
                 error: "",
-                banks: [...state.banks, action.payload]
+                banks: [...state.banks, action.payload],
+                banksCount: state.banksCount + 1
             }
 
         case CREATE_BANK_FAILURE:

@@ -180,10 +180,10 @@ const getUsersRequest = () => {
     }
 }
 
-const getUsersSuccess = users => {
+const getUsersSuccess = (users, usersCount) => {
     return {
         type: GET_USERS_SUCCESS,
-        payload: users
+        payload: {users, usersCount}
     }
 }
 
@@ -202,11 +202,11 @@ export const getUsers = (token, query, showNotification) => {
             url: `${SERVER_BASE_URL}/users${query ? `?${query}` : ''}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data, message} = res.data;
+            const {data, message, usersCount} = res.data;
             if (showNotification) {
                 showNotification(message, {variant: 'success'});
             }
-            dispatch(getUsersSuccess(data));
+            dispatch(getUsersSuccess(data, usersCount));
         }).catch(error => {
             if (showNotification) {
                 showNotification(error.response.data.message, {variant: 'error'});

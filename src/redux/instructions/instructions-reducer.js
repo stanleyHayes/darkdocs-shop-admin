@@ -17,7 +17,8 @@ const INITIAL_STATE = {
     instructions: [],
     loading: false,
     error: null,
-    singleInstruction: {}
+    singleInstruction: {},
+    instructionsCount: 0
 };
 
 const instructionsReducer = (state = INITIAL_STATE, action) => {
@@ -35,7 +36,8 @@ const instructionsReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: false,
                 error: "",
-                instructions: action.payload
+                instructions: action.payload.instructions,
+                instructionsCount: action.payload.instructionsCount
             }
 
         case GET_INSTRUCTIONS_FAILURE:
@@ -43,7 +45,8 @@ const instructionsReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: false,
                 error: action.payload,
-                instructions: []
+                instructions: [],
+                instructionsCount: 0
             }
 
         case ADD_INSTRUCTION_REQUEST:
@@ -58,7 +61,8 @@ const instructionsReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: false,
                 error: "",
-                instructions: [...state.instructions, action.payload]
+                instructions: [...state.instructions, action.payload],
+                instructionsCount: state.instructionsCount + 1
             }
 
         case ADD_INSTRUCTION_FAILURE:

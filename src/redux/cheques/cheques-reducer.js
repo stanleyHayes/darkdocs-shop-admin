@@ -11,7 +11,8 @@ const INITIAL_STATE = {
     cheques: [],
     loading: false,
     error: null,
-    singleCheque: {}
+    singleCheque: {},
+    chequesCount: 0
 };
 
 const chequesReducer = (state = INITIAL_STATE, action) => {
@@ -27,7 +28,8 @@ const chequesReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 loading: false,
-                cheques: action.payload,
+                cheques: action.payload.cheques,
+                chequesCount: action.payload.chequesCount,
                 error: ""
             }
 
@@ -36,7 +38,8 @@ const chequesReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: true,
                 error: action.payload,
-                cheques: []
+                cheques: [],
+                chequesCount: 0
             }
 
         case UPDATE_CHEQUE_REQUEST:

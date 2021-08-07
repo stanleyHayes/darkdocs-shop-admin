@@ -78,7 +78,7 @@ const FundsPage = () => {
         }
     });
     const {token} = useSelector(state => state.auth);
-    const {funds, loading, error} = useSelector(state => state.funds);
+    const {funds, loading, error, fundsCount} = useSelector(state => state.funds);
 
     const classes = useStyles();
 
@@ -241,7 +241,7 @@ const FundsPage = () => {
                                 }
                             </TableBody>
                             <TablePagination
-                                count={funds.length}
+                                count={fundsCount}
                                 page={page}
                                 onPageChange={handlePageChange}
                                 rowsPerPage={20}

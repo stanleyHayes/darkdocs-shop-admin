@@ -11,7 +11,8 @@ const INITIAL_STATE = {
     funds: [],
     loading: false,
     error: null,
-    singleFund: {}
+    singleFund: {},
+    fundsCount: 0
 };
 
 const fundsReducer = (state = INITIAL_STATE, action) => {
@@ -28,7 +29,8 @@ const fundsReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 loading: false,
-                funds: action.payload,
+                funds: action.payload.funds,
+                fundsCount: action.payload.fundsCount,
                 error: ""
             }
 
@@ -37,7 +39,8 @@ const fundsReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: true,
                 error: action.payload,
-                funds: []
+                funds: [],
+                fundsCount: 0
             }
 
 

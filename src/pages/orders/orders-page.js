@@ -93,7 +93,7 @@ const OrdersPage = () => {
 
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const [selectedID, setSelectedID] = useState(null);
-    const {orders, loading, error} = useSelector(state => state.orders);
+    const {orders, loading, error, ordersCount} = useSelector(state => state.orders);
 
     const handleDeleteDialogOpen = () => {
         setOpenDeleteDialog(true);
@@ -209,7 +209,7 @@ const OrdersPage = () => {
                                 }
                             </TableBody>
                             <TablePagination
-                                count={orders.length}
+                                count={ordersCount}
                                 page={page}
                                 onPageChange={handlePageChange}
                                 rowsPerPage={20}

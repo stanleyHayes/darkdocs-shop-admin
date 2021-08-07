@@ -105,7 +105,7 @@ const LoginsPage = () => {
         setBank(event.target.value);
     }
 
-    const {logins, loading, error} = useSelector(state => state.logins);
+    const {logins, loading, error, loginsCount} = useSelector(state => state.logins);
 
     useEffect(() => {
         const showNotification = (message, options) => {
@@ -283,7 +283,7 @@ const LoginsPage = () => {
                                 }
                             </TableBody>
                             <TablePagination
-                                count={logins.length}
+                                count={loginsCount}
                                 page={page}
                                 onPageChange={handlePageChange}
                                 rowsPerPage={20}

@@ -109,7 +109,7 @@ const UsersPage = () => {
         dispatch(getUsers(token, query, showNotification));
     }, [dispatch, enqueueSnackbar, query, token]);
 
-    const {users, loading, error} = useSelector(state => state.users);
+    const {users, loading, error, usersCount} = useSelector(state => state.users);
 
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const [selectedID, setSelectedID] = useState(null);
@@ -274,7 +274,7 @@ const UsersPage = () => {
                                 }
                             </TableBody>
                             <TablePagination
-                                count={users.length}
+                                count={usersCount}
                                 page={page}
                                 onPageChange={handlePageChange}
                                 rowsPerPage={20}

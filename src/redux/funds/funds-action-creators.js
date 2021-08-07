@@ -176,10 +176,10 @@ const getFundsRequest = () => {
     }
 }
 
-const getFundsSuccess = funds => {
+const getFundsSuccess = (funds, fundsCount) => {
     return {
         type: GET_FUNDS_SUCCESS,
-        payload: funds
+        payload: {funds, fundsCount}
     }
 }
 
@@ -198,8 +198,8 @@ export const getFunds = (token, query, showNotification) => {
             url: `${SERVER_BASE_URL}/funds${query ? `?${query}` : ''}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data, message} = res.data;
-            dispatch(getFundsSuccess(data));
+            const {data, message, fundsCount} = res.data;
+            dispatch(getFundsSuccess(data,fundsCount));
             showNotification(message, {variant: 'success'});
         }).catch(error => {
             showNotification(error.response.data.message, {variant: 'success'});

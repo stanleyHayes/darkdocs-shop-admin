@@ -101,7 +101,7 @@ const BanksPage = () => {
     }
 
     const {token} = useSelector(state => state.auth);
-    const {banks, loading, error} = useSelector(state => state.banks);
+    const {banks, loading, error, banksCount} = useSelector(state => state.banks);
 
     const {enqueueSnackbar} = useSnackbar();
     const classes = useStyles();
@@ -255,7 +255,7 @@ const BanksPage = () => {
                                 }
                             </TableBody>
                             <TablePagination
-                                count={banks.length}
+                                count={banksCount}
                                 page={page}
                                 onPageChange={handlePageChange}
                                 rowsPerPage={20}

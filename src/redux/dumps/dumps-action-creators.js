@@ -180,10 +180,10 @@ const getDumpsRequest = () => {
     }
 }
 
-const getDumpsSuccess = dumps => {
+const getDumpsSuccess = (dumps, ccDumpsCount) => {
     return {
         type: GET_DUMPS_SUCCESS,
-        payload: dumps
+        payload: {dumps, ccDumpsCount}
     }
 }
 
@@ -202,9 +202,9 @@ export const getDumps = (token, query, showNotification) => {
             url: `${SERVER_BASE_URL}/dumps?${query}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data, message} = res.data;
+            const {data, message, ccDumpsCount} = res.data;
             showNotification(message, {variant: 'success'});
-            dispatch(getDumpsSuccess(data));
+            dispatch(getDumpsSuccess(data, ccDumpsCount));
         }).catch(error => {
             showNotification(error.response.data.message, {variant: 'error'});
             dispatch(getDumpsFailure(error.response.data.message));

@@ -178,10 +178,10 @@ const getBanksRequest = () => {
     }
 }
 
-const getBanksSuccess = banks => {
+const getBanksSuccess = (banks, banksCount) => {
     return {
         type: GET_BANKS_SUCCESS,
-        payload: banks
+        payload: {banks, banksCount}
     }
 }
 
@@ -200,10 +200,10 @@ export const getBanks = (token, query, showNotification) => {
             url: `${SERVER_BASE_URL}/banks${query ? `?${query}` : ''}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data, message} = res.data;
+            const {data, message, banksCount} = res.data;
             if (showNotification)
                 showNotification(message, {variant: 'success'});
-            dispatch(getBanksSuccess(data));
+            dispatch(getBanksSuccess(data, banksCount));
         }).catch(error => {
             showNotification(error.response.data.message, {variant: 'error'});
             dispatch(getBanksFailure(error.response.data.message));

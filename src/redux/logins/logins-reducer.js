@@ -11,7 +11,8 @@ const INITIAL_STATE = {
     logins: [],
     loading: false,
     error: null,
-    singleLogin: {}
+    singleLogin: {},
+    loginsCount:0
 };
 
 const loginsReducer = (state = INITIAL_STATE, action) => {
@@ -28,7 +29,8 @@ const loginsReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: false,
                 error: "",
-                logins: [...state.logins, action.payload]
+                logins: [...state.logins, action.payload],
+                loginsCount: state.loginsCount + 1
             }
 
         case CREATE_LOGIN_FAILURE:
@@ -50,7 +52,8 @@ const loginsReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: false,
                 error: "",
-                logins: action.payload
+                logins: action.payload.logins,
+                loginsCount: action.payload.loginsCount
             }
 
         case GET_LOGINS_FAILURE:
@@ -58,7 +61,8 @@ const loginsReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: false,
                 error: action.payload,
-                logins: []
+                logins: [],
+                loginsCount: 0
             }
 
         case UPDATE_LOGIN_REQUEST:

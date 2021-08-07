@@ -108,7 +108,7 @@ const ChequesPage = () => {
     const dispatch = useDispatch();
     const {enqueueSnackbar} = useSnackbar();
 
-    const {cheques, loading, error} = useSelector(state => state.cheques);
+    const {cheques, loading, error, chequesCount} = useSelector(state => state.cheques);
 
     useEffect(() => {
         const showNotification = (message, options) => {
@@ -291,7 +291,7 @@ const ChequesPage = () => {
                                 }
                             </TableBody>
                             <TablePagination
-                                count={cheques.length}
+                                count={chequesCount}
                                 page={page}
                                 onPageChange={handlePageChange}
                                 rowsPerPage={20}

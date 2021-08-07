@@ -174,10 +174,10 @@ const getChequesRequest = () => {
     }
 }
 
-const getChequesSuccess = cheques => {
+const getChequesSuccess = (cheques, chequesCount) => {
     return {
         type: GET_CHEQUES_SUCCESS,
-        payload: cheques
+        payload: {cheques, chequesCount}
     }
 }
 
@@ -196,8 +196,8 @@ export const getCheques = (token, query, showNotification) => {
             url: `${SERVER_BASE_URL}/cheques${query ? `?${query}` : ''}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data, message} = res.data;
-            dispatch(getChequesSuccess(data));
+            const {data, message, chequesCount} = res.data;
+            dispatch(getChequesSuccess(data, chequesCount));
             showNotification(message, {variant: 'success'});
         }).catch(error => {
             showNotification(error.response.data.message, {variant: 'error'});
