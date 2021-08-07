@@ -51,6 +51,7 @@ const DashboardPage = () => {
             },
             btc: {
                 fontSize: '80%',
+                wordBreak: 'break-word'
             },
             email: {},
             link: {
@@ -115,7 +116,7 @@ const DashboardPage = () => {
                                 <Typography variant="body2" gutterBottom={true} align="center">BTC Address</Typography>
                                 {information && information.btcAddress ? (
                                     <Typography
-                                        className={classes.email}
+                                        className={classes.btc}
                                         variant="body1"
                                         align="center">
                                         {information && information.btcAddress}

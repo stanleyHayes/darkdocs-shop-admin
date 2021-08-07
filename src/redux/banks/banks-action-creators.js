@@ -192,12 +192,12 @@ const getBanksFailure = error => {
     }
 }
 
-export const getBanks = (token, showNotification) => {
+export const getBanks = (token, query, showNotification) => {
     return dispatch => {
         dispatch(getBanksRequest());
         axios({
             method: 'get',
-            url: `${SERVER_BASE_URL}/banks`,
+            url: `${SERVER_BASE_URL}/banks${query ? `?${query}` : ''}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data, message} = res.data;

@@ -99,7 +99,7 @@ const DrawerContent = () => {
                   className={classes.box}>
                 <Grid item={true}>
                     <Avatar className={classes.avatar}>
-                        <Typography className={classes.initials} variant="h5" align="center">
+                        <Typography className={classes.initials} variant="h4" align="center">
                             {user && getInitials(user.name)}
                         </Typography>
                     </Avatar>

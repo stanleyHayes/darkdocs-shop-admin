@@ -69,6 +69,10 @@ const DumpsPage = () => {
     const dispatch = useDispatch();
     const {enqueueSnackbar} = useSnackbar();
 
+    const [page, setPage] = useState(0);
+
+    const query = `page=${page + 1}`;
+
     const showNotification = (message, options) => {
         enqueueSnackbar(message, options);
     }
@@ -78,12 +82,11 @@ const DumpsPage = () => {
         const showNotification = (message, options) => {
             enqueueSnackbar(message, options);
         }
-        dispatch(getDumps(token, showNotification));
-    }, [dispatch, token, enqueueSnackbar]);
+        dispatch(getDumps(token, query, showNotification));
+    }, [dispatch, token, enqueueSnackbar, query]);
 
     const {dumps, loading, error} = useSelector(state => state.dumps);
 
-    const [page, setPage] = useState(0);
     const [openCCDumpsDialog, setOpenCCDumpsDialog] = useState(false);
 
     const handleCCDumpsDialogOpen = () => {
@@ -230,7 +233,7 @@ const DumpsPage = () => {
                                 count={dumps.length}
                                 page={page}
                                 onPageChange={handlePageChange}
-                                rowsPerPage={10}
+                                rowsPerPage={20}
                             />
                         </Table>
                     </TableContainer>

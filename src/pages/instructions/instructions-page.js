@@ -72,6 +72,7 @@ const InstructionsPage = () => {
 
     const [page, setPage] = useState(0);
     const [openInstructionDialog, setOpenInstructionDialog] = useState(false);
+    const query = `page=${page + 1}`;
 
     const handleOpenInstructionDialog = () => {
         setOpenInstructionDialog(true);
@@ -206,7 +207,7 @@ const InstructionsPage = () => {
                                 count={instructions.length}
                                 page={page}
                                 onPageChange={handlePageChange}
-                                rowsPerPage={10}
+                                rowsPerPage={20}
                             />
                         </Table>
                     </TableContainer>

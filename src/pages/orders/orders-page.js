@@ -78,7 +78,7 @@ const OrdersPage = () => {
         setPage(page);
     }
 
-    const query = `${type === 'All' ? '' : `type=${type}`}`;
+    const query = `page=${page + 1}&${type === 'All' ? '' : `type=${type}`}`;
 
     const handleTypeChange = event => {
         setType(event.target.value);
@@ -212,7 +212,7 @@ const OrdersPage = () => {
                                 count={orders.length}
                                 page={page}
                                 onPageChange={handlePageChange}
-                                rowsPerPage={10}
+                                rowsPerPage={20}
                             />
                         </Table>
                     </TableContainer>

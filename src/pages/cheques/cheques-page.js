@@ -91,7 +91,7 @@ const ChequesPage = () => {
     const [status, setStatus] = useState('All');
     const [page, setPage] = useState(0);
     const [user, setUser] = useState('All');
-    const query = `${user === 'All' ? '' : `user=${user}`}${user !== 'All' && status !== 'All' ? '&' : ''}${status === 'All' ? '' : `status=${status}`}`;
+    const query = `page=${page + 1}&${user === 'All' ? '' : `user=${user}`}${user !== 'All' && status !== 'All' ? '&' : ''}${status === 'All' ? '' : `status=${status}`}`;
 
     const handlePageChange = (event, page) => {
         setPage(page);
@@ -294,7 +294,7 @@ const ChequesPage = () => {
                                 count={cheques.length}
                                 page={page}
                                 onPageChange={handlePageChange}
-                                rowsPerPage={10}
+                                rowsPerPage={20}
                             />
                         </Table>
                     </TableContainer>

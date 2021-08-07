@@ -115,7 +115,7 @@ const updateDumpFailure = error => {
     }
 }
 
-export const updateDump = (id, dump, token,showNotification) => {
+export const updateDump = (id, dump, token, showNotification) => {
     return dispatch => {
         dispatch(updateDumpRequest());
         axios({
@@ -194,12 +194,12 @@ const getDumpsFailure = error => {
     }
 }
 
-export const getDumps = (token,showNotification) => {
+export const getDumps = (token, query, showNotification) => {
     return dispatch => {
         dispatch(getDumpsRequest());
         axios({
             method: 'get',
-            url: `${SERVER_BASE_URL}/dumps`,
+            url: `${SERVER_BASE_URL}/dumps?${query}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data, message} = res.data;

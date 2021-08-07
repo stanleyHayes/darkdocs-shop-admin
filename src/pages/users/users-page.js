@@ -80,7 +80,7 @@ const UsersPage = () => {
     const [status, setStatus] = useState('All');
     const [openUserDialog, setOpenUserDialog] = useState(false);
     const [page, setPage] = useState(0);
-    const query = `${role === 'All' ? '' : `role=${role}`}${role !== 'All' && status !== 'All' ? '&' : ''}${status === 'All' ? '' : `status=${status}`}`;
+    const query = `page=${page + 1}&${role === 'All' ? '' : `role=${role}`}${role !== 'All' && status !== 'All' ? '&' : ''}${status === 'All' ? '' : `status=${status}`}`;
 
     const handlePageChange = (event, page) => {
         setPage(page);
@@ -277,7 +277,7 @@ const UsersPage = () => {
                                 count={users.length}
                                 page={page}
                                 onPageChange={handlePageChange}
-                                rowsPerPage={10}
+                                rowsPerPage={20}
                             />
                         </Table>
                     </TableContainer>

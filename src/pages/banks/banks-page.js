@@ -82,7 +82,7 @@ const BanksPage = () => {
     const [country, setCountry] = useState('All');
     const [page, setPage] = useState(0);
     const [openBankDialog, setOpenBankDialog] = useState(false);
-    const query = `${country === 'All' ? '' : `country=${country}`}`;
+    const query = `page=${page + 1}&${country === 'All' ? '' : `country=${country}`}`;
 
     const handleBankDialogOpen = () => {
         setOpenBankDialog(true);
@@ -111,8 +111,8 @@ const BanksPage = () => {
         const showNotification = (message, options) => {
             enqueueSnackbar(message, options);
         }
-        dispatch(getBanks(token, showNotification));
-    }, [dispatch, enqueueSnackbar, token]);
+        dispatch(getBanks(token, query, showNotification));
+    }, [dispatch, enqueueSnackbar, token, query]);
 
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
     const [selectedID, setSelectedID] = useState(null);
@@ -258,7 +258,7 @@ const BanksPage = () => {
                                 count={banks.length}
                                 page={page}
                                 onPageChange={handlePageChange}
-                                rowsPerPage={10}
+                                rowsPerPage={20}
                             />
                         </Table>
                     </TableContainer>

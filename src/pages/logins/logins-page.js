@@ -71,11 +71,12 @@ const LoginsPage = () => {
     });
     const {token} = useSelector(state => state.auth);
     const [bank, setBank] = useState('All');
+    const [page, setPage] = useState(0);
     const {enqueueSnackbar} = useSnackbar();
 
     const [country, setCountry] = useState('All');
 
-    const query = `${country === 'All' ? '' : `country=${country}`}${country !== 'All' && bank !== 'All' ? '&' : ''}${bank === 'All' ? '' : `bank=${bank}`}`;
+    const query = `page=${page + 1}&${country === 'All' ? '' : `country=${country}`}${country !== 'All' && bank !== 'All' ? '&' : ''}${bank === 'All' ? '' : `bank=${bank}`}`;
 
     const classes = useStyles();
 
@@ -84,7 +85,6 @@ const LoginsPage = () => {
     }
     const dispatch = useDispatch();
 
-    const [page, setPage] = useState(0);
     const [openBankLoginDialog, setOpenBankLoginDialog] = useState(false);
 
     const {banks} = useSelector(state => state.banks);
@@ -178,7 +178,7 @@ const LoginsPage = () => {
                 {loading && <LinearProgress variant="query"/>}
                 {error && <Alert severity="error" title="Error">{error}</Alert>}
                 <Grid container={true} justifyContent="space-between" alignItems="center" spacing={2}>
-                    <Grid item={true} xs={12} md={6}>
+                    <Grid item={true} xs={12} md={3}>
                         <Typography
                             color="textSecondary"
                             className={classes.title}
@@ -214,7 +214,7 @@ const LoginsPage = () => {
                             })}
                         </Select>
                     </Grid>
-                    <Grid item={true} xs={12} md={4}>
+                    <Grid item={true} xs={12} md={3}>
                         <Button
                             onClick={handleOpenBankLoginDialog}
                             fullWidth={true}
@@ -286,7 +286,7 @@ const LoginsPage = () => {
                                 count={logins.length}
                                 page={page}
                                 onPageChange={handlePageChange}
-                                rowsPerPage={10}
+                                rowsPerPage={20}
                             />
                         </Table>
                     </TableContainer>

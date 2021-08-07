@@ -85,7 +85,7 @@ const FundsPage = () => {
     const [status, setStatus] = useState('All');
     const [page, setPage] = useState(0);
 
-    const query = `${status === 'All' ? '' : `status=${status}`}`;
+    const query = `page=${page + 1}&${status === 'All' ? '' : `status=${status}`}`;
 
     const handlePageChange = (event, page) => {
         setPage(page);
@@ -244,7 +244,7 @@ const FundsPage = () => {
                                 count={funds.length}
                                 page={page}
                                 onPageChange={handlePageChange}
-                                rowsPerPage={10}
+                                rowsPerPage={20}
                             />
                         </Table>
                     </TableContainer>
