@@ -248,6 +248,7 @@ const ChequesPage = () => {
                                 <TableRow hover={true}>
                                     <TableCell>#</TableCell>
                                     <TableCell>User</TableCell>
+                                    <TableCell>Email</TableCell>
                                     <TableCell>Status</TableCell>
                                     <TableCell>Address</TableCell>
                                     <TableCell>Balance</TableCell>
@@ -263,6 +264,7 @@ const ChequesPage = () => {
                                             <TableRow hover={true} key={index}>
                                                 <TableCell>{index + 1}</TableCell>
                                                 <TableCell>{cheque.user.name}</TableCell>
+                                                <TableCell>{cheque.user.email}</TableCell>
                                                 <TableCell>{renderStatus(cheque.status)}</TableCell>
                                                 <TableCell>{cheque.address}</TableCell>
                                                 <TableCell>{cheque.balance}</TableCell>

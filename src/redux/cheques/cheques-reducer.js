@@ -36,7 +36,7 @@ const chequesReducer = (state = INITIAL_STATE, action) => {
         case GET_CHEQUES_FAILURE:
             return {
                 ...state,
-                loading: true,
+                loading: false,
                 error: action.payload,
                 cheques: [],
                 chequesCount: 0
@@ -64,7 +64,7 @@ const chequesReducer = (state = INITIAL_STATE, action) => {
         case UPDATE_CHEQUE_FAILURE:
             return {
                 ...state,
-                loading: true,
+                loading: false,
                 error: action.payload
             }
         default:

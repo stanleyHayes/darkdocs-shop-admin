@@ -39,6 +39,10 @@ const ViewChequeDialog = ({openViewChequeDialog, handleViewChequeDialogClose, ch
                 <Typography className={classes.value} variant="body2">{cheque.user.name}</Typography>
                 <Divider variant="fullWidth" className={classes.divider}/>
 
+                <Typography gutterBottom={true} className={classes.caption} variant="caption">Email</Typography>
+                <Typography className={classes.value} variant="body2">{cheque.user.email}</Typography>
+                <Divider variant="fullWidth" className={classes.divider}/>
+
                 <Typography gutterBottom={true} className={classes.caption} variant="caption">Balance</Typography>
                 <Typography className={classes.value} variant="body2">{cheque.balance}</Typography>
                 <Divider variant="fullWidth" className={classes.divider}/>
